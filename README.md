@@ -24,7 +24,7 @@ Por último, mas não menos importante, o Protocolo-Caramelo pretende ser um jog
       <th>CastCris (Desenvolvedor)</th>
       <th>DiogoBSousa (Artista)</th>
       <th>JeanCFreitas (Artista)</th>
-      <th>JVVS</th>
+      <th>JVVS(Diretor Criativo)</th>
     </tr>
   </thead>
   <tbody>
