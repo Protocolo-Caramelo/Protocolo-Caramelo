@@ -12,7 +12,7 @@
 ## 1.Introdução
 Protocolo-Caramelo é um jogo _Point&Click_ sobre mineração de criptomoedas, no qual você controla Pedro e administra tanto o dinheiro quanto suas relações pessoais para sobreviver até o final do jogo. O principal objetivo do jogo é fornecer uma experiência imersiva e introspectiva sobre um indivíduo comum que vive e experiencia uma sociedade em profunda degeneração e autodestruição.
 
-Para minerar criptomoedas, você deve resolver problemas matemáticos. Embora pareça chato e monótono resolver essa categoria de problemas, um dos pilares do jogo é em demonstrar que, se feito da forma certa para o público-alvo certo, é possível disseminar conhecimento de qualquer natureza. A lógica dos problemas matemáticos estão explicados no documento da história jogo, entretanto, desejamos e esperamos que você jogue-o primeiro antes de ler qualquer material dele(por favor, não tome spoilers!)
+Para minerar criptomoedas, você deve resolver problemas matemáticos. Embora pareça, à primeira vista, chato e monótono resolver essa categoria de problemas, um dos pilares do jogo é em demonstrar que, se feito da forma certa para o público-alvo certo, é possível disseminar conhecimento de qualquer natureza. A lógica dos problemas matemáticos estão explicados no documento da história jogo, entretanto, desejamos e esperamos que você jogue o jogo primeiro antes de ler qualquer material dele(por favor, não tome spoilers!)
 
 Por último, mas não menos importante, o Protocolo-Caramelo pretende ser um jogo leve e portátil a qualquer dispositivo, dado que está sendo desenvolvido na linguagem _C_ usando da biblioteca gráfica _**SDL**_.
 
