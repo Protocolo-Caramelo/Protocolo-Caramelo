@@ -17,6 +17,18 @@ Para minerar criptomoedas, você deve resolver problemas matemáticos. Embora pa
 Por último, mas não menos importante, o Protocolo-Caramelo pretende ser um jogo leve e portátil a qualquer dispositivo, dado que está sendo desenvolvido na linguagem _C_ usando da biblioteca gráfica _**SDL**_.
 
 ## 2.UML
+
+### 2.1 Caso de Uso
+<img width="3126" height="1804" alt="use case diagram" src="https://github.com/user-attachments/assets/d4e7467e-6322-4a91-b111-b0ad34fe6aad" />
+
+### 2.2 Diagrama de Classes
+
+#### _Graphical_
+<img width="3453" height="1464" alt="graphical" src="https://github.com/user-attachments/assets/3f83d25f-98a0-44ef-9cd9-fa8f9259dded" />
+
+#### _Protocolo-Caramelo_
+<img width="2014" height="1707" alt="ProtocoloCaramelo" src="https://github.com/user-attachments/assets/f0f60468-76ff-4a71-b9f5-1343a46a7050" />
+
 ## 3.Integrantes do grupo
 <table>
   <thead>
