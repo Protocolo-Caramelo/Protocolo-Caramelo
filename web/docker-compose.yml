@@ -1,0 +1,11 @@
+services:
+  protocolo-caramelo-web:
+    image: "protocolo-caramelo-web:latest"
+    build: .
+    stdin_open: true
+    tty: true
+
+    volumes:
+      - ./Protocolo-Caramelo:/Protocolo-Caramelo/web
+    ports:
+      - "8080:8080"
