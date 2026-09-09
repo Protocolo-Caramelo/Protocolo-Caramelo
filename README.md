@@ -55,7 +55,8 @@ E... pronto, você terá o site do jogando localmente em seu computador!
 
 #### 3.2.1.2 Diagrama de Classes
 ##### _Graphical_
-<img width="3453" height="1464" alt="graphical" src="https://github.com/user-attachments/assets/3f83d25f-98a0-44ef-9cd9-fa8f9259dded" />
+<img width="3011" height="1706" alt="graphical" src="https://github.com/user-attachments/assets/c37dd9dd-e129-4619-af98-91f6158044d0" />
+<hr>
 
 #### _Protocolo-Caramelo_
 <img width="2014" height="1707" alt="ProtocoloCaramelo" src="https://github.com/user-attachments/assets/f0f60468-76ff-4a71-b9f5-1343a46a7050" />
