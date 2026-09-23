@@ -8,6 +8,6 @@ public class SiteController {
 
     @GetMapping("/")
     public String home() {
-        return "forward:/index.html";
+        return "index.html";
     }
 }
