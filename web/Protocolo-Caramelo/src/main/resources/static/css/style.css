@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Larceny';
+    src: url('font/Larceny.ttf') format('truetype')
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -5,11 +10,17 @@
 }
 
 body{
-    background-color: gray;
+    background-color: black;
+    color: #D8E2DC;
+    font-size: 20px;
+    font-family: 'Larceny', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 header {
-    background-color: #111111;
+    background-color: #0f252e;
     padding: 20px 40px;
 }
 
@@ -17,65 +28,106 @@ ul {
     display: flex;
     list-style: none;
     justify-content: center;
-    gap: 75px;   
+    gap: 85px;   
 }
 
 li {
     cursor: pointer;
-    font-size: 20px;
-    color: white;
+    transition: transform 0.3s ease;
+    font-size: 23px;
 }
 
 li:hover{
-    transform: scale(155%);
-    transition: 0.5s ease-in-out;
+    color: #00E5FC;
+    transform: translateY(-5px);
+}
+
+li a{
+    text-decoration: none;
+    color: #D8E2DC;
 }
 
 img {
     display: block;
     width: 500px;
     margin: 60px auto 30px;
+    border-radius: 12px;
 }
 
-p {
+#container{
+    display: block;
+    margin: 10px auto 20px;
+    background-color: #0f252e;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 13px;
+}
+
+#container p {
     width: 800px;
     margin: 0 auto 30px;
     text-align: center;
     line-height: 1.6;
-    font-size: 20px;
 }
 
+#container p::first-letter{
+    font-size: 21px;
+}
 
 button {
     display: block;
-    width: 150px;
-    margin: 15px auto 60px;
-    padding: 15px;
+    margin: 10px auto 30px;
+    padding: 6px;
+    width: 250px;
+    height: 65px;
     border: none;
     border-radius: 10px;
-    background-color: #e78a32;
-    color: white;
-    font-size: 18px;
+    background-color: #f05e23;
+    color: #D8E2DC;
+    font-size: 30px;
+    font-family: 'Larceny', sans-serif;
     cursor: pointer;
+    transition: 0.3s ease;
 }
 
 button:hover {
-    background-color: #f89940;
-    border: 1px solid white;
-    transform: scale(110%);
-     transition: 0.5s ease-in-out;
+    background-color: #D8E2DC;
+    color: #f05e23;
+    border: 2px solid #f05e23;
+    transform: scale(105%);
+    opacity: 0.9;
 }
 
-
 footer {
-    padding: 5px;
-    margin-top: 10px;
-    background-color: #0d0d0d;
+    width: 100%;
+    padding: 8px;
+    margin-top: auto;
+    background-color: #0f252e;
     text-align: center;
     max-height: 40px;
+    margin-top: auto;
 }
 
 footer p {
-    color: white;
-    font-size: 14px;
+    font-size: 16px;
+}
+
+#error-alert{
+    display: block;
+    margin: 100px auto 20px;
+    background-color: #0f252e;
+    width: fit-content;
+    padding: 25px;
+    border-radius: 13px;
+    text-align: center;
+}
+
+#error-alert h1{
+    font-size: 100px;
+}
+
+#error-alert p {
+    width: 100%;
+    margin: 0 auto 30px;
+    font-size: 50px;
 }
