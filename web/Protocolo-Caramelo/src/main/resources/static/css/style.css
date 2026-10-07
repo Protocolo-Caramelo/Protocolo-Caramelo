@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Larceny';
-    src: url('font/Larceny.ttf') format('truetype')
+    src: url('/font/Larceny.ttf') format('truetype');
 }
 
 * {
@@ -54,24 +54,31 @@ img {
     border-radius: 12px;
 }
 
-#container{
-    display: block;
-    margin: 10px auto 20px;
+
+h1{
+    color: #f05e23;
+    text-align: center;
+}
+
+.card{
+    display: block;    
+    margin: 10px auto 30px;
     background-color: #0f252e;
     width: fit-content;
-    padding: 10px;
-    border-radius: 13px;
+    padding: 10px 15px;
+    border-radius: 7px;
+    border: 2px solid #f05e23;
 }
 
-#container p {
+.card p {
     width: 800px;
-    margin: 0 auto 30px;
-    text-align: center;
-    line-height: 1.6;
+    margin: 10 auto 10px;
+    text-align: justify;
+    line-height: 1.4;
 }
 
-#container p::first-letter{
-    font-size: 21px;
+.card p::first-letter{
+    font-size: 22px;
 }
 
 button {
@@ -115,7 +122,7 @@ footer p {
 #error-alert{
     display: block;
     margin: 100px auto 20px;
-    background-color: #0f252e;
+    background-color: #f05e23;
     width: fit-content;
     padding: 25px;
     border-radius: 13px;
@@ -124,10 +131,104 @@ footer p {
 
 #error-alert h1{
     font-size: 100px;
+    color: #D8E2DC;
 }
 
 #error-alert p {
     width: 100%;
     margin: 0 auto 30px;
     font-size: 50px;
+}
+
+#devs-container{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 45px;
+    width: 100%;
+    padding: 50px;
+    flex-wrap: wrap;
+}
+
+.dev-card{
+    width: 250px;
+    background-color: #0f252e;
+    color: #D8E2DC;
+    border-radius: 10px;
+    border: solid 2px #0f252e;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, height 0.4s ease;
+    height: 330px;
+}
+
+.dev-card:hover{
+    transform: translateY(-5px);
+}
+
+.dev-header{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0f252e;
+    color: #f05e23;
+}
+
+.dev-header h3{
+    margin: 0;
+    font-size: 24px;
+}
+
+.dev-image{
+    width: 100%;
+    height: 230px;
+}
+
+.dev-image img{
+    margin-top: 0px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0px;
+}
+
+.dev-footer{
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #0f252e;
+    font-size: 20px;
+}
+
+.dev-footer h3{
+    margin: 0;
+}
+
+.dev-info{
+    max-height: 0;
+    text-align: justify;
+    overflow: hidden;
+    padding: 0 20px;
+    background-color: #0f252e;
+    opacity: 0;
+    transition: max-height 0.5s ease, padding 0.5s ease, opacity 0.3s ease;
+}
+
+.dev-card.expanded{
+    height: fit-content;
+}
+
+
+.dev-card.expanded .dev-info{
+    max-height: fit-content;
+    padding: 20px;
+    opacity: 1;
+}
+
+.dev-info p{
+    margin: 0;
+    line-height: 1.2;
+    text-align: center;
 }
