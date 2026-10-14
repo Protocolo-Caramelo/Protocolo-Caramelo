@@ -1,7 +1,13 @@
 @font-face {
-    font-family: 'Larceny';
-    src: url('/font/Larceny.ttf') format('truetype');
+    font-family: 'Pixeloid';
+    src: url('/font/PixeloidSans.ttf') format('truetype');
 }
+
+@font-face {
+    font-family: 'PressStart2P';
+    src: url('/font/PressStart2P.ttf') format('truetype');
+}
+
 
 * {
     margin: 0;
@@ -12,29 +18,29 @@
 body{
     background-color: black;
     color: #D8E2DC;
-    font-size: 20px;
-    font-family: 'Larceny', sans-serif;
+    font-family: 'PressStart2P', sans-serif;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
 header {
+    width: 100%;
     background-color: #0f252e;
-    padding: 20px 40px;
+    padding: 20px;
 }
 
 ul {
     display: flex;
     list-style: none;
     justify-content: center;
-    gap: 85px;   
+    gap: 85px;
 }
 
 li {
     cursor: pointer;
     transition: transform 0.3s ease;
-    font-size: 23px;
+    font-size: 18px;
 }
 
 li:hover{
@@ -47,9 +53,14 @@ li a{
     color: #D8E2DC;
 }
 
+li a:hover{
+    color: #00E5FC;
+    transform: translateY(-5px);
+}
+
 img {
     display: block;
-    width: 500px;
+    height: auto;
     margin: 60px auto 30px;
     border-radius: 12px;
 }
@@ -58,41 +69,45 @@ img {
 h1{
     color: #f05e23;
     text-align: center;
+    margin-top: 50px;
+}
+
+p{
+    font-family: "Pixeloid";
+    font-size: 20px;
 }
 
 .card{
     display: block;    
     margin: 10px auto 30px;
     background-color: #0f252e;
-    width: fit-content;
-    padding: 10px 15px;
+    max-width: 1200px;
+    height: 100%;
+    padding: 10px 20px;
     border-radius: 7px;
     border: 2px solid #f05e23;
 }
 
 .card p {
-    width: 800px;
+    width: fit-content;
     margin: 10 auto 10px;
     text-align: justify;
-    line-height: 1.4;
-}
-
-.card p::first-letter{
-    font-size: 22px;
+    line-height: 1.39;
+    letter-spacing: 1.2;
 }
 
 button {
     display: block;
     margin: 10px auto 30px;
     padding: 6px;
-    width: 250px;
+    width: 20%;
+    max-width: 400px;
     height: 65px;
     border: none;
     border-radius: 10px;
     background-color: #f05e23;
     color: #D8E2DC;
-    font-size: 30px;
-    font-family: 'Larceny', sans-serif;
+    font-family: 'PressStart2P';
     cursor: pointer;
     transition: 0.3s ease;
 }
@@ -167,6 +182,7 @@ footer p {
 }
 
 .dev-header{
+    width: fit-content;
     height: 50px;
     display: flex;
     align-items: center;
@@ -177,7 +193,7 @@ footer p {
 
 .dev-header h3{
     margin: 0;
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .dev-image{
@@ -199,7 +215,7 @@ footer p {
     align-items: center;
     justify-content: center;
     background-color: #0f252e;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .dev-footer h3{
@@ -220,7 +236,6 @@ footer p {
     height: fit-content;
 }
 
-
 .dev-card.expanded .dev-info{
     max-height: fit-content;
     padding: 20px;
@@ -231,4 +246,227 @@ footer p {
     margin: 0;
     line-height: 1.2;
     text-align: center;
+}
+
+@media (max-width: 1500px) { 
+
+    header{ 
+        padding: 20px; 
+    } 
+    
+    ul{ 
+        gap: 85px; 
+        flex-wrap: wrap; 
+    } 
+    
+    img { 
+        width: 50%; 
+    }
+
+    .card{ 
+        width: 70%; 
+    } 
+    
+    button{ 
+        width: 20%; 
+        font-size: 17px;
+        padding: 5px;
+    } 
+    
+    #error-alert h1{ 
+        font-size: 75px; 
+    } 
+    
+    #error-alert p{ 
+        font-size: 35px; 
+    } 
+}
+
+@media (max-width: 1000px){
+
+    header{ 
+        padding: 20px; 
+    }
+
+    ul{ 
+        gap: 60px; 
+    } 
+    
+    li{ 
+        font-size: 15px; 
+    } 
+    
+    img{ 
+        width: 55%; 
+        margin: 40px auto 25px; 
+    } 
+    
+    h1{ 
+        font-size: 25px; 
+    } 
+    
+    p{ 
+        font-size: 18px; 
+    } 
+    
+    .card{ 
+        width: 80%; 
+        padding: 10px 15px; 
+    } 
+    
+    button{ 
+        width: 30%; 
+        max-width: 400px;
+        min-width: 200px; 
+        font-size: 16px; 
+        padding: 7px;
+    } 
+    
+    footer{ 
+        padding: 12px; 
+    } 
+    
+    footer p{ 
+        font-size: 13px; 
+    } 
+    
+    #devs-container{ 
+        gap: 25px; 
+        padding: 30px 15px; 
+    } 
+    
+    .dev-card{ 
+        width: 220px; 
+    }
+    
+    .dev-header h3{ 
+        font-size: 16px; 
+    }
+    
+    .dev-footer{ 
+        font-size: 14px; 
+    } 
+    
+    #error-alert{ 
+        width: 72%; 
+        margin: 60px auto 20px;
+        padding: 20px; 
+    } 
+    
+    #error-alert h1{ 
+        font-size: 55px; 
+    }
+    
+    #error-alert p{ 
+        font-size: 28px; 
+        overflow-wrap: anywhere; 
+    } 
+}
+
+@media (max-width: 700px){ 
+    
+    header{ 
+        padding: 15px 10px;
+    } 
+    
+    ul{ 
+        flex-direction: column; 
+        align-items: center; 
+        gap: 30px;
+    } 
+    
+    li{ 
+        font-size: 14px;  
+    } 
+    
+    img{ 
+        width: 75%; 
+        margin: 30px auto 20px; 
+    } 
+    
+    h1{ 
+        font-size: 17px; 
+    } 
+    
+    p{ 
+        font-size: 16.5px; 
+    } 
+    
+    .card{ 
+        width: 85%; 
+        padding: 12px; 
+    } 
+    
+    .card p{ 
+        width: 100%;
+        margin: 3px auto;
+        font-size: 16px; 
+        line-height: 1.5; 
+        letter-spacing: 0.7px; 
+    } 
+    
+    button{ 
+        width: 40%; 
+        height: auto; 
+        min-height: 60px; 
+        padding: 12px; 
+        font-size: 15px; 
+    } 
+    
+    footer{ 
+        padding: 12px 8px; 
+    } 
+    
+    footer p{ 
+        font-size: 11px; 
+    } 
+    
+    #devs-container{ 
+        gap: 25px; 
+        padding: 25px 10px; 
+    } 
+    
+    .dev-card{ 
+        width: 100%; 
+        max-width: 300px; 
+    } 
+    
+    .dev-header{ 
+        width: 100%; 
+    } 
+    
+    .dev-header h3{ 
+        font-size: 16px; 
+    } 
+    
+    .dev-footer{ 
+        font-size: 14px; 
+    } 
+    
+    .dev-info{ 
+        padding: 0 12px; 
+    } 
+    
+    .dev-card.expanded .dev-info{ 
+        padding: 15px; 
+    } 
+    
+    .dev-info p{ 
+        font-size: 16px; 
+    } 
+    
+    #error-alert{ 
+        width: 75%; 
+        margin: 40px auto 20px; 
+        padding: 15px; 
+    } 
+    
+    #error-alert h1{ 
+        font-size: 40px; 
+    } 
+    
+    #error-alert p{ 
+        font-size: 20px; 
+        margin-bottom: 20px; 
+    } 
 }

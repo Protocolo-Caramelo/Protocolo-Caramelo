@@ -21,7 +21,7 @@ function showHome() {
         <h1>O que é?</h1>
         <div class="card">
             <p>
-                Protocolo-Caramelo é um jogo Point&Click sobre mineração de criptomoedas, no qual você controla Pedro e administra tanto
+                Protocolo-Caramelo é um jogo Point & Click sobre mineração de criptomoedas, no qual você controla Pedro e administra tanto
                 o dinheiro quanto suas relações pessoais para sobreviver até o final do jogo. O principal objetivo do jogo é fornecer uma
                 experiência imersiva e introspectiva sobre um indivíduo comum que vive e experiencia uma sociedade em profunda degeneração
                 e autodestruição. 
@@ -37,7 +37,7 @@ function showHome() {
         <h1>Portabilidade</h1>
         <div class="card">
             <p>
-                o Protocolo-Caramelo pretende ser um jogo leve e portátil a qualquer dispositivo, 
+                O Protocolo-Caramelo pretende ser um jogo leve e portátil a qualquer dispositivo, 
                 dado que está sendo desenvolvido na linguagem C usando da biblioteca gráfica SDL.
             </p>
         </div>
