@@ -2,9 +2,10 @@ const app = document.getElementById("app");
 
 function showHome() {
     app.innerHTML = 
-    `<section> 
-        <img src="img/cachorro.png" alt="dog">
-
+    `<section>
+        <div id="logo"> 
+            <img src="img/cachorro.png" alt="dog">
+        </div>
         <h1>Sinopse</h1>
         <div class="card">
             <p>
@@ -25,8 +26,7 @@ function showHome() {
                 o dinheiro quanto suas relações pessoais para sobreviver até o final do jogo. O principal objetivo do jogo é fornecer uma
                 experiência imersiva e introspectiva sobre um indivíduo comum que vive e experiencia uma sociedade em profunda degeneração
                 e autodestruição. 
-            </p>
-            <p>
+                <br>
                 Para minerar criptomoedas, você deve resolver problemas matemáticos. Embora pareça, à primeira vista, chato e monótono
                 resolver essa categoria de problemas, um dos pilares do jogo é demonstrar que, se feito da forma certa para o público-alvo 
                 certo, é possível disseminar conhecimento de qualquer natureza. A lógica dos problemas matemáticos estão explicados na aba 
@@ -52,14 +52,14 @@ function showDevs(){
 
         <div id="devs-container">
             <div class="dev-card" onclick="expandCard(this)">
-                <div class="dev-header">
-                    <h3>Desenvolvedor</h3>
+                <div class="dev-nickname">
+                    <h3>CastCris</h3>
                 </div>
                 <div class="dev-image">
                     <img src="img/cris.jpeg" alt="Cris">
                 </div>
-                <div class="dev-footer">
-                    <h3>CastCris</h3>
+                <div class="dev-job">
+                    <h3>Desenvolvedor</h3>
                 </div>
                 <div class="dev-info">
                     <p>
@@ -70,35 +70,33 @@ function showDevs(){
                 </div>
             </div>
 
-
             <div class="dev-card" onclick="expandCard(this)">
-                <div class="dev-header">
-                    <h3>Diretor Criativo && Dev. Web</h3>
+                <div class="dev-nickname">
+                    <h3>JVVS</h3>
                 </div>
                 <div class="dev-image">
                     <img src="img/joao.png" alt="João">
                 </div>
-                <div class="dev-footer">
-                    <h3>JVVS</h3>
+                <div class="dev-job">
+                    <h3>Diretor Criativo && Dev. Web</h3>
                 </div>
                 <div class="dev-info">
                     <p>
                         Diretor criativo do jogo, sendo responsável pela criação e desenvolvimento da história do jogo e seus personagens.
                         Além disso, é responsável pela criação de efeitos sonoros e músicas ambientes dentro do jogo.
-                        or fim, auxilia DiogoBSousa e JeanCFreitas no desenvolvimento dos personagens e cenários dentro do jogo.
                     </p>
                 </div>
             </div>
 
             <div class="dev-card" onclick="expandCard(this)">
-                <div class="dev-header">
-                    <h3>Artista</h3>
+                <div class="dev-nickname">
+                    <h3>JeanCFreitas</h3>
                 </div>
                 <div class="dev-image">
                     <img src="img/jean.jpeg" alt="Jean">
                 </div>
-                <div class="dev-footer">
-                    <h3>JeanCFreitas</h3>
+                <div class="dev-job">
+                    <h3>Artista</h3>
                 </div>
                 <div class="dev-info">
                     <p>
@@ -109,14 +107,14 @@ function showDevs(){
             </div>
 
             <div class="dev-card" onclick="expandCard(this)">
-                <div class="dev-header">
-                    <h3>Artista</h3>
+                <div class="dev-nickname">
+                    <h3>DiogoBSousa</h3>
                 </div>
                 <div class="dev-image">
                     <img src="img/diogo.jpeg" alt="Diogo">
                 </div>
-                <div class="dev-footer">
-                    <h3>DiogoBSousa</h3>
+                <div class="dev-job">
+                    <h3>Artista</h3>
                 </div>
                 <div class="dev-info">
                     <p>

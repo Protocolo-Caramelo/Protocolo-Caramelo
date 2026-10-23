@@ -8,7 +8,6 @@
     src: url('/font/PressStart2P.ttf') format('truetype');
 }
 
-
 * {
     margin: 0;
     padding: 0;
@@ -58,18 +57,18 @@ li a:hover{
     transform: translateY(-5px);
 }
 
-img {
+#logo img {
     display: block;
     height: auto;
     margin: 60px auto 30px;
     border-radius: 12px;
 }
 
-
 h1{
     color: #f05e23;
     text-align: center;
     margin-top: 50px;
+    margin-bottom: 15px;
 }
 
 p{
@@ -78,29 +77,25 @@ p{
 }
 
 .card{
-    display: block;    
+    display: block;
     margin: 10px auto 30px;
     background-color: #0f252e;
     max-width: 1200px;
     height: 100%;
-    padding: 10px 20px;
+    padding: 5px 20px;
     border-radius: 7px;
     border: 2px solid #f05e23;
 }
 
 .card p {
-    width: fit-content;
-    margin: 10 auto 10px;
+    width: 100%;
+    margin: 10px auto;
     text-align: justify;
-    line-height: 1.39;
-    letter-spacing: 1.2;
 }
 
 button {
     display: block;
     margin: 10px auto 30px;
-    padding: 6px;
-    width: 20%;
     max-width: 400px;
     height: 65px;
     border: none;
@@ -127,7 +122,6 @@ footer {
     background-color: #0f252e;
     text-align: center;
     max-height: 40px;
-    margin-top: auto;
 }
 
 footer p {
@@ -139,123 +133,122 @@ footer p {
     margin: 100px auto 20px;
     background-color: #f05e23;
     width: fit-content;
-    padding: 25px;
     border-radius: 13px;
     text-align: center;
 }
 
 #error-alert h1{
-    font-size: 100px;
     color: #D8E2DC;
 }
 
 #error-alert p {
     width: 100%;
-    margin: 0 auto 30px;
-    font-size: 50px;
 }
 
-#devs-container{
+#devs-container {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 45px;
+    gap: 35px;
     width: 100%;
-    padding: 50px;
+    padding: 40px;
     flex-wrap: wrap;
 }
 
-.dev-card{
-    width: 250px;
-    background-color: #0f252e;
+.dev-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 260px;
+    min-height: 300px;
     color: #D8E2DC;
+    border: 1.5px solid #f05e23;
     border-radius: 10px;
-    border: solid 2px #0f252e;
     overflow: hidden;
     cursor: pointer;
-    transition: transform 0.3s ease, height 0.4s ease;
-    height: 330px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.dev-card:hover{
-    transform: translateY(-5px);
+.dev-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 20px rgba(240, 94, 35, 0.35);
 }
 
-.dev-header{
-    width: fit-content;
-    height: 50px;
+.dev-nickname {
+    width: 100%;
+    padding: 15px 10px 5px 10px; 
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #0f252e;
-    color: #f05e23;
+    text-align: center;
 }
 
-.dev-header h3{
+.dev-nickname h3 {
     margin: 0;
-    font-size: 20px;
+    font-size: 16px;
 }
 
-.dev-image{
-    width: 100%;
-    height: 230px;
+.dev-image {
+    width: 200px; 
+    height: 200px;
+    margin: 5px 0; 
 }
 
-.dev-image img{
-    margin-top: 0px;
+.dev-image img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 0px;
+    border-radius: 50%;
 }
 
-.dev-footer{
-    height: 50px;
+.dev-job {
+    width: 100%;
+    padding: 5px 10px 10px 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #0f252e;
-    font-size: 18px;
+    color: #f05e23;
+    text-align: center;
 }
 
-.dev-footer h3{
-    margin: 0;
+.dev-job h3 {
+    margin: 0; 
+    font-size: 14px;
 }
 
-.dev-info{
+.dev-info {
+    width: 100%;
     max-height: 0;
-    text-align: justify;
+    padding: 0 15px;
+    box-sizing: border-box;
     overflow: hidden;
-    padding: 0 20px;
-    background-color: #0f252e;
     opacity: 0;
     transition: max-height 0.5s ease, padding 0.5s ease, opacity 0.3s ease;
 }
 
-.dev-card.expanded{
-    height: fit-content;
+.dev-card.expanded {
+    height: auto;
+    transform: scaleX(1.05);
 }
 
-.dev-card.expanded .dev-info{
-    max-height: fit-content;
-    padding: 20px;
+.dev-card.expanded .dev-info {
+    max-height: 600px;
+    padding: 12px;
     opacity: 1;
 }
 
-.dev-info p{
+.dev-info p {
     margin: 0;
-    line-height: 1.2;
-    text-align: center;
+    line-height: 1.5;
+    letter-spacing: 1.3; 
+    text-align: justify;
+    font-size: 14px;
 }
 
 @media (max-width: 1500px) { 
-
-    header{ 
-        padding: 20px; 
-    } 
     
     ul{ 
-        gap: 85px; 
         flex-wrap: wrap; 
     } 
     
@@ -265,31 +258,39 @@ footer p {
 
     .card{ 
         width: 70%; 
-    } 
+    }
+    
+    .card p{
+        line-height: 1.4;
+        letter-spacing: 1.4;
+    }
     
     button{ 
         width: 20%; 
         font-size: 17px;
         padding: 5px;
-    } 
+    }
+    
+    #error-alert{
+        width: 50%; 
+        margin: 60px auto 20px;
+        padding: 10px; 
+    }
     
     #error-alert h1{ 
         font-size: 75px; 
     } 
     
     #error-alert p{ 
-        font-size: 35px; 
+        font-size: 35px;
+        margin: 0 auto 30px;
     } 
 }
 
 @media (max-width: 1000px){
 
-    header{ 
-        padding: 20px; 
-    }
-
     ul{ 
-        gap: 60px; 
+        gap: 40px; 
     } 
     
     li{ 
@@ -305,18 +306,17 @@ footer p {
         font-size: 25px; 
     } 
     
-    p{ 
-        font-size: 18px; 
-    } 
-    
     .card{ 
         width: 80%; 
         padding: 10px 15px; 
     } 
+
+    .card p {
+        font-size: 18px;
+    }
     
     button{ 
         width: 30%; 
-        max-width: 400px;
         min-width: 200px; 
         font-size: 16px; 
         padding: 7px;
@@ -350,7 +350,7 @@ footer p {
     #error-alert{ 
         width: 72%; 
         margin: 60px auto 20px;
-        padding: 20px; 
+        padding: 10px; 
     } 
     
     #error-alert h1{ 
@@ -359,7 +359,6 @@ footer p {
     
     #error-alert p{ 
         font-size: 28px; 
-        overflow-wrap: anywhere; 
     } 
 }
 
@@ -388,21 +387,17 @@ footer p {
         font-size: 17px; 
     } 
     
-    p{ 
-        font-size: 16.5px; 
-    } 
-    
     .card{ 
         width: 85%; 
-        padding: 12px; 
+        padding: 12px 17px; 
     } 
     
     .card p{ 
         width: 100%;
         margin: 3px auto;
         font-size: 16px; 
-        line-height: 1.5; 
-        letter-spacing: 0.7px; 
+        line-height: 1.6; 
+        letter-spacing: 1.5; 
     } 
     
     button{ 
