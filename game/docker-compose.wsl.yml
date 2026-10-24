@@ -1,0 +1,10 @@
+services:
+  protocolo_caramelo:
+    devices:
+      - /dev/dxg
+
+    environment:
+      - XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
+
+    volumes:
+      - /mnt/wslg/runtime-dir/${WAYLAND_DISPLAY}:/mnt/wslg/runtime-dir/${WAYLAND_DISPLAY}

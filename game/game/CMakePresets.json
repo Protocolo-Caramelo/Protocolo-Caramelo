@@ -1,0 +1,39 @@
+{
+    "version": 3,
+    "configurePresets":
+    [
+        {
+            "name": "build",
+            "binaryDir": "${sourceDir}/__build__",
+            "cacheVariables": {
+                "compilation_mode": "NORMAL",
+                "GRAPHICAL_BUILD_TESTS": "OFF"
+            }
+        },
+        {
+            "name": "devquote",
+            "binaryDir": "${sourceDir}/__build_devquote__",
+            "cacheVariables": {
+                "compilation_mode": "DEVQUOTE",
+                "GRAPHICAL_BUILD_TESTS": "ON"
+            }
+        },
+
+        {
+            "name": "windows",
+            "binaryDir": "${sourceDir}/__build_windows__",
+            "cacheVariables": {
+                "compilation_mode": "TOOLCHAIN_WINDOWS",
+                "GRAPHICAL_BUILD_TESTS": "OFF"
+            }
+        },
+        {
+            "name": "windows_devquote",
+            "binaryDir": "${sourceDir}/__build_windows_devquote__",
+            "cacheVariables": {
+                "compilation_mode": "TOOLCHAIN_WINDOWS_DEVQUOTE",
+                "GRAPHICAL_BUILD_TESTS": "ON"
+            }
+        }
+    ]
+}

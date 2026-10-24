@@ -1,0 +1,14 @@
+services:
+  protocolo_caramelo:
+    image: "protocolo_caramelo:latest"
+    build: .
+
+    volumes:
+      - ./game:/game
+    environment:
+      - DISPLAY=${DISPLAY}
+      - WAYLAND_DISPLAY=${WAYLAND_DISPLAY}
+      - SDL_VIDEODRIVER=wayland
+
+    stdin_open: true
+    tty: true
