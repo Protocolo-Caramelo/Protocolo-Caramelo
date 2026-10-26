@@ -15,7 +15,8 @@ target_sources(
     PRIVATE
         main.c
         #
-        Protocolo-Caramelo/elements/elements_globals.c
+        Protocolo-Caramelo/game/game_globals.c
+        Protocolo-Caramelo/game/game.c
         #
         Protocolo-Caramelo/inputs/bar.c
         Protocolo-Caramelo/inputs/button.c

@@ -21,6 +21,7 @@ Button* Button_Create(
         }
     }
     //
+    b->x = b->y = 0;
     b->text = Text_Create(
         cache,
         b->state_tc[INP_STATE_NEUTRAL],
@@ -49,8 +50,8 @@ void Button_Display(Button*b, int x, int y, void(*func)(Button*))
     if(func){
         func(b);
     }
-    Button_tc_buffer->x = x;
-    Button_tc_buffer->y = y;
+    b->x = Button_tc_buffer->x = x;
+    b->y = Button_tc_buffer->y = y;
     Text_DrawUTF8(
         b->text,
         NULL,
@@ -76,6 +77,10 @@ void Button_handleMouseButton(Button*b, SDL_Event*e, void(*func)(Button*, SDL_Ev
         && e->type == SDL_MOUSEBUTTONDOWN
       ){
         b->state[INP_STATE_SELECTED] = !b->state[INP_STATE_SELECTED];
+    }
+
+    if(e->type == SDL_MOUSEBUTTONUP){
+        b->state[INP_STATE_SELECTED] = 0;
     }
 
     if(func){

@@ -286,7 +286,8 @@ void Text_MeasureUTF8(Text*t, int*w, int*h)
             cIns_ctrl.line_idx++;
         } 
 
-        if(c == '\n' || (c == ' ' && cIns.x == 0)){
+        // if(c == '\n' || (c == ' ' && cIns.x == 0)){
+        if(c == '\n'){
             (*Text_chrsDest(t))[i - 1] = (TextCharRect){
                 .src = NULL,
                 .x = cIns.x,
@@ -338,6 +339,10 @@ void Text_MeasureUTF8(Text*t, int*w, int*h)
 
     }
     cIns_yMax += lineskip;
+
+    (*Text_edgesBack(t))[DRAW_TEXT_RAW_WIDTH]  = cIns_xMax - cIns_xMin;
+    (*Text_edgesBack(t))[DRAW_TEXT_RAW_HEIGHT] = cIns_yMax - cIns_yMin;
+
     // if(*Text_boxWidthText(t) > 0 && cIns_xMax - cIns_xMin > *Text_boxWidthText(t)){
     if(*Text_boxWidthText(t) > 0){
         cIns_xMax = *Text_boxWidthText(t);

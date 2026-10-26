@@ -13,7 +13,7 @@
 #include<utf8.h>
 
 typedef enum DRAW_EDGES DRAW_EDGES;
-#define DRAW_EDGE_AMT 30
+#define DRAW_EDGE_AMT 32
 enum DRAW_EDGES {
     DRAW_EDGE_XMAX,
     DRAW_EDGE_YMAX,
@@ -51,6 +51,9 @@ enum DRAW_EDGES {
     DRAW_BORDER_HEIGHT,
     DRAW_PADDING_HEIGHT,
     DRAW_TEXT_HEIGHT,
+
+    DRAW_TEXT_RAW_WIDTH,
+    DRAW_TEXT_RAW_HEIGHT,
 };
 
 /*

@@ -1,7 +1,92 @@
-#if !defined(COMPILATION_DEVQUOTE) && !defined(COMPILATION_TOOLCHAIN_WINDOWS_DEVQUOTE)
 #include"main.h"
 
+void Test_libgraphical();
+void Test_inputs();
+
 int main(int argc, char*argv[])
+{
+    extern SDL_Event e;
+    extern GameState gameState;
+
+    Game_Init();
+    while(1){
+        switch(gameState){
+            case GAME_STATE_SCREEN_MENU:
+                Menu_Render();
+                break;
+
+            default:
+                break;
+        }
+
+        Game_Debug();
+
+        SDL_RenderPresent(r);
+        SDL_Delay(32);
+    }
+
+    return 0;
+}
+
+void Test_libgraphical()
+{
+    /*
+    const char font_path[] = 
+        // "./assets/fonts/Ubuntu/Ubuntu-Regular.ttf"
+        "./assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf"
+        // "./assets/fonts/pixeloid-font/PixeloidMono-nAOpP.ttf"
+        ;
+        // */
+    /*
+     * Please, run one test per program...
+     */
+    // 
+    // Test SDL
+    // // SimpleWindow();
+    //
+    // Text TextFA struct
+    //
+    // TextCache_Test(font_path, 50);
+
+    //
+    // Test Text struct
+    //
+    /*
+    Text_Test1(
+        font_path,
+        50,
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mollis faucibus porttitor. Mauris tempor ut lorem ac laoreet. Quisque facilisis aliquet mauris a blandit. Sed magna ante, faucibus sit amet purus ac, eleifend posuere nunc.\nDuis id elit vulputate, sollicitudin odio nec, volutpat massa. Praesent auctor tincidunt massa, vitae interdum felis euismod sed. Vivamus ultrices, odio ac ullamcorper tincidunt, est urna iaculis lorem, a venenatis nunc magna ac quam. Donec nunc turpis, bibendum a lobortis at, auctor vitae augue."
+        "#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
+        );
+    // */
+    /*
+    Text_Test2(
+        font_path,
+        50,
+        // "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mollis faucibus porttitor. Mauris tempor ut lorem ac laoreet."
+        "#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
+        // "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        // "Protocolo-Caramelo"
+        // "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mollis faucibus porttitor. Mauris tempor ut lorem ac laoreet. Quisque facilisis aliquet mauris a blandit. Sed magna ante, faucibus sit amet purus ac, eleifend posuere nunc.\nDuis id elit vulputate, sollicitudin odio nec, volutpat massa. Praesent auctor tincidunt massa, vitae interdum felis euismod sed. Vivamus ultrices, odio ac ullamcorper tincidunt, est urna iaculis lorem, a venenatis nunc magna ac quam. Donec nunc turpis, bibendum a lobortis at, auctor vitae augue."
+    );
+    // */
+    /*
+    Text_Test3(
+        font_path,
+        50,
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mollis faucibus porttitor. Mauris tempor ut lorem ac laoreet. Quisque facilisis aliquet mauris a blandit. Sed magna ante, faucibus sit amet purus ac, eleifend posuere nunc.\nDuis id elit vulputate, sollicitudin odio nec, volutpat massa. Praesent auctor tincidunt massa, vitae interdum felis euismod sed. Vivamus ultrices, odio ac ullamcorper tincidunt, est urna iaculis lorem, a venenatis nunc magna ac quam. Donec nunc turpis, bibendum a lobortis at, auctor vitae augue."
+    );
+    // */
+    /*
+    Text_Test4(
+        font_path,
+        90,
+        "Click Here!"
+    );
+    // */
+}
+
+void Test_inputs()
 {
     extern SDL_Window *w;
     extern SDL_Renderer *r;
@@ -231,72 +316,4 @@ int main(int argc, char*argv[])
         SDL_RenderPresent(r);
         SDL_Delay(16);
     }
-
-
-    return 0;
 }
-
-#elif defined(COMPILATION_DEVQUOTE) || defined(COMPILATION_TOOLCHAIN_WINDOWS_DEVQUOTE)
-#include<graphical.h>
-
-int main(int argc, char*argv[])
-{
-    const char font_path[] = 
-        // "./assets/fonts/Ubuntu/Ubuntu-Regular.ttf"
-        "./assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf"
-        // "./assets/fonts/pixeloid-font/PixeloidMono-nAOpP.ttf"
-        ;
-    /*
-     * Please, run one test per program...
-     */
-    // 
-    // Test SDL
-    //
-    // SimpleWindow();
-
-    //
-    // Text TextFA struct
-    //
-    // TextCache_Test(font_path, 50);
-
-    //
-    // Test Text struct
-    //
-    /*
-    Text_Test1(
-        font_path,
-        50,
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mollis faucibus porttitor. Mauris tempor ut lorem ac laoreet. Quisque facilisis aliquet mauris a blandit. Sed magna ante, faucibus sit amet purus ac, eleifend posuere nunc.\nDuis id elit vulputate, sollicitudin odio nec, volutpat massa. Praesent auctor tincidunt massa, vitae interdum felis euismod sed. Vivamus ultrices, odio ac ullamcorper tincidunt, est urna iaculis lorem, a venenatis nunc magna ac quam. Donec nunc turpis, bibendum a lobortis at, auctor vitae augue."
-        "#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
-        );
-    // */
-    /*
-    Text_Test2(
-        font_path,
-        50,
-        // "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mollis faucibus porttitor. Mauris tempor ut lorem ac laoreet."
-        "#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
-        // "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        // "Protocolo-Caramelo"
-        // "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mollis faucibus porttitor. Mauris tempor ut lorem ac laoreet. Quisque facilisis aliquet mauris a blandit. Sed magna ante, faucibus sit amet purus ac, eleifend posuere nunc.\nDuis id elit vulputate, sollicitudin odio nec, volutpat massa. Praesent auctor tincidunt massa, vitae interdum felis euismod sed. Vivamus ultrices, odio ac ullamcorper tincidunt, est urna iaculis lorem, a venenatis nunc magna ac quam. Donec nunc turpis, bibendum a lobortis at, auctor vitae augue."
-    );
-    // */
-    /*
-    Text_Test3(
-        font_path,
-        50,
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In mollis faucibus porttitor. Mauris tempor ut lorem ac laoreet. Quisque facilisis aliquet mauris a blandit. Sed magna ante, faucibus sit amet purus ac, eleifend posuere nunc.\nDuis id elit vulputate, sollicitudin odio nec, volutpat massa. Praesent auctor tincidunt massa, vitae interdum felis euismod sed. Vivamus ultrices, odio ac ullamcorper tincidunt, est urna iaculis lorem, a venenatis nunc magna ac quam. Donec nunc turpis, bibendum a lobortis at, auctor vitae augue."
-    );
-    // */
-    /*
-    Text_Test4(
-        font_path,
-        90,
-        "Click Here!"
-    );
-    // */
-
-    return 0;
-}
-
-#endif
