@@ -75,6 +75,11 @@ void Menu_handleEvent(SDL_Event*e)
         return;
     }
 
+    if(menu_buttons[MENU_BUTTON_INIT]->state[INP_STATE_SELECTED]){
+        // gameState = GAME_STATE_PLAYING;
+        // Game_PlayInit();
+    }
+
     switch(e->type){
         case SDL_QUIT:
             Game_Quit();
@@ -99,7 +104,7 @@ void Menu_displayMainButtons()
     //
     Text *t;
 
-    edges = Text_edges(menu_tTitle);
+    edges = Text_edges(menu_tTitle[MENU_TITLE_COUNT - 1]);
 
     //
     for(i=MENU_BUTTON_INIT; i <= MENU_BUTTON_CONFIG; ++i){
@@ -169,6 +174,9 @@ void Menu_displayMainButtons()
 
 void Menu_Render()
 {
+    int x, y;
+    size_t i;
+
     SDL_SetRenderDrawColor(r, 255, 255, 255, 255);
     SDL_RenderClear(r);
 
@@ -179,16 +187,21 @@ void Menu_Render()
 
     //
     SDL_GetWindowSize(w, &w_width, &w_height);
-    Text_DrawUTF8(
-        menu_tTitle,
-        NULL,
-        TextConfig_Create(
-            .x = w_width / 2 - (*Text_edges(menu_tTitle))[DRAW_WIDTH] / 2,
-            .y = 50,
-            .chr_fmt = CHAR_FMT_ITALIC
-        ),
-        NULL
-    );
+
+    y = 50;
+    for(i=0; i < MENU_TITLE_COUNT; ++i){
+        x = w_width / 2 - (*Text_edges(menu_tTitle[i]))[DRAW_WIDTH] / 2;
+        Text_DrawUTF8(
+            menu_tTitle[i],
+            NULL,
+            TextConfig_Create(
+                .x = x,
+                .y = y,
+            ),
+            NULL
+        );
+        y = (*Text_edges(menu_tTitle[i]))[DRAW_EDGE_YMAX] + 10;
+    }
     Menu_displayMainButtons();
 
     state_changed = 0;

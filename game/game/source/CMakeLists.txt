@@ -23,6 +23,10 @@ target_sources(
         Protocolo-Caramelo/inputs/text.c
         #
         Protocolo-Caramelo/screens/menu.c
+        #
+        Protocolo-Caramelo/mechanics/MathProblem/aes128.c
+        Protocolo-Caramelo/mechanics/MathProblem/mathproblem.c
+        Protocolo-Caramelo/mechanics/MathProblem/mathproblem_generators.c
     )
 target_include_directories(
     ${MAIN_NAME}

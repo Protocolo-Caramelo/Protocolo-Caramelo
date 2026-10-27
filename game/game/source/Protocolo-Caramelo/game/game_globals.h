@@ -3,6 +3,7 @@
 
 #include<graphical.h>
 #include"inputs/inputs.h"
+#include"mechanics/mechanics.h"
 
 #if defined(COMPILATION_DEVQUOTE) || defined(COMPILATION_TOOLCHAIN_WINDOWS_DEVQUOTE)
 #define GAME_DEBUG
@@ -30,6 +31,9 @@ extern TextCache *cache_fRegular;
 #define ELEMENT_CACHE_FTITLE_PATH "assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf"
 #define ELEMENT_CACHE_FTITLE_PTSIZE 100
 extern TextCache *cache_fTitle;
+#define ELEMENT_CACHE_3DFONT_1_PATH "assets/fonts/3d/ka1.ttf"
+#define ELEMENT_CACHE_3DFONT_1_PTSIZE 100
+extern TextCache *cache_f3D1;
 
 typedef enum GameState GameState;
 enum GameState {
@@ -37,7 +41,7 @@ enum GameState {
     GAME_STATE_SCREEN_CONFIG,
     GAME_STATE_SCREEN_ABOUT,
     GAME_STATE_PLAYING,
-    GAME_STATE_PLAYING_MONITOR
+    GAME_STATE_PLAYING_MONITOR,
 };
 extern GameState gameState;
 
@@ -49,7 +53,12 @@ extern GameState gameState;
 extern TextConfig* menu_textConfig;
 extern TextConfig* menu_buttonConfig[3];
 
-extern Text     *menu_tTitle;
+enum Menu_Title {
+    MENU_TITLE_PROTOCOLO,
+    MENU_TITLE_CARAMELO,
+    MENU_TITLE_COUNT,
+};
+extern Text *menu_tTitle[MENU_TITLE_COUNT];
 
 #define MENU_BUTTON_SPACING_TITLE_X 0
 #define MENU_BUTTON_SPACING_TITLE_Y 100
@@ -80,9 +89,9 @@ extern Text     *menu_tTitle;
         .scale_width = 1 / 4.0,     \
         .scale_height = 1 / 4.0,    \
         .color = (SDL_Color){       \
-            .r=251,                 \
-            .g=223,                 \
-            .b=71,                  \
+            .r=255,                 \
+            .g=180,                 \
+            .b=27,                  \
             .a=255                  \
         },                          \
         .margin = (Margin){         \
@@ -108,8 +117,8 @@ extern Text     *menu_tTitle;
         .scale_width = 1 / 4.0,     \
         .scale_height = 1 / 4.0,    \
         .color = (SDL_Color){       \
-            .r=251,                 \
-            .g=223,                 \
+            .r=255,                 \
+            .g=180,                 \
             .b=71,                  \
             .a=255                  \
         },                          \
@@ -160,13 +169,13 @@ extern Text     *menu_tTitle;
         },                          \
     );
 //
-#define MENU_BUTTONS_MAX 5
 typedef enum MenuButtons {
     MENU_BUTTON_INIT,
     MENU_BUTTON_CONTINUE,
     MENU_BUTTON_CONFIG,
     MENU_BUTTON_ABOUT,
     MENU_BUTTON_EXIT,
+    MENU_BUTTONS_MAX
 };
 extern Button *menu_buttons[MENU_BUTTONS_MAX];
 
@@ -193,6 +202,8 @@ extern char fps_buffer[32];
     )
 #endif
 
+// Mathematic
+extern MathProblem problem;
 
 // Others
 extern int w_width;

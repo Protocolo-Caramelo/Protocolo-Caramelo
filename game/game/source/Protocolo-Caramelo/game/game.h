@@ -8,6 +8,10 @@
 void Game_Init();
 void Game_Quit();
 
+// Init/Load a game
+// void Game_PlayInit();
+// void Game_PlayQuit();
+
 // Devquote(Debug)
 void Game_Debug();
 

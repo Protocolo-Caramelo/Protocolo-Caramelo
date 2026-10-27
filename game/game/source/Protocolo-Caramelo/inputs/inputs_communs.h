@@ -7,11 +7,11 @@
 #define RAD_TO_DEG(rad) (rad * 180 / M_PI)
 
 typedef enum Input_State INP_State;
-#define INP_STATES_MAX 3
 enum Input_State {
     INP_STATE_NEUTRAL,
     INP_STATE_SELECTED,
     INP_STATE_HOVER,
+    INP_STATES_MAX
 };
 
 #endif
