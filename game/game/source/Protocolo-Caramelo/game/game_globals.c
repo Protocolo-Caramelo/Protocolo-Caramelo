@@ -13,6 +13,10 @@ GameState gameState;
 // Menu
 TextConfig* menu_textConfig;
 TextConfig* menu_buttonConfig[3];
+// Play
+SDL_Texture *room_1;
+SDL_Texture *room_2;
+SDL_Texture *monitor;
 
 Text     *menu_tTitle[MENU_TITLE_COUNT];
 Button   *menu_buttons[MENU_BUTTONS_MAX];
@@ -49,7 +53,13 @@ void game_globals_init()
 
     extern Text     *menu_tTitle[2];
     extern Button   *menu_buttons[MENU_BUTTONS_MAX];
-    //
+
+    // Play
+    extern SDL_Texture *room_1;
+    extern SDL_Texture *room_2;
+    extern SDL_Texture *monitor;
+
+    // Others
     extern int w_width;
     extern int w_height;
     //
@@ -117,6 +127,11 @@ void game_globals_init()
     menu_buttons[MENU_BUTTON_EXIT]      = Button_Create(cache_fRegular, &menu_buttonConfig, "Sair");
     menu_buttons[MENU_BUTTON_ABOUT]     = Button_Create(cache_fRegular, &menu_buttonConfig, "Sobre");
 
+    // Play
+    room_1 = IMG_LoadTexture(r, SCREEN_ROOM_1_TEXTURE_PATH);
+    room_2 = IMG_LoadTexture(r, SCREEN_ROOM_2_TEXTURE_PATH);
+    monitor = IMG_LoadTexture(r, SCREEN_MONITOR_TEXTURE_PATH);
+
     // Devquote(Debug)
 #ifdef GAME_DEBUG
     fps = Text_Create(
@@ -142,6 +157,11 @@ void game_globals_quit()
     TextCache_Destroy(&cache_fRegular);
     TextCache_Destroy(&cache_fTitle);
     TextCache_Destroy(&cache_f3D1);
+
+    // Texture
+    SDL_DestroyTexture(room_1);
+    SDL_DestroyTexture(room_2);
+    SDL_DestroyTexture(monitor);
 
     // SDL
     SDL_DestroyRenderer(r);

@@ -40,8 +40,9 @@ enum GameState {
     GAME_STATE_SCREEN_MENU,
     GAME_STATE_SCREEN_CONFIG,
     GAME_STATE_SCREEN_ABOUT,
-    GAME_STATE_PLAYING,
-    GAME_STATE_PLAYING_MONITOR,
+    GAME_STATE_PLAYING_VIEW_ROOM_1,
+    GAME_STATE_PLAYING_VIEW_ROOM_2,
+    GAME_STATE_PLAYING_VIEW_MONITOR,
 };
 extern GameState gameState;
 
@@ -179,6 +180,17 @@ typedef enum MenuButtons {
 };
 extern Button *menu_buttons[MENU_BUTTONS_MAX];
 
+// Mathematic
+extern MathProblem problem;
+
+// Game Playing screen
+#define SCREEN_ROOM_1_TEXTURE_PATH "./assets/Room_view1.jpg"
+extern SDL_Texture *room_1;
+#define SCREEN_ROOM_2_TEXTURE_PATH "./assets/Room_view2.jpg"
+extern SDL_Texture *room_2;
+#define SCREEN_MONITOR_TEXTURE_PATH "./assets/Room_view2.jpg"
+extern SDL_Texture *monitor;
+
 // Devquote(Debug)
 #ifdef GAME_DEBUG
 extern Text *fps;
@@ -201,9 +213,6 @@ extern char fps_buffer[32];
         }                       \
     )
 #endif
-
-// Mathematic
-extern MathProblem problem;
 
 // Others
 extern int w_width;

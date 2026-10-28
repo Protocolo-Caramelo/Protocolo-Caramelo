@@ -1,5 +1,6 @@
 #include"game.h"
 
+//
 void Game_Init()
 {
     graphical_init();
@@ -14,6 +15,18 @@ void Game_Quit()
     exit(0);
 }
 
+//
+void Game_PlayInit()
+{
+    gameState = GAME_STATE_PLAYING_VIEW_ROOM_1;
+    //
+}
+
+void Game_PlayQuit()
+{
+}
+
+//
 void Game_Debug()
 {
 #ifdef GAME_DEBUG
