@@ -6,7 +6,7 @@ void Test_problems();
 
 int main(int argc, char*argv[])
 {
-    //*
+    /*
     extern SDL_Event e;
     extern GameState gameState;
 
@@ -32,7 +32,7 @@ int main(int argc, char*argv[])
     }
     // */
     
-    // Test_problems();
+    Test_problems();
 
     return 0;
 }

@@ -34,7 +34,8 @@ Button      *menu_buttons[MENU_BUTTONS_MAX];
 //
 GamePlay_Texture gamePlay_tex;
 SDL_Texture *play_tex[GAMEPLAY_TEX_COUNT];
-TextConfig  *play_buttonsConfig[INP_STATES_MAX];
+TextConfig  *play_buttonsArrowConfig[INP_STATES_MAX];
+TextConfig  *play_buttonsMonitorConfig[INP_STATES_MAX];
 Button      *play_buttons[GAMEPLAY_BUTTON_COUNT];
 // 
 // Devquote(Debug)
@@ -188,16 +189,24 @@ void game_globals_init()
         }
     }
 
-    play_buttonsConfig[INP_STATE_NEUTRAL]   = GAMEPLAY_BUTTON_ARROW_CONFIG_NEUTRAL;
-    play_buttonsConfig[INP_STATE_SELECTED]  = GAMEPLAY_BUTTON_ARROW_CONFIG_SELECTED;
-    play_buttonsConfig[INP_STATE_HOVER]     = GAMEPLAY_BUTTON_ARROW_CONFIG_HOVER;
-    //
-    play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_BACK]      = Button_Create(cache_fRegular, &play_buttonsConfig, "Virar");
-    play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_MONITOR]   = Button_Create(cache_fRegular, &play_buttonsConfig, "Monitor");
-    play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_BED]       = Button_Create(cache_fRegular, &play_buttonsConfig, "Cama");
+    play_buttonsArrowConfig[INP_STATE_NEUTRAL]     = GAMEPLAY_BUTTON_ARROW_CONFIG_NEUTRAL;
+    play_buttonsArrowConfig[INP_STATE_SELECTED]    = GAMEPLAY_BUTTON_ARROW_CONFIG_SELECTED;
+    play_buttonsArrowConfig[INP_STATE_HOVER]       = GAMEPLAY_BUTTON_ARROW_CONFIG_HOVER;
 
-    play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM2_BACK] = Button_Create(cache_fRegular, &play_buttonsConfig, "Virar");
-    play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM2_DOOR] = Button_Create(cache_fRegular, &play_buttonsConfig, "Porta");
+    play_buttonsMonitorConfig[INP_STATE_NEUTRAL]   = GAMEPLAY_BUTTON_MONITOR_CONFIG_NEUTRAL;
+    play_buttonsMonitorConfig[INP_STATE_SELECTED]  = GAMEPLAY_BUTTON_MONITOR_CONFIG_SELECTED;
+    play_buttonsMonitorConfig[INP_STATE_HOVER]     = GAMEPLAY_BUTTON_MONITOR_CONFIG_HOVER;
+    //
+    play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_BACK]    = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Virar");
+    play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_MONITOR] = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Monitor");
+    play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_BED]     = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Cama");
+
+    play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM2_BACK]    = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Virar");
+    play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM2_DOOR]    = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Porta");
+
+    play_buttons[GAMEPLAY_BUTTON_ARROW_MONITOR_BACK]  = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Voltar");
+    play_buttons[GAMEPLAY_BUTTON_MONITOR_MINE]        = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Minerar");
+    play_buttons[GAMEPLAY_BUTTON_MONITOR_DELIVERY]    = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Entrega Rápidas");
 
     // Devquote(Debug)
 #ifdef GAME_DEBUG

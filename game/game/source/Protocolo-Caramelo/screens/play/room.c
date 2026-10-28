@@ -89,7 +89,7 @@ void Room1_handleInput(SDL_Event*e)
 
     switch(e->type){
         case SDL_QUIT:
-            Game_Quit();
+            Game_PlayQuit();
             break;
 
         default:
@@ -155,7 +155,7 @@ void Room2_handleInput(SDL_Event*e)
 
     switch(e->type){
         case SDL_QUIT:
-            Game_Quit();
+            Game_PlayQuit();
             break;
 
         default:

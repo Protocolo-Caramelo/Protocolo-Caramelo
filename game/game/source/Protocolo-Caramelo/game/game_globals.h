@@ -240,6 +240,10 @@ enum GamePlay_Button {
     GAMEPLAY_BUTTON_ARROW_ROOM2_BACK,
     GAMEPLAY_BUTTON_ARROW_ROOM2_DOOR,
 
+    GAMEPLAY_BUTTON_ARROW_MONITOR_BACK,
+    GAMEPLAY_BUTTON_MONITOR_MINE,
+    GAMEPLAY_BUTTON_MONITOR_DELIVERY,
+
     GAMEPLAY_BUTTON_COUNT
 };
 #define GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE (1 / 1.5)
@@ -282,7 +286,28 @@ enum GamePlay_Button {
         .padding = (Padding){2, 2, 2, 2, (SDL_Color){}}, \
         .func_alterBorder = &gamePlay_Button_Arrow_Hover_alterBorder \
     )
-extern TextConfig *play_buttonsConfig[INP_STATES_MAX];
+extern TextConfig *play_buttonsArrowConfig[INP_STATES_MAX];
+
+#define GAMEPLAY_BUTTON_MONITOR_CONFIG_NEUTRAL  \
+    TextConfig_Create(                          \
+        .scale_width  = 1 / 6.5,                \
+        .scale_height = 1 / 6.5,                \
+        .color = (SDL_Color){0, 0, 0, 255},     \
+    )                                           
+#define GAMEPLAY_BUTTON_MONITOR_CONFIG_SELECTED \
+    TextConfig_Create(                          \
+        .scale_width  = 1 / 6.5,                \
+        .scale_height = 1 / 6.5,                \
+        .color = (SDL_Color){0, 0, 0, 255},     \
+    )                                           
+#define GAMEPLAY_BUTTON_MONITOR_CONFIG_HOVER    \
+    TextConfig_Create(                          \
+        .scale_width  = 1 / 6.5,                \
+        .scale_height = 1 / 6.5,                \
+        .color = (SDL_Color){0, 0, 0, 255},     \
+    )                                           
+extern TextConfig *play_buttonsMonitorConfig[INP_STATES_MAX];
+
 extern Button *play_buttons[GAMEPLAY_BUTTON_COUNT];
 void gamePlay_Button_Arrow_Neutral_alterBorder(Text*, Texture*);
 void gamePlay_Button_Arrow_Selected_alterBorder(Text*, Texture*);
