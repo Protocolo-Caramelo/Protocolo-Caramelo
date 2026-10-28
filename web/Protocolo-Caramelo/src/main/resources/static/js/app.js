@@ -2,7 +2,7 @@ const app = document.getElementById("app");
 
 function showHome() {
     app.innerHTML = 
-    `<section>
+    `<section id="Home">
         <div id="logo"> 
             <img src="img/cachorro.png" alt="dog">
         </div>
@@ -18,7 +18,6 @@ function showHome() {
             </p>
         </div>
 
-   
         <h1>O que é?</h1>
         <div class="card">
             <p>
@@ -49,7 +48,9 @@ function showHome() {
 function showDevs(){
     app.innerHTML = 
     `<section id="devs-section">
-
+        <div id="dev-guide">
+            <h2>Clique em um desenvolvedor para interagir<h2>
+        </div>
         <div id="devs-container">
             <div class="dev-card" onclick="expandCard(this)">
                 <div class="dev-nickname">
@@ -84,6 +85,7 @@ function showDevs(){
                     <p>
                         Diretor criativo do jogo, sendo responsável pela criação e desenvolvimento da história do jogo e seus personagens.
                         Além disso, é responsável pela criação de efeitos sonoros e músicas ambientes dentro do jogo.
+                        Por fim, é responsável pela criação e desenvolvimento do site do jogo.
                     </p>
                 </div>
             </div>

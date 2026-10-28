@@ -145,23 +145,31 @@ footer p {
     width: 100%;
 }
 
-#devs-container {
-    display: flex;
+#dev-guide h2 {
     justify-content: center;
-    align-items: flex-start;
-    gap: 35px;
+    text-align: center;
+    font-size: 16px;
+    width: 100%;
+    margin: 35px 0 10px;
+}
+
+#devs-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 360px));
+    justify-content: center;
+    align-items: start;
+    gap: 75px;
     width: 100%;
     padding: 40px;
-    flex-wrap: wrap;
 }
 
 .dev-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 260px;
+    width: 360px;
     min-height: 300px;
-    color: #D8E2DC;
     border: 1.5px solid #f05e23;
     border-radius: 10px;
     overflow: hidden;
@@ -176,7 +184,7 @@ footer p {
 
 .dev-nickname {
     width: 100%;
-    padding: 15px 10px 5px 10px; 
+    padding: 15px 10px 5px 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -185,13 +193,13 @@ footer p {
 
 .dev-nickname h3 {
     margin: 0;
-    font-size: 16px;
+    font-size: 20px;
 }
 
 .dev-image {
-    width: 200px; 
-    height: 200px;
-    margin: 5px 0; 
+    width: 250px;
+    height: 250px;
+    margin: 15px 0;
 }
 
 .dev-image img {
@@ -204,264 +212,333 @@ footer p {
 
 .dev-job {
     width: 100%;
-    padding: 5px 10px 10px 10px;
+    padding: 2px 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #f05e23;
+    background-color: #f05e23;
     text-align: center;
 }
 
 .dev-job h3 {
-    margin: 0; 
-    font-size: 14px;
+    margin: 10px;
+    font-size: 15px;
 }
 
-.dev-info {
+.dev-info{
     width: 100%;
     max-height: 0;
     padding: 0 15px;
+    background-color: #bdc0be;
+    color: rgb(26, 25, 25);
     box-sizing: border-box;
     overflow: hidden;
     opacity: 0;
-    transition: max-height 0.5s ease, padding 0.5s ease, opacity 0.3s ease;
+    transform: translateY(-50px);
+    transition: max-height 1s cubic-bezier(0.22, 1, 0.36, 1),
+                padding 1s ease,
+                opacity 0.5s ease-out,
+                transform 1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .dev-card.expanded {
     height: auto;
-    transform: scaleX(1.05);
 }
 
 .dev-card.expanded .dev-info {
     max-height: 600px;
     padding: 12px;
     opacity: 1;
+    transform: translateY(0);
 }
 
 .dev-info p {
     margin: 0;
     line-height: 1.5;
-    letter-spacing: 1.3; 
+    letter-spacing: 1.3;
     text-align: justify;
-    font-size: 14px;
+    font-size: 16px;
 }
 
-@media (max-width: 1500px) { 
-    
-    ul{ 
-        flex-wrap: wrap; 
-    } 
-    
-    img { 
-        width: 50%; 
+@media (max-width: 1500px) {
+
+    ul{
+        flex-wrap: wrap;
     }
 
-    .card{ 
-        width: 70%; 
+    #logo img {
+        width: 50%;
     }
-    
+
+    .card{
+        width: 70%;
+    }
+
     .card p{
         line-height: 1.4;
-        letter-spacing: 1.4;
+        letter-spacing: 1.4px;
     }
-    
-    button{ 
-        width: 20%; 
+
+    button{
+        width: 20%;
         font-size: 17px;
         padding: 5px;
     }
-    
+
     #error-alert{
-        width: 50%; 
+        width: 50%;
         margin: 60px auto 20px;
-        padding: 10px; 
+        padding: 10px;
     }
-    
-    #error-alert h1{ 
-        font-size: 75px; 
-    } 
-    
-    #error-alert p{ 
+
+    #error-alert h1{
+        font-size: 75px;
+    }
+
+    #error-alert p{
         font-size: 35px;
         margin: 0 auto 30px;
-    } 
+    }
 }
 
 @media (max-width: 1000px){
 
-    ul{ 
-        gap: 40px; 
-    } 
-    
-    li{ 
-        font-size: 15px; 
-    } 
-    
-    img{ 
-        width: 55%; 
-        margin: 40px auto 25px; 
-    } 
-    
-    h1{ 
-        font-size: 25px; 
-    } 
-    
-    .card{ 
-        width: 80%; 
-        padding: 10px 15px; 
-    } 
+    ul{
+        gap: 40px;
+    }
+
+    li{
+        font-size: 15px;
+    }
+
+    #logo img{
+        width: 55%;
+        margin: 40px auto 25px;
+    }
+
+    h1{
+        font-size: 25px;
+    }
+
+    .card{
+        width: 80%;
+        padding: 10px 15px;
+    }
 
     .card p {
         font-size: 18px;
     }
-    
-    button{ 
-        width: 30%; 
-        min-width: 200px; 
-        font-size: 16px; 
+
+    button{
+        width: 30%;
+        min-width: 200px;
+        font-size: 16px;
         padding: 7px;
-    } 
-    
-    footer{ 
-        padding: 12px; 
-    } 
-    
-    footer p{ 
-        font-size: 13px; 
-    } 
-    
-    #devs-container{ 
-        gap: 25px; 
-        padding: 30px 15px; 
-    } 
-    
-    .dev-card{ 
-        width: 220px; 
     }
-    
-    .dev-header h3{ 
-        font-size: 16px; 
+
+    footer{
+        padding: 12px;
     }
-    
-    .dev-footer{ 
-        font-size: 14px; 
-    } 
-    
-    #error-alert{ 
-        width: 72%; 
+
+    footer p{
+        font-size: 13px;
+    }
+
+    #dev-guide h2{
+        font-size: 14px;
+    }
+
+    #devs-container{
+        grid-template-columns: repeat(2, minmax(0, 300px));
+        gap: 35px;
+        padding: 30px 20px;
+    }
+
+    .dev-card{
+        width: 300px; 
+        min-height: 0;
+    }
+
+    .dev-image{
+        width: 210px; 
+        height: 210px;
+    }
+
+    .dev-nickname h3{
+        font-size: 16px;
+    }
+
+    .dev-job h3{
+        font-size: 13px;
+    }
+
+    .dev-info p{
+        font-size: 14px;
+    }
+
+    #error-alert{
+        width: 72%;
         margin: 60px auto 20px;
-        padding: 10px; 
-    } 
-    
-    #error-alert h1{ 
-        font-size: 55px; 
+        padding: 10px;
     }
-    
-    #error-alert p{ 
-        font-size: 28px; 
-    } 
+
+    #error-alert h1{
+        font-size: 55px;
+    }
+
+    #error-alert p{
+        font-size: 28px;
+    }
 }
 
-@media (max-width: 700px){ 
-    
-    header{ 
+@media (max-width: 700px){
+
+    header{
         padding: 15px 10px;
-    } 
-    
-    ul{ 
-        flex-direction: column; 
-        align-items: center; 
+    }
+
+    ul{
+        flex-direction: column;
+        align-items: center;
         gap: 30px;
-    } 
-    
-    li{ 
-        font-size: 14px;  
-    } 
-    
-    img{ 
-        width: 75%; 
-        margin: 30px auto 20px; 
-    } 
-    
-    h1{ 
-        font-size: 17px; 
-    } 
-    
-    .card{ 
-        width: 85%; 
-        padding: 12px 17px; 
-    } 
-    
-    .card p{ 
+    }
+
+    li{
+        font-size: 14px;
+    }
+
+    #logo img{
+        width: 75%;
+        margin: 30px auto 20px;
+    }
+
+    h1{
+        font-size: 17px;
+    }
+
+    .card{
+        width: 85%;
+        padding: 12px 17px;
+    }
+
+    .card p{
         width: 100%;
         margin: 3px auto;
-        font-size: 16px; 
-        line-height: 1.6; 
-        letter-spacing: 1.5; 
+        font-size: 16px;
+        line-height: 1.6;
+        letter-spacing: 1.5;
+    }
+
+    button{
+        width: 40%;
+        height: auto;
+        min-height: 60px;
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    footer{
+        padding: 12px 8px;
+    }
+
+    footer p{
+        font-size: 11px;
+    }
+
+    #dev-guide h2{
+        font-size: 12px;
+    }
+
+    #devs-container{
+        grid-template-columns: 1fr; 
+        justify-items: center; 
+        gap: 35px; 
+        padding: 25px 10px;
+    }
+
+    .dev-card{
+        width: 50%; 
+        overflow: visible;
+        transition: transform 0.5s ease;
+    }
+
+    .dev-card:hover{
+        transform: translateY(-5px);
+    }
+
+    .dev-nickname{
+        padding: 12px 6px 5px;
+    }
+
+    .dev-nickname h3{
+        font-size: 13px;
+    }
+
+    .dev-image{
+       width: 200px; 
+       height: 200px; 
+       margin: 10px 0;
+    }
+
+    .dev-job{
+        padding: 2px 4px;
+          border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    .dev-job h3{
+        margin: 7px 3px; 
+        font-size: 11px;
+    }
+
+    .dev-info{
+        margin: 3px;
+        position: absolute;
+        top: 0;
+        left: calc(100%);
+        width: 200px;
+        max-height: 600px;
+        border-radius: 6px;
+        padding: 12px;
+        opacity: 0;
+        transform: translateX(-20px);
+        pointer-events: none;
+        transition: opacity 0.5s ease, transform 0.5s ease; 
     } 
     
-    button{ 
-        width: 40%; 
-        height: auto; 
-        min-height: 60px; 
-        padding: 12px; 
-        font-size: 15px; 
+    .dev-card.expanded{ 
+        transform: translateX(-95px); 
+        transition: transform 0.5s ease;
     } 
     
-    footer{ 
-        padding: 12px 8px; 
-    } 
-    
-    footer p{ 
-        font-size: 11px; 
-    } 
-    
-    #devs-container{ 
-        gap: 25px; 
-        padding: 25px 10px; 
-    } 
-    
-    .dev-card{ 
-        width: 100%; 
-        max-width: 300px; 
-    } 
-    
-    .dev-header{ 
-        width: 100%; 
-    } 
-    
-    .dev-header h3{ 
-        font-size: 16px; 
-    } 
-    
-    .dev-footer{ 
-        font-size: 14px; 
-    } 
-    
-    .dev-info{ 
-        padding: 0 12px; 
+    .dev-card.expanded:hover{ 
+        transform: translateX(-95px) translateY(-5px); 
     } 
     
     .dev-card.expanded .dev-info{ 
-        padding: 15px; 
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: auto;
     } 
     
     .dev-info p{ 
-        font-size: 16px; 
-    } 
-    
-    #error-alert{ 
-        width: 75%; 
-        margin: 40px auto 20px; 
-        padding: 15px; 
-    } 
-    
-    #error-alert h1{ 
-        font-size: 40px; 
-    } 
-    
-    #error-alert p{ 
-        font-size: 20px; 
-        margin-bottom: 20px; 
-    } 
+        font-size: 12px; 
+        line-height: 1.5; 
+        letter-spacing: 1.1; 
+    }
+
+    #error-alert{
+        width: 75%;
+        margin: 40px auto 20px;
+        padding: 15px;
+    }
+
+    #error-alert h1{
+        font-size: 40px;
+    }
+
+    #error-alert p{
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
 }
