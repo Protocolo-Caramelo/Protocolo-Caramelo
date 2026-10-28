@@ -12,6 +12,9 @@
 void game_globals_init();
 void game_globals_quit();
 
+//
+// SDL
+// 
 #define ELEMENT_WINDOW_NAME "Protocolo-Caramelo"
 #define ELEMENT_WINDOW_X_POSITION SDL_WINDOWPOS_UNDEFINED
 #define ELEMENT_WINDOW_Y_POSITION SDL_WINDOWPOS_UNDEFINED
@@ -25,6 +28,9 @@ extern SDL_Renderer *r;
 //
 extern SDL_Event e;
 
+//
+// Cache
+//
 #define ELEMENT_CACHE_FREGULAR_PATH "assets/fonts/pixeloid-font/PixeloidMono-nAOpP.ttf"
 #define ELEMENT_CACHE_FREGULAR_PTSIZE 100
 extern TextCache *cache_fRegular;
@@ -35,24 +41,50 @@ extern TextCache *cache_fTitle;
 #define ELEMENT_CACHE_3DFONT_1_PTSIZE 100
 extern TextCache *cache_f3D1;
 
+//
+// Buttons type
+//
+#define BUTTON_TEXTURE_PATH_SEELCTED 
+#define BUTTON_TEXTURE_PATH_HOVER
+#define BUTTON_TEXTURE_PATH_NEUTRAL
+
+#define BUTTON_ARROW_TEXTURE_PATH  "./assets/images/button/arrow.png"
+typedef enum ButtonArrow_TexState ButtonArrow_TexState;
+enum ButtonArrow_TextState {
+    BUTTON_ARROW_STATE_NEUTRAL,
+    BUTTON_ARROW_STATE_SELECTED,
+    BUTTON_ARROW_STATE_HOVER,
+    BUTTON_ARROW_STATE_COUNT
+};
+extern SDL_Rect b_arrowState[BUTTON_ARROW_STATE_COUNT];
+extern SDL_Texture *b_arrowTex;
+
+
+//
+// Game State
+//
 typedef enum GameState GameState;
 enum GameState {
     GAME_STATE_SCREEN_MENU,
     GAME_STATE_SCREEN_CONFIG,
     GAME_STATE_SCREEN_ABOUT,
-    GAME_STATE_PLAYING_VIEW_ROOM_1,
-    GAME_STATE_PLAYING_VIEW_ROOM_2,
-    GAME_STATE_PLAYING_VIEW_MONITOR,
+    GAME_STATE_SCREEN_PLAY,
 };
 extern GameState gameState;
 
-#define BUTTON_TEXTURE_PATH_SEELCTED 
-#define BUTTON_TEXTURE_PATH_HOVER
-#define BUTTON_TEXTURE_PATH_NEUTRAL
+typedef enum GamePlay_State GamePlay_State;
+enum GamePlay_State {
+    GAMEPLAY_STATE_VIEW_ROOM_1,
+    GAMEPLAY_STATE_VIEW_ROOM_2,
+    GAMEPLAY_STATE_VIEW_MONITOR,
+};
+extern GamePlay_State gamePlay_state;
 
+//
 // Menu
+//
 extern TextConfig* menu_textConfig;
-extern TextConfig* menu_buttonConfig[3];
+extern TextConfig* menu_buttonConfig[INP_STATES_MAX];
 
 enum Menu_Title {
     MENU_TITLE_PROTOCOLO,
@@ -183,15 +215,82 @@ extern Button *menu_buttons[MENU_BUTTONS_MAX];
 // Mathematic
 extern MathProblem problem;
 
-// Game Playing screen
-#define SCREEN_ROOM_1_TEXTURE_PATH "./assets/Room_view1.jpg"
-extern SDL_Texture *room_1;
-#define SCREEN_ROOM_2_TEXTURE_PATH "./assets/Room_view2.jpg"
-extern SDL_Texture *room_2;
-#define SCREEN_MONITOR_TEXTURE_PATH "./assets/Room_view2.jpg"
-extern SDL_Texture *monitor;
+//
+// Game Play Textures And Buttons
+//
+typedef enum GamePlay_Texture GamePlay_Texture;
+enum GamePlay_Texture {
+    GAMEPLAY_TEX_ROOM_1,
+    GAMEPLAY_TEX_ROOM_2,
+    GAMEPLAY_TEX_MONITOR,
+    GAMEPLAY_TEX_COUNT
+};
+extern GamePlay_Texture gamePlay_tex;
+extern SDL_Texture  *play_tex[GAMEPLAY_TEX_COUNT];
+#define GAMEPLAY_TEX_ROOM_1_PATH    "./assets/images/scene/Room_view1.jpg"
+#define GAMEPLAY_TEX_ROOM_2_PATH    "./assets/images/scene/Room_view2.jpg"
+#define GAMEPLAY_TEX_MONITOR_PATH   "./assets/images/scene/Monitor_view.jpg"
 
+typedef enum GamePlay_Button GamePlay_Button;
+enum GamePlay_Button {
+    GAMEPLAY_BUTTON_ARROW_ROOM1_BED,
+    GAMEPLAY_BUTTON_ARROW_ROOM1_BACK,
+    GAMEPLAY_BUTTON_ARROW_ROOM1_MONITOR,
+
+    GAMEPLAY_BUTTON_ARROW_ROOM2_BACK,
+    GAMEPLAY_BUTTON_ARROW_ROOM2_DOOR,
+
+    GAMEPLAY_BUTTON_COUNT
+};
+#define GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE (1 / 1.5)
+#define GAMEPLAY_BUTTON_ARROW_CONFIG_NEUTRAL    \
+    TextConfig_Create(                          \
+        .scale_width = 1 / 5.5,                 \
+        .scale_height = 1 / 5.5,                \
+        .color = (SDL_Color){0, 0, 0, 255},     \
+        .border = (Border){                     \
+            .bottom = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].h * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE),       \
+            .left   = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].w * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE) / 2,   \
+            .right  = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].w * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE) / 2,   \
+        },                                      \
+        .padding = (Padding){2, 2, 2, 2, (SDL_Color){}}, \
+        .func_alterBorder = &gamePlay_Button_Arrow_Neutral_alterBorder \
+    )
+#define GAMEPLAY_BUTTON_ARROW_CONFIG_SELECTED   \
+    TextConfig_Create(                          \
+        .scale_width = 1 / 5.5,                 \
+        .scale_height = 1 / 5.5,                \
+        .color = (SDL_Color){0, 0, 0, 255},     \
+        .border = (Border){                     \
+            .bottom = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].h * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE),       \
+            .left   = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].w * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE) / 2,   \
+            .right  = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].w * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE) / 2    \
+        },                                      \
+        .padding = (Padding){2, 2, 2, 2, (SDL_Color){}}, \
+        .func_alterBorder = &gamePlay_Button_Arrow_Selected_alterBorder, \
+    )
+#define GAMEPLAY_BUTTON_ARROW_CONFIG_HOVER      \
+    TextConfig_Create(                          \
+        .scale_width = 1 / 5.5,                 \
+        .scale_height = 1 / 5.5,                \
+        .color = (SDL_Color){0, 0, 0, 255},     \
+        .border = (Border){                     \
+            .bottom = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].h * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE),       \
+            .left   = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].w * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE) / 2,   \
+            .right  = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].w * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE) / 2    \
+        },                                      \
+        .padding = (Padding){2, 2, 2, 2, (SDL_Color){}}, \
+        .func_alterBorder = &gamePlay_Button_Arrow_Hover_alterBorder \
+    )
+extern TextConfig *play_buttonsConfig[INP_STATES_MAX];
+extern Button *play_buttons[GAMEPLAY_BUTTON_COUNT];
+void gamePlay_Button_Arrow_Neutral_alterBorder(Text*, Texture*);
+void gamePlay_Button_Arrow_Selected_alterBorder(Text*, Texture*);
+void gamePlay_Button_Arrow_Hover_alterBorder(Text*, Texture*);
+
+//
 // Devquote(Debug)
+//
 #ifdef GAME_DEBUG
 extern Text *fps;
 extern int fps_time;
@@ -217,5 +316,15 @@ extern char fps_buffer[32];
 // Others
 extern int w_width;
 extern int w_height;
+extern double w_ratio;
+#define WINDOW_RATIO_W (ELEMENT_WINDOW_W / (double)ELEMENT_WINDOW_H)
+#define WINDOW_RATIO_H (ELEMENT_WINDOW_H / (double)ELEMENT_WINDOW_W)
+
+#define SWAP_VALUES(a, b) \
+    do {            \
+        a += b;     \
+        b = a - b;  \
+        a -= b;      \
+    }while(0)
 
 #endif

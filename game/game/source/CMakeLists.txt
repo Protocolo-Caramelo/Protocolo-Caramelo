@@ -22,7 +22,10 @@ target_sources(
         Protocolo-Caramelo/inputs/button.c
         Protocolo-Caramelo/inputs/text.c
         #
+        Protocolo-Caramelo/screens/play/monitor.c
+        Protocolo-Caramelo/screens/play/room.c
         Protocolo-Caramelo/screens/menu.c
+        Protocolo-Caramelo/screens/play.c
         #
         Protocolo-Caramelo/mechanics/MathProblem/aes128.c
         Protocolo-Caramelo/mechanics/MathProblem/mathproblem.c

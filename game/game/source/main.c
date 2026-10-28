@@ -17,6 +17,10 @@ int main(int argc, char*argv[])
                 Menu_Render();
                 break;
 
+            case GAME_STATE_SCREEN_PLAY:
+                Play_Render();
+                break;
+
             default:
                 break;
         }

@@ -8,9 +8,10 @@
 void Game_Init();
 void Game_Quit();
 
-// Init/Load a game
+// Play methods
 void Game_PlayInit();
 void Game_PlayQuit();
+void Game_PlayDisplayBackground(GamePlay_Texture, SDL_Rect*, SDL_Rect*);
 
 // Devquote(Debug)
 void Game_Debug();

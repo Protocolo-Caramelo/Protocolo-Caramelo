@@ -3,7 +3,6 @@
 
 #include"config.h"
 #include"menu.h"
-#include"monitor.h"
-#include"room.h"
+#include"play.h"
 
 #endif
