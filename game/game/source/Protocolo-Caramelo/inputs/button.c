@@ -67,6 +67,11 @@ void Button_handleMouseButton(Button*b, SDL_Event*e, void(*func)(Button*, SDL_Ev
         return;
     }
 
+    if(e->button.button != 1){
+        return;
+    }
+
+
     int x, y;
     x = e->button.x;
     y = e->button.y;

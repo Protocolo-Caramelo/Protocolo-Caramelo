@@ -216,21 +216,32 @@ extern Button *menu_buttons[MENU_BUTTONS_MAX];
 extern MathProblem problem;
 
 //
-// Game Play Textures And Buttons
+// Game Play Textures
 //
 typedef enum GamePlay_Texture GamePlay_Texture;
 enum GamePlay_Texture {
     GAMEPLAY_TEX_ROOM_1,
     GAMEPLAY_TEX_ROOM_2,
-    GAMEPLAY_TEX_MONITOR,
+
+    GAMEPLAY_TEX_MONITOR_POWER_BUTTON_UNSELECTED,
+    GAMEPLAY_TEX_MONITOR_POWER_BUTTON_SELECTED,
+
     GAMEPLAY_TEX_COUNT
 };
 extern GamePlay_Texture gamePlay_tex;
 extern SDL_Texture  *play_tex[GAMEPLAY_TEX_COUNT];
-#define GAMEPLAY_TEX_ROOM_1_PATH    "./assets/images/scene/Room_view1.jpg"
-#define GAMEPLAY_TEX_ROOM_2_PATH    "./assets/images/scene/Room_view2.jpg"
-#define GAMEPLAY_TEX_MONITOR_PATH   "./assets/images/scene/Monitor_view.jpg"
+extern char* play_texPaths[];
+#define GAMEPLAY_TEX_PATHS \
+    { \
+        [GAMEPLAY_TEX_ROOM_1]                           = "./assets/images/scene/Room_view1.jpg",               \
+        [GAMEPLAY_TEX_ROOM_2]                           = "./assets/images/scene/Room_view2.jpg",               \
+        [GAMEPLAY_TEX_MONITOR_POWER_BUTTON_UNSELECTED]  = "./assets/images/scene/Monitor_view_unselected.png", \
+        [GAMEPLAY_TEX_MONITOR_POWER_BUTTON_SELECTED]    = "./assets/images/scene/Monitor_view_selected.png",\
+    }
 
+//
+// Game Play Button
+//
 typedef enum GamePlay_Button GamePlay_Button;
 enum GamePlay_Button {
     GAMEPLAY_BUTTON_ARROW_ROOM1_BED,
@@ -240,9 +251,9 @@ enum GamePlay_Button {
     GAMEPLAY_BUTTON_ARROW_ROOM2_BACK,
     GAMEPLAY_BUTTON_ARROW_ROOM2_DOOR,
 
-    GAMEPLAY_BUTTON_ARROW_MONITOR_BACK,
-    GAMEPLAY_BUTTON_MONITOR_MINE,
-    GAMEPLAY_BUTTON_MONITOR_DELIVERY,
+    GAMEPLAY_BUTTON_MONITOR_BACK,
+    GAMEPLAY_BUTTON_MONITOR_ICON_MINE,
+    GAMEPLAY_BUTTON_MONITOR_ICON_DELIVERY,
 
     GAMEPLAY_BUTTON_COUNT
 };
@@ -253,9 +264,7 @@ enum GamePlay_Button {
         .scale_height = 1 / 5.5,                \
         .color = (SDL_Color){0, 0, 0, 255},     \
         .border = (Border){                     \
-            .bottom = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].h * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE),       \
-            .left   = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].w * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE) / 2,   \
-            .right  = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].w * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE) / 2,   \
+            .bottom = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].h * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE), \
         },                                      \
         .padding = (Padding){2, 2, 2, 2, (SDL_Color){}}, \
         .func_alterBorder = &gamePlay_Button_Arrow_Neutral_alterBorder \
@@ -266,9 +275,7 @@ enum GamePlay_Button {
         .scale_height = 1 / 5.5,                \
         .color = (SDL_Color){0, 0, 0, 255},     \
         .border = (Border){                     \
-            .bottom = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].h * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE),       \
-            .left   = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].w * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE) / 2,   \
-            .right  = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].w * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE) / 2    \
+            .bottom = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].h * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE), \
         },                                      \
         .padding = (Padding){2, 2, 2, 2, (SDL_Color){}}, \
         .func_alterBorder = &gamePlay_Button_Arrow_Selected_alterBorder, \
@@ -279,34 +286,65 @@ enum GamePlay_Button {
         .scale_height = 1 / 5.5,                \
         .color = (SDL_Color){0, 0, 0, 255},     \
         .border = (Border){                     \
-            .bottom = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].h * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE),       \
-            .left   = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].w * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE) / 2,   \
-            .right  = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].w * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE) / 2    \
+            .bottom = (b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].h * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE), \
         },                                      \
         .padding = (Padding){2, 2, 2, 2, (SDL_Color){}}, \
         .func_alterBorder = &gamePlay_Button_Arrow_Hover_alterBorder \
     )
 extern TextConfig *play_buttonsArrowConfig[INP_STATES_MAX];
 
-#define GAMEPLAY_BUTTON_MONITOR_CONFIG_NEUTRAL  \
+// Monitor
+#define GAMEPLAY_BUTTON_MONITOR_POWER_CONFIG_NEUTRAL  \
     TextConfig_Create(                          \
-        .scale_width  = 1 / 6.5,                \
-        .scale_height = 1 / 6.5,                \
-        .color = (SDL_Color){0, 0, 0, 255},     \
+        .bx_width   = 510,                      \
+        .bx_height  = 210,                      \
     )                                           
-#define GAMEPLAY_BUTTON_MONITOR_CONFIG_SELECTED \
-    TextConfig_Create(                          \
-        .scale_width  = 1 / 6.5,                \
-        .scale_height = 1 / 6.5,                \
-        .color = (SDL_Color){0, 0, 0, 255},     \
-    )                                           
-#define GAMEPLAY_BUTTON_MONITOR_CONFIG_HOVER    \
-    TextConfig_Create(                          \
-        .scale_width  = 1 / 6.5,                \
-        .scale_height = 1 / 6.5,                \
-        .color = (SDL_Color){0, 0, 0, 255},     \
-    )                                           
-extern TextConfig *play_buttonsMonitorConfig[INP_STATES_MAX];
+#define GAMEPLAY_BUTTON_MONITOR_POWER_CONFIG_SELECTED \
+    NULL
+#define GAMEPLAY_BUTTON_MONITOR_POWER_CONFIG_HOVER    \
+    NULL
+
+#define  GAMEPLAY_BUTTON_MONITOR_ICON_CONFIG_NEUTRAL \
+    TextConfig_Create(                              \
+        .color = (SDL_Color){0, 0, 0, 255},         \
+        .scale_width  = 1 / 4.0,                    \
+        .scale_height = 1 / 4.0,                    \
+        .border = (Border){                         \
+            .top    = 100,                          \
+            .right  = 60,                           \
+            .left   = 60,                           \
+            .color  = (SDL_Color){255, 255, 255, 0} \
+        },                                          \
+        .wrap = 135,                                \
+    )
+#define GAMEPLAY_BUTTON_MONITOR_ICON_CONFIG_SELECTED \
+    TextConfig_Create(                              \
+        .color = (SDL_Color){0, 0, 0, 255},         \
+        .scale_width  = 1 / 4.0,                    \
+        .scale_height = 1 / 4.0,                    \
+        .border = (Border){                         \
+            .top    = 100,                          \
+            .right  = 60,                           \
+            .left   = 60,                           \
+            .color  = (SDL_Color){255, 255, 255, 125} \
+        },                                          \
+        .wrap = 135,                                \
+    )
+#define GAMEPLAY_BUTTON_MONITOR_ICON_CONFIG_HOVER  \
+    TextConfig_Create(                              \
+        .color = (SDL_Color){0, 0, 0, 255},         \
+        .scale_width  = 1 / 4.0,                    \
+        .scale_height = 1 / 4.0,                    \
+        .border = (Border){                         \
+            .top    = 100,                          \
+            .right  = 60,                           \
+            .left   = 60,                           \
+            .color  = (SDL_Color){255, 255, 255, 125} \
+        },                                          \
+        .wrap = 135,                                \
+    )
+extern TextConfig *play_buttonMonitorPowerConfig[INP_STATES_MAX];
+extern TextConfig *play_buttonsMonitorIconConfig[INP_STATES_MAX];
 
 extern Button *play_buttons[GAMEPLAY_BUTTON_COUNT];
 void gamePlay_Button_Arrow_Neutral_alterBorder(Text*, Texture*);

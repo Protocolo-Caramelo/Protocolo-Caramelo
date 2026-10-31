@@ -11,7 +11,15 @@ void Game_Quit();
 // Play methods
 void Game_PlayInit();
 void Game_PlayQuit();
-void Game_PlayDisplayBackground(GamePlay_Texture, SDL_Rect*, SDL_Rect*);
+
+void Game_PlayDisplayBackground(GamePlay_Texture, SDL_Rect*, SDL_Rect*, double*, double*);
+void Game_PlayDisplayButtonArrow(Button*, SDL_Rect*, int, int);
+
+// Usefull methods
+double Game_GetScaleW();
+double Game_GetScaleH();
+
+void Game_ResetButtons();
 
 // Devquote(Debug)
 void Game_Debug();

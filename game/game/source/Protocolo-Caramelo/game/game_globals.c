@@ -34,8 +34,10 @@ Button      *menu_buttons[MENU_BUTTONS_MAX];
 //
 GamePlay_Texture gamePlay_tex;
 SDL_Texture *play_tex[GAMEPLAY_TEX_COUNT];
+char* play_texPaths[] = GAMEPLAY_TEX_PATHS;
 TextConfig  *play_buttonsArrowConfig[INP_STATES_MAX];
-TextConfig  *play_buttonsMonitorConfig[INP_STATES_MAX];
+TextConfig  *play_buttonMonitorPowerConfig[INP_STATES_MAX];
+TextConfig  *play_buttonsMonitorIconConfig[INP_STATES_MAX];
 Button      *play_buttons[GAMEPLAY_BUTTON_COUNT];
 // 
 // Devquote(Debug)
@@ -180,33 +182,38 @@ void game_globals_init()
     //
     // Play
     //
-    play_tex[GAMEPLAY_TEX_ROOM_1] = IMG_LoadTexture(r, GAMEPLAY_TEX_ROOM_1_PATH);
-    play_tex[GAMEPLAY_TEX_ROOM_2] = IMG_LoadTexture(r, GAMEPLAY_TEX_ROOM_2_PATH);
-    play_tex[GAMEPLAY_TEX_MONITOR] = IMG_LoadTexture(r, GAMEPLAY_TEX_MONITOR_PATH);
     for(i=0;  i < GAMEPLAY_TEX_COUNT; ++i){
+            play_tex[i] = IMG_LoadTexture(r, play_texPaths[i]);
         if(!play_tex[i]){
             printf("Error while open play textures: %s\n", SDL_GetError());
         }
     }
 
+    // Play Button Configs
     play_buttonsArrowConfig[INP_STATE_NEUTRAL]     = GAMEPLAY_BUTTON_ARROW_CONFIG_NEUTRAL;
     play_buttonsArrowConfig[INP_STATE_SELECTED]    = GAMEPLAY_BUTTON_ARROW_CONFIG_SELECTED;
     play_buttonsArrowConfig[INP_STATE_HOVER]       = GAMEPLAY_BUTTON_ARROW_CONFIG_HOVER;
 
-    play_buttonsMonitorConfig[INP_STATE_NEUTRAL]   = GAMEPLAY_BUTTON_MONITOR_CONFIG_NEUTRAL;
-    play_buttonsMonitorConfig[INP_STATE_SELECTED]  = GAMEPLAY_BUTTON_MONITOR_CONFIG_SELECTED;
-    play_buttonsMonitorConfig[INP_STATE_HOVER]     = GAMEPLAY_BUTTON_MONITOR_CONFIG_HOVER;
-    //
+
+    play_buttonMonitorPowerConfig[INP_STATE_NEUTRAL]   = GAMEPLAY_BUTTON_MONITOR_POWER_CONFIG_NEUTRAL;
+    play_buttonMonitorPowerConfig[INP_STATE_SELECTED]  = GAMEPLAY_BUTTON_MONITOR_POWER_CONFIG_SELECTED;
+    play_buttonMonitorPowerConfig[INP_STATE_HOVER]     = GAMEPLAY_BUTTON_MONITOR_POWER_CONFIG_HOVER;
+
+    play_buttonsMonitorIconConfig[INP_STATE_NEUTRAL]   = GAMEPLAY_BUTTON_MONITOR_ICON_CONFIG_NEUTRAL;
+    play_buttonsMonitorIconConfig[INP_STATE_SELECTED]  = GAMEPLAY_BUTTON_MONITOR_ICON_CONFIG_SELECTED;
+    play_buttonsMonitorIconConfig[INP_STATE_HOVER]     = GAMEPLAY_BUTTON_MONITOR_ICON_CONFIG_HOVER;
+
+    // Play Buttons
     play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_BACK]    = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Virar");
-    play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_MONITOR] = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Monitor");
+    play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_MONITOR] = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "PC");
     play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_BED]     = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Cama");
 
     play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM2_BACK]    = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Virar");
     play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM2_DOOR]    = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Porta");
 
-    play_buttons[GAMEPLAY_BUTTON_ARROW_MONITOR_BACK]  = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Voltar");
-    play_buttons[GAMEPLAY_BUTTON_MONITOR_MINE]        = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Minerar");
-    play_buttons[GAMEPLAY_BUTTON_MONITOR_DELIVERY]    = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Entrega Rápidas");
+    play_buttons[GAMEPLAY_BUTTON_MONITOR_BACK]         = Button_Create(cache_fRegular, &play_buttonMonitorPowerConfig, "");
+    play_buttons[GAMEPLAY_BUTTON_MONITOR_ICON_MINE]        = Button_Create(cache_fRegular, &play_buttonsMonitorIconConfig, "Minerar");
+    play_buttons[GAMEPLAY_BUTTON_MONITOR_ICON_DELIVERY]    = Button_Create(cache_fRegular, &play_buttonsMonitorIconConfig, "EntregasRápidas");
 
     // Devquote(Debug)
 #ifdef GAME_DEBUG

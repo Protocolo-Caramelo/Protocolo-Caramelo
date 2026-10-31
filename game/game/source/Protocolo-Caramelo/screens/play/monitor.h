@@ -5,6 +5,11 @@
 #include"game/game.h"
 
 void Monitor_handleInput(SDL_Event*e);
+
+void Monitor_displayButtonIcon(Button*b, int, int);
+void Monitor_displayButtonPower(Button*b, int, int);
+void Monitor_displayButtons();
+
 void Monitor_Render();
 
 #endif

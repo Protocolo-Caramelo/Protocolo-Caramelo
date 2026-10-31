@@ -5,66 +5,7 @@ static SDL_Rect room_texDestRaw;
 
 void Room_displayButtonArrow(Button*b, int x, int y)
 {
-    double scale;
-    //
-    int b_borderL, b_borderR;
-    int b_borderLPrev, b_borderRPrev;
-    double scale_width, scale_height;
-    double scale_widthPrev, scale_heightPrev;
-    char *str_prev;
-    //
-    size_t i;
-
-    //
-    b_borderLPrev = b_borderL       = b->state_tc[INP_STATE_NEUTRAL]->border.left;
-    b_borderRPrev = b_borderR       = b->state_tc[INP_STATE_NEUTRAL]->border.right;
-    scale_widthPrev = scale_width   = b->state_tc[INP_STATE_NEUTRAL]->scale_width;
-    scale_heightPrev = scale_height = b->state_tc[INP_STATE_NEUTRAL]->scale_height;
-    str_prev                        = malloc(sizeof(Text_GetLenUTF8(b->text)));
-
-    if(w_width / (double)w_height < room_texDestRaw.w / (double)room_texDestRaw.h){
-        scale = w_width / (double)ELEMENT_WINDOW_W;
-    }
-    else {
-        scale = w_height / (double)ELEMENT_WINDOW_H;
-    }
-    b_borderR    *= scale;
-    b_borderL    *= scale;
-    scale_width  *= scale;
-    scale_height *= scale;
-    utf8cpy(str_prev, *Text_raw(b->text));
-
-    for(i=0; i < INP_STATES_MAX; ++i){
-        b->state_tc[i]->border.left = b_borderL;
-        b->state_tc[i]->border.right = b_borderR;
-        //
-        b->state_tc[i]->scale_width = scale_width;
-        b->state_tc[i]->scale_height = scale_height;
-        //
-    }
-    if(!b->state[INP_STATE_SELECTED] && !b->state[INP_STATE_HOVER]){
-        // free(*Text_raw(b->text));
-        // *Text_raw(b->text) = NULL;
-    }
-
-    //
-    Button_Display(
-        b,
-        x,
-        y,
-        NULL
-    );
-
-    //
-    for(i=0; i < INP_STATES_MAX; ++i){
-        b->state_tc[i]->border.left = b_borderLPrev;
-        b->state_tc[i]->border.right = b_borderRPrev;
-        //
-        b->state_tc[i]->scale_width = scale_widthPrev;
-        b->state_tc[i]->scale_height = scale_heightPrev;
-    }
-    Text_SetUTF8(b->text, str_prev);
-    free(str_prev);
+    Game_PlayDisplayButtonArrow(b, &room_texDestRaw, x, y);
 }
 
 //
@@ -84,7 +25,7 @@ void Room1_handleInput(SDL_Event*e)
     }
     if(play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_MONITOR]->state[INP_STATE_SELECTED]){
         gamePlay_state  = GAMEPLAY_STATE_VIEW_MONITOR;
-        gamePlay_tex    = GAMEPLAY_TEX_MONITOR;
+        gamePlay_tex    = GAMEPLAY_TEX_MONITOR_POWER_BUTTON_UNSELECTED;
     }
 
     switch(e->type){
@@ -104,24 +45,26 @@ void Room1_displayButtons()
     double scale;
 
     // Adjust scale
-    scale = (w_height / (double)ELEMENT_WINDOW_H);
+    scale = Game_GetScaleH();
 
     // Bed button
     b = play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_BED];
-    x = room_texDest.x + 10 * scale;
-    y = room_texDest.y + room_texDest.h - 270 * scale;
+    x = room_texDest.x + 70 * scale;
+    y = room_texDest.y + room_texDest.h - 220 * scale;
     Room_displayButtonArrow(b, x, y);
 
     // Look back button
     b = play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_BACK];
-    x = room_texDest.x + room_texDest.w / 2 - (*Text_edges(b->text))[DRAW_WIDTH] / 2;
-    y = room_texDest.y + room_texDest.h - ((*Text_edges(b->text))[DRAW_HEIGHT] - 30) * scale;
+    // x = room_texDest.x + room_texDest.w / 2 - (*Text_edges(b->text))[DRAW_WIDTH] / 2;
+    // y = room_texDest.y + room_texDest.h - ((*Text_edges(b->text))[DRAW_HEIGHT] - 30) * scale;
+    x = room_texDest.x + room_texDest.w / 2;
+    y = room_texDest.y + room_texDest.h - 40 * scale;
     Room_displayButtonArrow(b, x, y);
 
     // Check monitor
     b = play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_MONITOR];
-    x = room_texDest.x + room_texDest.w - 465 * scale;
-    y = room_texDest.y + 90 * scale;
+    x = room_texDest.x + room_texDest.w - 395 * scale;
+    y = room_texDest.y + 130 * scale;
     Room_displayButtonArrow(b, x, y);
 }
 
@@ -136,7 +79,11 @@ void Room1_Render()
     }
 
     //
-    Game_PlayDisplayBackground(GAMEPLAY_TEX_ROOM_1, &room_texDest, &room_texDestRaw);
+    Game_PlayDisplayBackground(
+        gamePlay_tex,
+        &room_texDest, &room_texDestRaw,
+        NULL, NULL
+    );
     Room1_displayButtons();
 }
 
@@ -170,18 +117,20 @@ void Room2_displayButtons()
     double scale;
 
     // Adjust scale
-    scale = (w_height / (double)ELEMENT_WINDOW_H);
+    scale = Game_GetScaleH();
 
     // Back button
     b = play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM2_BACK];
-    x = room_texDest.x + room_texDest.w / 2 - (*Text_edges(b->text))[DRAW_WIDTH] / 2;
-    y = room_texDest.y + room_texDest.h - ((*Text_edges(b->text))[DRAW_HEIGHT] - 30) * scale;
+    // x = room_texDest.x + room_texDest.w / 2 - (*Text_edges(b->text))[DRAW_WIDTH] / 2;
+    x = room_texDest.x + room_texDest.w / 2;
+    // y = room_texDest.y + room_texDest.h - ((*Text_edges(b->text))[DRAW_HEIGHT] - 30) * scale;
+    y = room_texDest.y + room_texDest.h - 40 * scale;
     Room_displayButtonArrow(b, x, y);
 
     // Door button
     b = play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM2_DOOR];
-    x = room_texDest.x + 270 * scale;
-    y = room_texDest.y + 110 * scale;
+    x = room_texDest.x + 330 * scale;
+    y = room_texDest.y + 155 * scale;
     Room_displayButtonArrow(b, x, y);
 }
 
@@ -194,6 +143,10 @@ void Room2_Render()
         Room2_handleInput(&e);
     }
 
-    Game_PlayDisplayBackground(GAMEPLAY_TEX_ROOM_2, &room_texDest, &room_texDestRaw);
+    Game_PlayDisplayBackground(
+        gamePlay_tex,
+        &room_texDest, &room_texDestRaw,
+        NULL, NULL
+    );
     Room2_displayButtons();
 }
