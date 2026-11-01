@@ -126,7 +126,7 @@ void Room2_displayButtons()
     // x = room_texDest.x + room_texDest.w / 2 - (*Text_edges(b->text))[DRAW_WIDTH] / 2;
     x = room_texDest.x + room_texDest.w / 2;
     // y = room_texDest.y + room_texDest.h - ((*Text_edges(b->text))[DRAW_HEIGHT] - 30) * scale;
-    y = room_texDest.y + room_texDest.h - 40 * scale;
+    y = room_texDest.y + room_texDest.h - 100 * room_texScaleH;
     Room_displayButtonArrow(b, x, y);
 
     // Door button
