@@ -23,6 +23,22 @@ target_sources(
         Protocolo-Caramelo/inputs/text.c
         #
         Protocolo-Caramelo/screens/play/monitor.c
+        Protocolo-Caramelo/screens/play/monitor/monitor_space.c
+        Protocolo-Caramelo/screens/play/monitor/monitor_draw.c
+        Protocolo-Caramelo/screens/play/monitor/monitor_text.c
+        Protocolo-Caramelo/screens/play/monitor/monitor_cursor.c
+        Protocolo-Caramelo/screens/play/monitor/monitor_apps.c
+        Protocolo-Caramelo/screens/play/monitor/desktop_icon.c
+        Protocolo-Caramelo/screens/play/monitor/icon_layer.c
+        Protocolo-Caramelo/screens/play/monitor/desktop_window.c
+        Protocolo-Caramelo/screens/play/monitor/click_counter.c
+        Protocolo-Caramelo/screens/play/monitor/icon_grid.c
+        Protocolo-Caramelo/screens/play/monitor/window_stack.c
+        Protocolo-Caramelo/screens/play/monitor/window_manager.c
+        Protocolo-Caramelo/screens/play/monitor/window_input.c
+        Protocolo-Caramelo/screens/play/monitor/taskbar.c
+        Protocolo-Caramelo/screens/play/monitor/app_taskmgr.c
+        Protocolo-Caramelo/screens/play/monitor/monitor_desktop.c
         Protocolo-Caramelo/screens/play/room.c
         Protocolo-Caramelo/screens/menu.c
         Protocolo-Caramelo/screens/play.c

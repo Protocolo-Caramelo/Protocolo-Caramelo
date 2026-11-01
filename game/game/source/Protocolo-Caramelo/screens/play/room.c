@@ -2,6 +2,8 @@
 
 static SDL_Rect room_texDest;
 static SDL_Rect room_texDestRaw;
+static double room_texScaleW;
+static double room_texScaleH;
 
 void Room_displayButtonArrow(Button*b, int x, int y)
 {
@@ -49,8 +51,8 @@ void Room1_displayButtons()
 
     // Bed button
     b = play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_BED];
-    x = room_texDest.x + 70 * scale;
-    y = room_texDest.y + room_texDest.h - 220 * scale;
+    x = room_texDest.x + 2200 * room_texScaleW;
+    y = room_texDest.y + 1120 * room_texScaleH;
     Room_displayButtonArrow(b, x, y);
 
     // Look back button
@@ -63,8 +65,8 @@ void Room1_displayButtons()
 
     // Check monitor
     b = play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_MONITOR];
-    x = room_texDest.x + room_texDest.w - 395 * scale;
-    y = room_texDest.y + 130 * scale;
+    x = room_texDest.x + 924 * room_texScaleW;
+    y = room_texDest.y + 397 * room_texScaleH;
     Room_displayButtonArrow(b, x, y);
 }
 
@@ -82,7 +84,7 @@ void Room1_Render()
     Game_PlayDisplayBackground(
         gamePlay_tex,
         &room_texDest, &room_texDestRaw,
-        NULL, NULL
+        &room_texScaleW, &room_texScaleH
     );
     Room1_displayButtons();
 }
@@ -146,7 +148,7 @@ void Room2_Render()
     Game_PlayDisplayBackground(
         gamePlay_tex,
         &room_texDest, &room_texDestRaw,
-        NULL, NULL
+        &room_texScaleW, &room_texScaleH 
     );
     Room2_displayButtons();
 }

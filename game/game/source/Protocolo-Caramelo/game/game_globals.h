@@ -235,8 +235,8 @@ extern char* play_texPaths[];
     { \
         [GAMEPLAY_TEX_ROOM_1]                           = "./assets/images/scene/Room_view1.jpg",               \
         [GAMEPLAY_TEX_ROOM_2]                           = "./assets/images/scene/Room_view2.jpg",               \
-        [GAMEPLAY_TEX_MONITOR_POWER_BUTTON_UNSELECTED]  = "./assets/images/scene/Monitor_view_unselected.png", \
-        [GAMEPLAY_TEX_MONITOR_POWER_BUTTON_SELECTED]    = "./assets/images/scene/Monitor_view_selected.png",\
+        [GAMEPLAY_TEX_MONITOR_POWER_BUTTON_UNSELECTED]  = "./assets/images/scene/Monitor_view_unselected.png",  \
+        [GAMEPLAY_TEX_MONITOR_POWER_BUTTON_SELECTED]    = "./assets/images/scene/Monitor_view_selected.png",    \
     }
 
 //
@@ -252,8 +252,6 @@ enum GamePlay_Button {
     GAMEPLAY_BUTTON_ARROW_ROOM2_DOOR,
 
     GAMEPLAY_BUTTON_MONITOR_BACK,
-    GAMEPLAY_BUTTON_MONITOR_ICON_MINE,
-    GAMEPLAY_BUTTON_MONITOR_ICON_DELIVERY,
 
     GAMEPLAY_BUTTON_COUNT
 };
@@ -304,52 +302,120 @@ extern TextConfig *play_buttonsArrowConfig[INP_STATES_MAX];
 #define GAMEPLAY_BUTTON_MONITOR_POWER_CONFIG_HOVER    \
     NULL
 
-#define  GAMEPLAY_BUTTON_MONITOR_ICON_CONFIG_NEUTRAL \
-    TextConfig_Create(                              \
-        .color = (SDL_Color){0, 0, 0, 255},         \
-        .scale_width  = 1 / 4.0,                    \
-        .scale_height = 1 / 4.0,                    \
-        .border = (Border){                         \
-            .top    = 100,                          \
-            .right  = 60,                           \
-            .left   = 60,                           \
-            .color  = (SDL_Color){255, 255, 255, 0} \
-        },                                          \
-        .wrap = 135,                                \
-    )
-#define GAMEPLAY_BUTTON_MONITOR_ICON_CONFIG_SELECTED \
-    TextConfig_Create(                              \
-        .color = (SDL_Color){0, 0, 0, 255},         \
-        .scale_width  = 1 / 4.0,                    \
-        .scale_height = 1 / 4.0,                    \
-        .border = (Border){                         \
-            .top    = 100,                          \
-            .right  = 60,                           \
-            .left   = 60,                           \
-            .color  = (SDL_Color){255, 255, 255, 125} \
-        },                                          \
-        .wrap = 135,                                \
-    )
-#define GAMEPLAY_BUTTON_MONITOR_ICON_CONFIG_HOVER  \
-    TextConfig_Create(                              \
-        .color = (SDL_Color){0, 0, 0, 255},         \
-        .scale_width  = 1 / 4.0,                    \
-        .scale_height = 1 / 4.0,                    \
-        .border = (Border){                         \
-            .top    = 100,                          \
-            .right  = 60,                           \
-            .left   = 60,                           \
-            .color  = (SDL_Color){255, 255, 255, 125} \
-        },                                          \
-        .wrap = 135,                                \
-    )
 extern TextConfig *play_buttonMonitorPowerConfig[INP_STATES_MAX];
-extern TextConfig *play_buttonsMonitorIconConfig[INP_STATES_MAX];
 
 extern Button *play_buttons[GAMEPLAY_BUTTON_COUNT];
 void gamePlay_Button_Arrow_Neutral_alterBorder(Text*, Texture*);
 void gamePlay_Button_Arrow_Selected_alterBorder(Text*, Texture*);
 void gamePlay_Button_Arrow_Hover_alterBorder(Text*, Texture*);
+
+//
+// Characters
+//
+typedef enum Character Character;
+typedef enum Character_State Character_State;
+
+enum Character {
+    C_PEDRO,
+    C_FELIPE,
+    C_ANA,
+    C_JOSE,
+    C_RICARDO,
+    C_DONODOPREDIO,
+    C_INSPETOR,
+
+    C_COUNT
+};
+enum Character_State {
+    CS_NORMAL,
+    CS_HAPPY,
+    CS_ANIMATED,
+    CS_SAD,
+    CS_ANGRY,
+    CS_REVOLTED,
+    CS_DISTRUSTING,
+    CS_DARK,
+    CS_SUPER_ANIMATED,
+
+    CS_COUNT
+};
+
+extern SDL_Texture *chars_tex[C_COUNT][CS_COUNT];
+#define CHARACTER_TEX_PATHS_PREFIX "./assets/images/characters"
+#define CHARACTER_TEX_PATHS \
+    {                           \
+        [C_PEDRO][CS_NORMAL]        = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Pedro/Normal.png")                               \
+        [C_PEDRO][CS_HAPPY]         = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Pedro/Happy.png")                                \
+        [C_PEDRO][CS_ANIMATED]      = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Pedro/Animated.png")                             \
+        [C_PEDRO][CS_SAD]           = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Pedro/Sad.png")                                  \
+        [C_PEDRO][CS_ANGRY]         = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Pedro/Angry.png")                                \
+        [C_PEDRO][CS_REVOLTED]      = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Pedro/Revolted.png")                             \
+        [C_PEDRO][CS_DISTRUSTING]   = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Pedro/Distrusting.png")                          \
+        [C_PEDRO][CS_DARK]          = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Pedro/Dark.png")                                 \
+        [C_PEDRO][CS_SUPERANIMATED] = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Pedro/SuperAnimated.png")                        \
+        \
+        [C_FELIPE][CS_NORMAL]        = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Felipe/Normal.png")                             \
+        [C_FELIPE][CS_HAPPY]         = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Felipe/Happy.png")                              \
+        [C_FELIPE][CS_ANIMATED]      = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Felipe/Animated.png")                           \
+        [C_FELIPE][CS_SAD]           = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Felipe/Sad.png")                                \
+        [C_FELIPE][CS_ANGRY]         = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Felipe/Angry.png")                              \
+        [C_FELIPE][CS_REVOLTED]      = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Felipe/Revolted.png")                           \
+        [C_FELIPE][CS_DISTRUSTING]   = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Felipe/Distrusting.png")                        \
+        [C_FELIPE][CS_DARK]          = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Felipe/Dark.png")                               \
+        [C_FELIPE][CS_SUPERANIMATED] = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Felipe/SuperAnimated.png")                      \
+        \
+        [C_ANA][CS_NORMAL]        = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ana/Normal.png")                                   \
+        [C_ANA][CS_HAPPY]         = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ana/Happy.png")                                    \
+        [C_ANA][CS_ANIMATED]      = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ana/Animated.png")                                 \
+        [C_ANA][CS_SAD]           = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ana/Sad.png")                                      \
+        [C_ANA][CS_ANGRY]         = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ana/Angry.png")                                    \
+        [C_ANA][CS_REVOLTED]      = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ana/Revolted.png")                                 \
+        [C_ANA][CS_DISTRUSTING]   = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ana/Distrusting.png")                              \
+        [C_ANA][CS_DARK]          = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ana/Dark.png")                                     \
+        [C_ANA][CS_SUPERANIMATED] = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ana/SuperAnimated.png")                            \
+        \
+        [C_JOSE][CS_NORMAL]        = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Jose/Normal.png")                                 \
+        [C_JOSE][CS_HAPPY]         = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Jose/Happy.png")                                  \
+        [C_JOSE][CS_ANIMATED]      = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Jose/Animated.png")                               \
+        [C_JOSE][CS_SAD]           = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Jose/Sad.png")                                    \
+        [C_JOSE][CS_ANGRY]         = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Jose/Angry.png")                                  \
+        [C_JOSE][CS_REVOLTED]      = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Jose/Revolted.png")                               \
+        [C_JOSE][CS_DISTRUSTING]   = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Jose/Distrusting.png")                            \
+        [C_JOSE][CS_DARK]          = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Jose/Dark.png")                                   \
+        [C_JOSE][CS_SUPERANIMATED] = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Jose/SuperAnimated.png")                          \
+        \
+        [C_RICARDO][CS_NORMAL]        = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ricardo/Normal.png")                           \
+        [C_RICARDO][CS_HAPPY]         = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ricardo/Happy.png")                            \
+        [C_RICARDO][CS_ANIMATED]      = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ricardo/Animated.png")                         \
+        [C_RICARDO][CS_SAD]           = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ricardo/Sad.png")                              \
+        [C_RICARDO][CS_ANGRY]         = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ricardo/Angry.png")                            \
+        [C_RICARDO][CS_REVOLTED]      = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ricardo/Revolted.png")                         \
+        [C_RICARDO][CS_DISTRUSTING]   = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ricardo/Distrusting.png")                      \
+        [C_RICARDO][CS_DARK]          = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ricardo/Dark.png")                             \
+        [C_RICARDO][CS_SUPERANIMATED] = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Ricardo/SuperAnimated.png")                    \
+        \
+        [C_DONODOPREDIO][CS_NORMAL]        = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/DonoDoPredio/Normal.png")                 \
+        [C_DONODOPREDIO][CS_HAPPY]         = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/DonoDoPredio/Happy.png")                  \
+        [C_DONODOPREDIO][CS_ANIMATED]      = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/DonoDoPredio/Animated.png")               \
+        [C_DONODOPREDIO][CS_SAD]           = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/DonoDoPredio/Sad.png")                    \
+        [C_DONODOPREDIO][CS_ANGRY]         = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/DonoDoPredio/Angry.png")                  \
+        [C_DONODOPREDIO][CS_REVOLTED]      = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/DonoDoPredio/Revolted.png")               \
+        [C_DONODOPREDIO][CS_DISTRUSTING]   = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/DonoDoPredio/Distrusting.png")            \
+        [C_DONODOPREDIO][CS_DARK]          = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/DonoDoPredio/Dark.png")                   \
+        [C_DONODOPREDIO][CS_SUPERANIMATED] = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/DonoDoPredio/SuperAnimated.png")          \
+        \
+        [C_INSPETOR][CS_NORMAL]        = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Inspetor/Normal.png")                         \
+        [C_INSPETOR][CS_HAPPY]         = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Inspetor/Happy.png")                          \
+        [C_INSPETOR][CS_ANIMATED]      = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Inspetor/Animated.png")                       \
+        [C_INSPETOR][CS_SAD]           = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Inspetor/Sad.png")                            \
+        [C_INSPETOR][CS_ANGRY]         = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Inspetor/Angry.png")                          \
+        [C_INSPETOR][CS_REVOLTED]      = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Inspetor/Revolted.png")                       \
+        [C_INSPETOR][CS_DISTRUSTING]   = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Inspetor/Distrusting.png")                    \
+        [C_INSPETOR][CS_DARK]          = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Inspetor/Dark.png")                           \
+        [C_INSPETOR][CS_SUPERANIMATED] = IMG_Load(CHARACTER_TEX_PATHS_PREFIX"/Inspetor/SuperAnimated.png")                  \
+        \
+    }
+
 
 //
 // Devquote(Debug)

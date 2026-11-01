@@ -37,7 +37,6 @@ SDL_Texture *play_tex[GAMEPLAY_TEX_COUNT];
 char* play_texPaths[] = GAMEPLAY_TEX_PATHS;
 TextConfig  *play_buttonsArrowConfig[INP_STATES_MAX];
 TextConfig  *play_buttonMonitorPowerConfig[INP_STATES_MAX];
-TextConfig  *play_buttonsMonitorIconConfig[INP_STATES_MAX];
 Button      *play_buttons[GAMEPLAY_BUTTON_COUNT];
 // 
 // Devquote(Debug)
@@ -199,10 +198,6 @@ void game_globals_init()
     play_buttonMonitorPowerConfig[INP_STATE_SELECTED]  = GAMEPLAY_BUTTON_MONITOR_POWER_CONFIG_SELECTED;
     play_buttonMonitorPowerConfig[INP_STATE_HOVER]     = GAMEPLAY_BUTTON_MONITOR_POWER_CONFIG_HOVER;
 
-    play_buttonsMonitorIconConfig[INP_STATE_NEUTRAL]   = GAMEPLAY_BUTTON_MONITOR_ICON_CONFIG_NEUTRAL;
-    play_buttonsMonitorIconConfig[INP_STATE_SELECTED]  = GAMEPLAY_BUTTON_MONITOR_ICON_CONFIG_SELECTED;
-    play_buttonsMonitorIconConfig[INP_STATE_HOVER]     = GAMEPLAY_BUTTON_MONITOR_ICON_CONFIG_HOVER;
-
     // Play Buttons
     play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_BACK]    = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Virar");
     play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_MONITOR] = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "PC");
@@ -212,8 +207,6 @@ void game_globals_init()
     play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM2_DOOR]    = Button_Create(cache_fRegular, &play_buttonsArrowConfig, "Porta");
 
     play_buttons[GAMEPLAY_BUTTON_MONITOR_BACK]         = Button_Create(cache_fRegular, &play_buttonMonitorPowerConfig, "");
-    play_buttons[GAMEPLAY_BUTTON_MONITOR_ICON_MINE]        = Button_Create(cache_fRegular, &play_buttonsMonitorIconConfig, "Minerar");
-    play_buttons[GAMEPLAY_BUTTON_MONITOR_ICON_DELIVERY]    = Button_Create(cache_fRegular, &play_buttonsMonitorIconConfig, "EntregasRápidas");
 
     // Devquote(Debug)
 #ifdef GAME_DEBUG

@@ -1,14 +1,17 @@
 #include"game.h"
+#include"screens/play/monitor.h"
 
 //
 void Game_Init()
 {
     graphical_init();
     game_globals_init();
+    Monitor_Init();
 }
 
 void Game_Quit()
 {
+    Monitor_Quit();
     game_globals_quit();
     graphical_quit();
     SDL_Quit();
