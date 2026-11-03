@@ -4,7 +4,7 @@
 static int state_prev[INP_STATES_MAX];
 static int state_changed;
 
-void Menu_displayButtonCentered(Button*b, int x, int y)
+void Menu_displayButtonCentered(Button*b, int x, int y, int state_changed)
 {
     Text *t;
     int t_w, t_h;
@@ -77,7 +77,7 @@ void Menu_handleEvent(SDL_Event*e)
     }
 
     if(menu_buttons[MENU_BUTTON_INIT]->state[INP_STATE_SELECTED]){
-        Game_PlayInit();
+        GamePlay_Init();
     }
 
     switch(e->type){
@@ -90,7 +90,7 @@ void Menu_handleEvent(SDL_Event*e)
     }
 }
 
-void Menu_displayMainButtons()
+void Menu_displayButtons()
 {
     int (*edges)[DRAW_EDGE_AMT];
     //
@@ -105,15 +105,11 @@ void Menu_displayMainButtons()
     Text *t;
 
     edges = Text_edges(menu_tTitle[MENU_TITLE_COUNT - 1]);
-
-    //
-    for(i=MENU_BUTTON_INIT; i <= MENU_BUTTON_CONFIG; ++i){
-    // for(i=MENU_BUTTON_INIT; i <= MENU_BUTTON_INIT; ++i){
+    for(i=MENU_BUTTON_INIT; i <= MENU_BUTTON_GCONFIG; ++i){
         b = menu_buttons[i];
         t = b->text;
 
         // Draw Button
-        //*
         b_x =
             (!state_changed)?
             (*edges)[DRAW_EDGE_XMIN] + (*edges)[DRAW_WIDTH] / 2 - (*Text_edges(t))[DRAW_TEXT_WIDTH] / 2 
@@ -127,11 +123,9 @@ void Menu_displayMainButtons()
             + ((i == MENU_BUTTON_INIT)? MENU_BUTTON_SPACING_TITLE_Y: MENU_BUTTON_SPACING_Y)
             : *Text_y(t)
             ;
-        // */
 
-        Menu_displayButtonCentered(b, b_x, b_y);
+        Menu_displayButtonCentered(b, b_x, b_y, state_changed);
         edges = Text_edges(b->text);
-        //
     }
 
     // Display about and exit buttons
@@ -151,7 +145,7 @@ void Menu_displayMainButtons()
             (*Text_edges(t))[DRAW_WIDTH]
             + MENU_BUTTON_SPACING_BUTTONS_BOTTOM_X
             // + *Text_paddingLeft(t) + *Text_borderLeft(t) + *Text_marginLeft(t)
-                ;
+            ;
     }
 
     b_x -= remain_w / 2;
@@ -160,9 +154,9 @@ void Menu_displayMainButtons()
         t = b->text;
 
         Menu_displayButtonCentered(
-            b
-            , b_x + *Text_paddingLeft(t) + *Text_borderLeft(t) + *Text_marginLeft(t)
-            , b_y
+            b,
+            b_x + *Text_paddingLeft(t) + *Text_borderLeft(t) + *Text_marginLeft(t), b_y,
+            state_changed
         );
         b_x +=
             (*Text_edges(t))[DRAW_WIDTH]
@@ -202,7 +196,7 @@ void Menu_Render()
         );
         y = (*Text_edges(menu_tTitle[i]))[DRAW_EDGE_YMAX] + 10;
     }
-    Menu_displayMainButtons();
+    Menu_displayButtons();
 
     state_changed = 0;
 }

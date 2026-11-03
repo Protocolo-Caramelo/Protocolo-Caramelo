@@ -1,7 +1,7 @@
 #include"game_state.h"
 
-GameState game_state;
-GamePlay_State game_playState;
+Game_State game_state;
+Game_PlayState game_playState;
 
 void GameState_Init()
 {

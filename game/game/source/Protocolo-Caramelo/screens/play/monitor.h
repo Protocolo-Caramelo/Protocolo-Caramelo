@@ -6,15 +6,15 @@
 
 #include"inputs/inputs.h"
 
-// Life cycle (called by Game_Init / Game_Quit)
-void Monitor_Init();
-void Monitor_Quit();
-
+void Monitor_handleKeyDown(SDL_Event *e);
 void Monitor_handleInput(SDL_Event*e);
 
 void Monitor_displayButtonPower(Button*b, int, int);
 void Monitor_displayButtons();
 
 void Monitor_Render();
+void Monitor_Load();
+void Monitor_Leave();
+void Monitor_Quit();
 
 #endif

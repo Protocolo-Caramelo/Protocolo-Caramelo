@@ -297,7 +297,7 @@ void Clock_year_def(Clock*r, T_YEAR y)
 }
 
 
-void Clock_time_set(
+void Clock_TimeSet(
         Clock*r,
         T_HOUR h, T_MIN m, T_SEC s
         )
@@ -307,7 +307,7 @@ void Clock_time_set(
     Clock_hour_def(r, h);
 }
 
-void Clock_date_set(
+void Clock_DateSet(
         Clock*r,
         T_MDAY mday, T_MONTH month, T_YEAR year
         )

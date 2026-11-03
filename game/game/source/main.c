@@ -6,15 +6,9 @@ void Test_problems();
 
 int main(int argc, char*argv[])
 {
-    //*
-    extern SDL_Event e;
-    extern GameState game_state;
-    GameState game_statePrev;
-    GamePlay_State game_playStatePrev;
-
     Game_Init();
-    game_statePrev = game_state;
-    game_playStatePrev = game_playState;
+
+    //*
     while(1){
         switch(game_state){
             case GAME_STATE_SCREEN_MENU:
@@ -29,16 +23,11 @@ int main(int argc, char*argv[])
                 break;
         }
 
-        if(game_statePrev != game_state || game_playStatePrev != game_playState){
-            Game_ResetButtons();
-        }
-        game_statePrev = game_state;
-        game_playStatePrev = game_playState;
         //
         Game_Debug();
 
         SDL_RenderPresent(r);
-        SDL_Delay(32);
+        SDL_Delay(GCORE_DELAY);
     }
     // */
 

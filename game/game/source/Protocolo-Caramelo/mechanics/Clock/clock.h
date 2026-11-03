@@ -263,11 +263,11 @@ void Clock_mday_def(Clock*, T_MDAY mday);
 void Clock_month_def(Clock*, T_MONTH month);
 void Clock_year_def(Clock*, T_YEAR year);
 
-void Clock_time_set(
+void Clock_TimeSet(
         Clock*,
         T_HOUR, T_MIN, T_SEC
         );
-void Clock_date_set(
+void Clock_DateSet(
         Clock*,
         T_MDAY, T_MONTH, T_YEAR
         );

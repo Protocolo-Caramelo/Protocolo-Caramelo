@@ -4,9 +4,9 @@
 #include<graphical.h>
 #include"inputs/inputs.h"
 
-void Menu_displayButtonCentered(Button*b, int x, int y);
+void Menu_displayButtonCentered(Button*b, int x, int y, int state_changed);
 void Menu_handleEvent(SDL_Event*);
-void Menu_displayMainButtons();
+void Menu_displayButtons();
 
 void Menu_Render();
 

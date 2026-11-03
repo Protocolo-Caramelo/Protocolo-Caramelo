@@ -55,6 +55,7 @@ target_sources(
         Protocolo-Caramelo/screens/play/monitor/taskbar.c
         Protocolo-Caramelo/screens/play/monitor/monitor_desktop.c
         Protocolo-Caramelo/screens/play/room.c
+        Protocolo-Caramelo/screens/play/pause.c
         Protocolo-Caramelo/screens/menu.c
         Protocolo-Caramelo/screens/play.c
         #

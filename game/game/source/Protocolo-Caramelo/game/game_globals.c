@@ -8,8 +8,6 @@ void game_globals_init()
     GameState_Init();
     //
     GameMenu_Init();
-    GamePlay_Init();
-    GameMechanics_Init();
     //
     GameDebug_Init();
 

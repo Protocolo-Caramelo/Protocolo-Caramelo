@@ -11,6 +11,8 @@ void GameMechanics_Init()
     size_t i, j;
 
     clock = Clock_Create();
+    Clock_TimeSet(clock, 15, 0, 0);
+    Clock_DateSet(clock, 1, JUN_, 2046);
     for(i=0; i < C_COUNT; ++i){
         for(j=0; j < CS_COUNT; ++j){
             chars_tex[i][j] = IMG_LoadTexture(r, chars_texPaths[i][j]);

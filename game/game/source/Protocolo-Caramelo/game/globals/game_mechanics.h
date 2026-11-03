@@ -5,6 +5,8 @@
 #include<SDL2/SDL_image.h>
 #include"mechanics/mechanics.h"
 
+#define CLOCK_TIME_PLAYER_TO_TIME_GAME (60)
+
 extern Clock *clock;
 extern MathProblem m_problem;
 

@@ -7,7 +7,7 @@ typedef enum MenuButtons MenuButtons;
 enum MenuButtons {
     MENU_BUTTON_INIT,
     MENU_BUTTON_CONTINUE,
-    MENU_BUTTON_CONFIG,
+    MENU_BUTTON_GCONFIG,
     MENU_BUTTON_ABOUT,
     MENU_BUTTON_EXIT,
     MENU_BUTTONS_MAX
@@ -17,9 +17,6 @@ enum Menu_Title {
     MENU_TITLE_CARAMELO,
     MENU_TITLE_COUNT,
 };
-
-extern TextConfig* menu_textConfig;
-extern TextConfig* menu_buttonConfig[INP_STATES_MAX];
 
 extern Text *menu_tTitle[MENU_TITLE_COUNT];
 extern Button *menu_buttons[MENU_BUTTONS_MAX];
@@ -77,7 +74,7 @@ extern Button *menu_buttons[MENU_BUTTONS_MAX];
         },                          \
     )
 #define MENU_BUTTON_CONFIG_SELECTED \
-        TextConfig_Create(          \
+    TextConfig_Create(              \
         .scale_width = 1 / 4.0,     \
         .scale_height = 1 / 4.0,    \
         .color = (SDL_Color){       \
@@ -103,9 +100,9 @@ extern Button *menu_buttons[MENU_BUTTONS_MAX];
                 .a=255              \
             }                       \
         },                          \
-    );
+    )
 #define MENU_BUTTON_CONFIG_HOVER \
-        TextConfig_Create(          \
+    TextConfig_Create(              \
         .scale_width = 1 / 4.0,     \
         .scale_height = 1 / 4.0,    \
         .color = (SDL_Color){       \
@@ -131,8 +128,22 @@ extern Button *menu_buttons[MENU_BUTTONS_MAX];
                 .a=255              \
             }                       \
         },                          \
-    );
+    )
+
+#define MENU_BUTTON_CONFIG \
+    { \
+        [INP_STATE_NEUTRAL]  = MENU_BUTTON_CONFIG_NEUTRAL,  \
+        [INP_STATE_SELECTED] = MENU_BUTTON_CONFIG_SELECTED, \
+        [INP_STATE_HOVER]    = MENU_BUTTON_CONFIG_HOVER,    \
+    }
+
 //
+#define MENU_TITLE_CONFIG \
+    TextConfig_Create( \
+        .scale_width = 1 / 2.0,                 \
+        .scale_height = 1 / 2.0,                \
+        .color = (SDL_Color){255, 180, 27, 255},\
+    )
 
 void GameMenu_Init();
 void GameMenu_Quit();
