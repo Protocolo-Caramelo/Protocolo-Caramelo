@@ -37,7 +37,7 @@ DesktopIcon* DesktopIcon_Create(MonitorAppId app)
     }
 
     icon->label = MonitorText_Create(
-        cache_fRegular,
+        cache[GFONT_REGULAR],
         TextConfig_Create(
             .color        = (SDL_Color){0, 0, 0, 255},
             .scale_width  = 1 / 4.0,

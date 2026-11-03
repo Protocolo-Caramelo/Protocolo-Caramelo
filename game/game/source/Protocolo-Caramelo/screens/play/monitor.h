@@ -5,7 +5,6 @@
 #define SCRN_MONITOR_H
 
 #include"inputs/inputs.h"
-#include"game/game.h"
 
 // Life cycle (called by Game_Init / Game_Quit)
 void Monitor_Init();

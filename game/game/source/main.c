@@ -8,15 +8,15 @@ int main(int argc, char*argv[])
 {
     //*
     extern SDL_Event e;
-    extern GameState gameState;
+    extern GameState game_state;
     GameState game_statePrev;
-    GamePlay_State gamePlay_statePrev;
+    GamePlay_State game_playStatePrev;
 
     Game_Init();
-    game_statePrev = gameState;
-    gamePlay_statePrev = gamePlay_state;
+    game_statePrev = game_state;
+    game_playStatePrev = game_playState;
     while(1){
-        switch(gameState){
+        switch(game_state){
             case GAME_STATE_SCREEN_MENU:
                 Menu_Render();
                 break;
@@ -29,11 +29,11 @@ int main(int argc, char*argv[])
                 break;
         }
 
-        if(game_statePrev != gameState || gamePlay_statePrev != gamePlay_state){
+        if(game_statePrev != game_state || game_playStatePrev != game_playState){
             Game_ResetButtons();
         }
-        game_statePrev = gameState;
-        gamePlay_statePrev = gamePlay_state;
+        game_statePrev = game_state;
+        game_playStatePrev = game_playState;
         //
         Game_Debug();
 
@@ -104,13 +104,14 @@ void Test_libgraphical()
     // */
 }
 
+/*
 void Test_inputs()
 {
     extern SDL_Window *w;
     extern SDL_Renderer *r;
     extern SDL_Event e;
-    extern TextCache *cache_fRegular;
-    extern TextCache *cache_fTitle;
+    extern TextCache *cache[GFONT_REGULAR];
+    extern TextCache *cache[GFONT_TITLE];
     //
     TextConfig *bi_tc[INP_STATES_MAX] = {
         [INP_STATE_NEUTRAL] = TextConfig_Create(
@@ -264,19 +265,19 @@ void Test_inputs()
         ELEMENT_RENDERER_FLAGS
     );
     //
-    cache_fRegular = TextCache_Create(
+    cache[GFONT_REGULAR] = TextCache_Create(
         r,
         ELEMENT_CACHE_FREGULAR_PATH,
         ELEMENT_CACHE_FREGULAR_PTSIZE
     );
-    cache_fTitle = TextCache_Create(
+    cache[GFONT_TITLE] = TextCache_Create(
         r,
         ELEMENT_CACHE_FTITLE_PATH,
         ELEMENT_CACHE_FTITLE_PTSIZE
     );
     //
     bi = BarInput_Create(
-        cache_fRegular, &bi_tc,
+        cache[GFONT_REGULAR], &bi_tc,
         "|%.2lf",
         0, 100,
         200, 0,
@@ -284,13 +285,13 @@ void Test_inputs()
     );
     //
     b = Button_Create(
-        cache_fTitle,
+        cache[GFONT_TITLE],
         &b_tc,
         "Click Here!"
     );
     //
     ti = TextInput_Create(
-        cache_fRegular,
+        cache[GFONT_REGULAR],
         &ti_tc,
         2, 0,
         "AAAA"
@@ -311,8 +312,8 @@ void Test_inputs()
                     Button_Destroy(&b);
                     TextInput_Destroy(&ti);
                     //
-                    TextCache_Destroy(&cache_fRegular);
-                    TextCache_Destroy(&cache_fTitle);
+                    TextCache_Destroy(&cache[GFONT_REGULAR]);
+                    TextCache_Destroy(&cache[GFONT_TITLE]);
                     //
                     SDL_DestroyRenderer(r);
                     SDL_DestroyWindow(w);
@@ -494,37 +495,37 @@ void Test_problems()
 
     Game_Init();
     //
-    b_generate = Button_Create(cache_fRegular, &b_config, "Gerar problema");
-    b_view_answer = Button_Create(cache_fRegular, &b_config, "Ver resposta");
+    b_generate = Button_Create(cache[GFONT_REGULAR], &b_config, "Gerar problema");
+    b_view_answer = Button_Create(cache[GFONT_REGULAR], &b_config, "Ver resposta");
     //
     for(i=MATHPROBLEM_DIFFICULTY_EASY; i < MATHPROBLEM_DIFFICULTY_COUNT; ++i){
-        b_difficulty[i] = Button_Create(cache_fRegular, &b_config, b_title_difficulty[i]);
+        b_difficulty[i] = Button_Create(cache[GFONT_REGULAR], &b_config, b_title_difficulty[i]);
     }
     for(i=MATHPROBLEM_NORMAL; i < MATHPROBLEM_TYPE_COUNT; ++i){
-        b_type[i] = Button_Create(cache_fRegular, &b_config, b_title_type[i]);
+        b_type[i] = Button_Create(cache[GFONT_REGULAR], &b_config, b_title_type[i]);
     }
     //
-    type_t = Text_Create(cache_fTitle, b_config[0], "Escolha um tipo: ");
-    difficulty_t = Text_Create(cache_fTitle, b_config[0], "Escolha uma dificuldade: ");
+    type_t = Text_Create(cache[GFONT_TITLE], b_config[0], "Escolha um tipo: ");
+    difficulty_t = Text_Create(cache[GFONT_TITLE], b_config[0], "Escolha uma dificuldade: ");
     //
     p_difficulty = MATHPROBLEM_DIFFICULTY_EASY;
     p_type = MATHPROBLEM_NORMAL;
-    p_t = Text_Create(cache_fRegular, b_config[0], "(Sem problemas)");
+    p_t = Text_Create(cache[GFONT_REGULAR], b_config[0], "(Sem problemas)");
     //
     answer_t = Text_Create(
-        cache_fTitle,
+        cache[GFONT_TITLE],
         TextConfig_Create(
             .scale_width = 1 / 4.0,
             .scale_height = 1 / 4.0
         )
     );
     answer = TextInput_Create(
-        cache_fRegular,
+        cache[GFONT_REGULAR],
         &b_config,
         5, 0,
         "(Insira sua resposta aqui)"
     );
-    b_submit = Button_Create(cache_fRegular, &b_submit_config, "Submissão");
+    b_submit = Button_Create(cache[GFONT_REGULAR], &b_submit_config, "Submissão");
 
     while(1){
         SDL_SetRenderDrawColor(r, 255, 255, 255, 255);
@@ -689,3 +690,4 @@ void Test_problems()
         SDL_Delay(16);
     }
 }
+// */

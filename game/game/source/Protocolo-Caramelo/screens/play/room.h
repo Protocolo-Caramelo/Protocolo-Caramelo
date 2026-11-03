@@ -2,7 +2,6 @@
 #define SCRN_ROOM
 
 #include"inputs/inputs.h"
-#include"game/game.h"
 
 void Room_displayButtonArrow(Button*b, int x, int y);
 

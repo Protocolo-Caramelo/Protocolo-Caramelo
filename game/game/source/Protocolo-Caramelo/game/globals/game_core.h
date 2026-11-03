@@ -1,0 +1,20 @@
+#ifndef GAME_GLOBALS_CORE_H
+#define GAME_GLOBALS_CORE_H
+
+#include<SDL2/SDL.h>
+
+#define GCORE_WINDOW_NAME "Protocolo-Caramelo"
+#define GCORE_WINDOW_X_POSITION SDL_WINDOWPOS_UNDEFINED
+#define GCORE_WINDOW_Y_POSITION SDL_WINDOWPOS_UNDEFINED
+#define GCORE_WINDOW_W 960
+#define GCORE_WINDOW_H 600
+#define GCORE_WINDOW_FLAGS (SDL_WINDOW_RESIZABLE)
+extern SDL_Window *w;
+#define GCORE_RENDERER_FLAGS (SDL_RENDERER_ACCELERATED)
+extern SDL_Renderer *r;
+extern SDL_Event e;
+
+void GameCore_Init();
+void GameCore_Quit();
+
+#endif

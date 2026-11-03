@@ -1,4 +1,6 @@
 #include"room.h"
+#include"game/game.h"
+#include"screens/screens_communs.h"
 
 static SDL_Rect room_texDest;
 static SDL_Rect room_texDestRaw;
@@ -14,20 +16,20 @@ void Room_displayButtonArrow(Button*b, int x, int y)
 void Room1_handleInput(SDL_Event*e)
 {
     size_t i;
-    for(i=GAMEPLAY_BUTTON_ARROW_ROOM1_BED ; i <= GAMEPLAY_BUTTON_ARROW_ROOM1_MONITOR; ++i){
+    for(i=GPLAY_BUTTON_ARROW_ROOM1_BED ; i <= GPLAY_BUTTON_ARROW_ROOM1_MONITOR; ++i){
         Button_handleInput(play_buttons[i], e);
     }
 
-    if(play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_BED]->state[INP_STATE_SELECTED]){
+    if(play_buttons[GPLAY_BUTTON_ARROW_ROOM1_BED]->state[INP_STATE_SELECTED]){
         printf("Feature not avaible yet\n");
     }
-    if(play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_BACK]->state[INP_STATE_SELECTED]){
-        gamePlay_state  = GAMEPLAY_STATE_VIEW_ROOM_2;
-        gamePlay_tex    = GAMEPLAY_TEX_ROOM_2;
+    if(play_buttons[GPLAY_BUTTON_ARROW_ROOM1_BACK]->state[INP_STATE_SELECTED]){
+        game_playState  = GAME_PLAY_STATE_VIEW_ROOM_2;
+        gamePlay_tex    = GPLAY_TEX_ROOM_2;
     }
-    if(play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_MONITOR]->state[INP_STATE_SELECTED]){
-        gamePlay_state  = GAMEPLAY_STATE_VIEW_MONITOR;
-        gamePlay_tex    = GAMEPLAY_TEX_MONITOR_POWER_BUTTON_UNSELECTED;
+    if(play_buttons[GPLAY_BUTTON_ARROW_ROOM1_MONITOR]->state[INP_STATE_SELECTED]){
+        game_playState  = GAME_PLAY_STATE_VIEW_MONITOR;
+        gamePlay_tex    = GPLAY_TEX_MONITOR_POWER_BUTTON_UNSELECTED;
     }
 
     switch(e->type){
@@ -50,13 +52,13 @@ void Room1_displayButtons()
     scale = Game_GetScaleH();
 
     // Bed button
-    b = play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_BED];
+    b = play_buttons[GPLAY_BUTTON_ARROW_ROOM1_BED];
     x = room_texDest.x + 2200 * room_texScaleW;
     y = room_texDest.y + 1120 * room_texScaleH;
     Room_displayButtonArrow(b, x, y);
 
     // Look back button
-    b = play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_BACK];
+    b = play_buttons[GPLAY_BUTTON_ARROW_ROOM1_BACK];
     // x = room_texDest.x + room_texDest.w / 2 - (*Text_edges(b->text))[DRAW_WIDTH] / 2;
     // y = room_texDest.y + room_texDest.h - ((*Text_edges(b->text))[DRAW_HEIGHT] - 30) * scale;
     x = room_texDest.x + room_texDest.w / 2;
@@ -64,7 +66,7 @@ void Room1_displayButtons()
     Room_displayButtonArrow(b, x, y);
 
     // Check monitor
-    b = play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM1_MONITOR];
+    b = play_buttons[GPLAY_BUTTON_ARROW_ROOM1_MONITOR];
     x = room_texDest.x + 924 * room_texScaleW;
     y = room_texDest.y + 397 * room_texScaleH;
     Room_displayButtonArrow(b, x, y);
@@ -93,13 +95,13 @@ void Room1_Render()
 void Room2_handleInput(SDL_Event*e)
 {
     size_t i;
-    for(i=GAMEPLAY_BUTTON_ARROW_ROOM2_BACK; i <= GAMEPLAY_BUTTON_ARROW_ROOM2_DOOR; ++i){
+    for(i=GPLAY_BUTTON_ARROW_ROOM2_BACK; i <= GPLAY_BUTTON_ARROW_ROOM2_DOOR; ++i){
         Button_handleInput(play_buttons[i], e);
     }
 
-    if(play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM2_BACK]->state[INP_STATE_SELECTED]){
-        gamePlay_state  = GAMEPLAY_STATE_VIEW_ROOM_1;
-        gamePlay_tex    = GAMEPLAY_TEX_ROOM_1;
+    if(play_buttons[GPLAY_BUTTON_ARROW_ROOM2_BACK]->state[INP_STATE_SELECTED]){
+        game_playState  = GAME_PLAY_STATE_VIEW_ROOM_1;
+        gamePlay_tex    = GPLAY_TEX_ROOM_1;
     }
 
     switch(e->type){
@@ -122,7 +124,7 @@ void Room2_displayButtons()
     scale = Game_GetScaleH();
 
     // Back button
-    b = play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM2_BACK];
+    b = play_buttons[GPLAY_BUTTON_ARROW_ROOM2_BACK];
     // x = room_texDest.x + room_texDest.w / 2 - (*Text_edges(b->text))[DRAW_WIDTH] / 2;
     x = room_texDest.x + room_texDest.w / 2;
     // y = room_texDest.y + room_texDest.h - ((*Text_edges(b->text))[DRAW_HEIGHT] - 30) * scale;
@@ -130,7 +132,7 @@ void Room2_displayButtons()
     Room_displayButtonArrow(b, x, y);
 
     // Door button
-    b = play_buttons[GAMEPLAY_BUTTON_ARROW_ROOM2_DOOR];
+    b = play_buttons[GPLAY_BUTTON_ARROW_ROOM2_DOOR];
     x = room_texDest.x + 330 * scale;
     y = room_texDest.y + 155 * scale;
     Room_displayButtonArrow(b, x, y);

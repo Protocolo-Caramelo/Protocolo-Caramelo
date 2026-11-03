@@ -1,5 +1,6 @@
 #include"monitor_apps.h"
-#include"app_taskmgr.h"
+#include"app/taskmgr.h"
+#include"app/miner.h"
 
 static const MonitorApp apps[MONITOR_APP_COUNT] = {
     [MONITOR_APP_TRASH] = {
@@ -17,6 +18,10 @@ static const MonitorApp apps[MONITOR_APP_COUNT] = {
         .icon_cell      = {7, 1},
         .window_w       = 900,  .window_h     = 680,
         .window_min_w   = 480,  .window_min_h = 340,
+        .init           = AppMiner_Init,
+        .quit           = AppMiner_Quit,
+        .draw_content   = AppMiner_Draw,
+        .handle_event   = AppMiner_HandleEvent,
     },
     [MONITOR_APP_DELIVERY] = {
         .icon_label     = "EntregasRápidas",

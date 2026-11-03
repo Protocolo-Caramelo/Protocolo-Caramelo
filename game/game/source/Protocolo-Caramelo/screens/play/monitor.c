@@ -1,5 +1,6 @@
 #include"monitor.h"
 #include"monitor/monitor_desktop.h"
+#include"screens/screens_communs.h"
 
 static SDL_Rect m_texDest;
 static SDL_Rect m_texDestRaw;
@@ -26,19 +27,19 @@ void Monitor_handleInput(SDL_Event*e)
     // Windows and icons live "inside" the monitor. The power button is outside of
     // the desktop area, so it always receives the event too (keeps its hover state right)
     MonitorDesktop_HandleEvent(e);
-    Button_handleInput(play_buttons[GAMEPLAY_BUTTON_MONITOR_BACK], e);
+    Button_handleInput(play_buttons[GPLAY_BUTTON_MONITOR_BACK], e);
 
-    if(play_buttons[GAMEPLAY_BUTTON_MONITOR_BACK]->state[INP_STATE_HOVER]){
-        gamePlay_tex = GAMEPLAY_TEX_MONITOR_POWER_BUTTON_SELECTED;
+    if(play_buttons[GPLAY_BUTTON_MONITOR_BACK]->state[INP_STATE_HOVER]){
+        gamePlay_tex = GPLAY_TEX_MONITOR_POWER_BUTTON_SELECTED;
     }
     else {
-        gamePlay_tex = GAMEPLAY_TEX_MONITOR_POWER_BUTTON_UNSELECTED;
+        gamePlay_tex = GPLAY_TEX_MONITOR_POWER_BUTTON_UNSELECTED;
     }
 
-    if(play_buttons[GAMEPLAY_BUTTON_MONITOR_BACK]->state[INP_STATE_SELECTED]){
+    if(play_buttons[GPLAY_BUTTON_MONITOR_BACK]->state[INP_STATE_SELECTED]){
         MonitorDesktop_Leave();
-        gamePlay_state  = GAMEPLAY_STATE_VIEW_ROOM_1;
-        gamePlay_tex    = GAMEPLAY_TEX_ROOM_1;
+        game_playState  = GAME_PLAY_STATE_VIEW_ROOM_1;
+        gamePlay_tex    = GPLAY_TEX_ROOM_1;
     }
 
     switch(e->type){
@@ -85,7 +86,7 @@ void Monitor_displayButtons()
     int x, y;
 
     // Button back (power)
-    b = play_buttons[GAMEPLAY_BUTTON_MONITOR_BACK];
+    b = play_buttons[GPLAY_BUTTON_MONITOR_BACK];
     x = m_texDest.x + 274 * m_texScaleW;
     y = m_texDest.y + 1324 * m_texScaleH;
     Monitor_displayButtonPower(b, x, y);
@@ -112,7 +113,7 @@ void Monitor_Render()
     // The desktop is drawn over the background, under the power button. If the
     // player just left the monitor, this frame still shows the room instead
     MonitorDesktop_SetSpace(&m_texDest, m_texScaleW, m_texScaleH);
-    if(gamePlay_state == GAMEPLAY_STATE_VIEW_MONITOR){
+    if(game_playState == GAME_PLAY_STATE_VIEW_MONITOR){
         MonitorDesktop_Render();
     }
     Monitor_displayButtons();

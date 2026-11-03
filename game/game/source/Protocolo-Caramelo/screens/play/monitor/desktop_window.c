@@ -47,7 +47,7 @@ DesktopWindow* DesktopWindow_Create(MonitorAppId app, const SDL_Rect *bounds, in
     DesktopWindow_Clamp(win, bounds);
 
     win->title = MonitorText_Create(
-        cache_fRegular,
+        FONT_MONITOR_TITLE,
         TextConfig_Create(
             .color        = (SDL_Color){0, 0, 0, 255},
             .scale_width  = 1 / 3.5,
@@ -56,7 +56,7 @@ DesktopWindow* DesktopWindow_Create(MonitorAppId app, const SDL_Rect *bounds, in
         def->window_title
     );
     win->placeholder = MonitorText_Create(
-        cache_fRegular,
+        FONT_MONITOR_REGULAR,
         TextConfig_Create(
             .color        = (SDL_Color){0, 0, 0, 255},
             .scale_width  = 1 / 4.0,

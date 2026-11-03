@@ -1,0 +1,4 @@
+#ifndef ENTREGAS_RAPIDAS_H
+#define ENTREGAS_RAPIDAS_H
+
+#endif

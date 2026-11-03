@@ -21,6 +21,9 @@
 #define DWIN_RESIZE_OUTSIDE 4   // extra grabbable strip just outside the window
 #define DWIN_SPAWN_MARGIN   60  // where the first window appears, from the desktop corner
 
+#define FONT_MONITOR_TITLE      cache[GFONT_TITLE]
+#define FONT_MONITOR_REGULAR    cache[GFONT_REGULAR]
+
 // Which edges a resize drag is holding (can be combined for corners)
 enum {
     DWIN_EDGE_LEFT   = 1,

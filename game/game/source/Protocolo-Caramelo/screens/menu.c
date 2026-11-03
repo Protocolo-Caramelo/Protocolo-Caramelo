@@ -1,4 +1,5 @@
 #include"menu.h"
+#include"screens_communs.h"
 
 static int state_prev[INP_STATES_MAX];
 static int state_changed;

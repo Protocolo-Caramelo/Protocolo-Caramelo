@@ -1,7 +1,8 @@
 #include"game.h"
 #include"screens/play/monitor.h"
+#include"game_globals.h"
 
-//
+// Game methods
 void Game_Init()
 {
     graphical_init();
@@ -18,18 +19,28 @@ void Game_Quit()
     exit(0);
 }
 
-//
+// Play methods
 void Game_PlayInit()
 {
-    gameState = GAME_STATE_SCREEN_PLAY;
-    gamePlay_state = GAMEPLAY_STATE_VIEW_ROOM_1;
-    gamePlay_tex = GAMEPLAY_TEX_ROOM_1;
+    game_state = GAME_STATE_SCREEN_PLAY;
+    game_playState = GAME_PLAY_STATE_VIEW_ROOM_1;
+    gamePlay_tex = GPLAY_TEX_ROOM_1;
 }
 
 void Game_PlayQuit()
 {
     Game_Quit();
 }
+
+
+void Game_PlayGenerateProblem()
+{
+}
+
+void Game_PlayManageMathProblem()
+{
+}
+
 
 void Game_PlayDisplayBackground(GamePlay_Texture tex, SDL_Rect *tex_rect, SDL_Rect *tex_rectRaw, double*scale_width, double*scale_height)
 {
@@ -49,11 +60,11 @@ void Game_PlayDisplayBackground(GamePlay_Texture tex, SDL_Rect *tex_rect, SDL_Re
 
     if(w_width / (double)w_height < tex_w / (double)tex_h){
         tex_nW = w_width;
-        tex_nH = w_width * (ELEMENT_WINDOW_H / (double)ELEMENT_WINDOW_W);
+        tex_nH = w_width * (GCORE_WINDOW_H / (double)GCORE_WINDOW_W);
     }
     else {
         tex_nH = w_height;
-        tex_nW = w_height * (ELEMENT_WINDOW_W / (double)ELEMENT_WINDOW_H);
+        tex_nW = w_height * (GCORE_WINDOW_W / (double)GCORE_WINDOW_H);
     }
 
     rect = (SDL_Rect){
@@ -115,10 +126,10 @@ void Game_PlayDisplayButtonArrow(Button*b, SDL_Rect*bg_texDest, int x, int y)
     str_prev                        = malloc(sizeof(Text_GetLenUTF8(b->text)));
 
     if(w_width / (double)w_height < bg_texDest->w / (double)bg_texDest->h){
-        scale = w_width / (double)ELEMENT_WINDOW_W;
+        scale = w_width / (double)GCORE_WINDOW_W;
     }
     else {
-        scale = w_height / (double)ELEMENT_WINDOW_H;
+        scale = w_height / (double)GCORE_WINDOW_H;
     }
 
     b_borderR    *= scale;
@@ -170,11 +181,11 @@ void Game_PlayDisplayButtonArrow(Button*b, SDL_Rect*bg_texDest, int x, int y)
     }
 
     //
-    tex_w = b_arrowState[BUTTON_ARROW_STATE_NEUTRAL].w;
-    for(i=0; i < INP_STATES_MAX && (*Text_edges(b->text))[DRAW_WIDTH] < tex_w * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE * scale; ++i){
+    tex_w = b_arrowState[GBUTTON_ARROW_STATE_NEUTRAL].w;
+    for(i=0; i < INP_STATES_MAX && (*Text_edges(b->text))[DRAW_WIDTH] < tex_w * GPLAY_BUTTON_ARROW_TEXTURE_SCALE * scale; ++i){
         b->state_tc[i]->border.right =
         b->state_tc[i]->border.left =
-            ((tex_w + 2) * GAMEPLAY_BUTTON_ARROW_TEXTURE_SCALE
+            ((tex_w + 2) * GPLAY_BUTTON_ARROW_TEXTURE_SCALE
             - (*Text_edges(b->text))[DRAW_WIDTH]) / 2.0
             ;
     }
@@ -184,19 +195,19 @@ void Game_PlayDisplayButtonArrow(Button*b, SDL_Rect*bg_texDest, int x, int y)
     free(str_prev);
 }
 
-//
+// Other usefull functions
 double Game_GetScaleW()
 {
     int width, height;
     SDL_GetWindowSize(w, &width, &height);
-    return width / (double)ELEMENT_WINDOW_W;
+    return width / (double)GCORE_WINDOW_W;
 }
 
 double Game_GetScaleH()
 {
     int width, height;
     SDL_GetWindowSize(w, &width, &height);
-    return height / (double)ELEMENT_WINDOW_H;
+    return height / (double)GCORE_WINDOW_H;
 }
 
 void Game_ResetButtons()
@@ -209,7 +220,7 @@ void Game_ResetButtons()
         memset(b->state, 0, sizeof(b->state));
     }
 
-    for(i=0; i < GAMEPLAY_BUTTON_COUNT; ++i){
+    for(i=0; i < GPLAY_BUTTON_COUNT; ++i){
         b = play_buttons[i];
         memset(b->state, 0, sizeof(b->state));
     }

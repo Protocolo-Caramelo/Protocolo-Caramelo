@@ -15,6 +15,17 @@ target_sources(
     PRIVATE
         main.c
         #
+        Protocolo-Caramelo/game/globals/game_core.c
+        Protocolo-Caramelo/game/globals/game_cache.c
+        Protocolo-Caramelo/game/globals/game_buttons.c
+        Protocolo-Caramelo/game/globals/game_state.c
+
+        Protocolo-Caramelo/game/globals/game_menu.c
+        Protocolo-Caramelo/game/globals/game_play.c
+        Protocolo-Caramelo/game/globals/game_mechanics.c
+        Protocolo-Caramelo/game/globals/game_debug.c
+
+        Protocolo-Caramelo/game/globals/game_others.c
         Protocolo-Caramelo/game/game_globals.c
         Protocolo-Caramelo/game/game.c
         #
@@ -23,6 +34,11 @@ target_sources(
         Protocolo-Caramelo/inputs/text.c
         #
         Protocolo-Caramelo/screens/play/monitor.c
+
+        Protocolo-Caramelo/screens/play/monitor/app/taskmgr.c
+        Protocolo-Caramelo/screens/play/monitor/app/miner.c
+        Protocolo-Caramelo/screens/play/monitor/app/entregas_rapidas.c
+
         Protocolo-Caramelo/screens/play/monitor/monitor_space.c
         Protocolo-Caramelo/screens/play/monitor/monitor_draw.c
         Protocolo-Caramelo/screens/play/monitor/monitor_text.c
@@ -37,7 +53,6 @@ target_sources(
         Protocolo-Caramelo/screens/play/monitor/window_manager.c
         Protocolo-Caramelo/screens/play/monitor/window_input.c
         Protocolo-Caramelo/screens/play/monitor/taskbar.c
-        Protocolo-Caramelo/screens/play/monitor/app_taskmgr.c
         Protocolo-Caramelo/screens/play/monitor/monitor_desktop.c
         Protocolo-Caramelo/screens/play/room.c
         Protocolo-Caramelo/screens/menu.c
@@ -46,6 +61,8 @@ target_sources(
         Protocolo-Caramelo/mechanics/MathProblem/aes128.c
         Protocolo-Caramelo/mechanics/MathProblem/mathproblem.c
         Protocolo-Caramelo/mechanics/MathProblem/mathproblem_generators.c
+
+        Protocolo-Caramelo/mechanics/Clock/clock.c
     )
 target_include_directories(
     ${MAIN_NAME}

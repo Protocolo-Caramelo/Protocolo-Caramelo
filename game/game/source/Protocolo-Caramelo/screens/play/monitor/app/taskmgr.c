@@ -1,8 +1,4 @@
-#include"app_taskmgr.h"
-#include"window_manager.h"
-#include"monitor_space.h"
-#include"monitor_draw.h"
-#include"game/game_globals.h"
+#include"taskmgr.h"
 
 // Layout of the window content, in monitor units
 #define PADDING         24
@@ -53,7 +49,7 @@ static RowHit pressed = {MONITOR_APP_NONE, 0};
 static MonitorText* createText(const char *str)
 {
     return MonitorText_Create(
-        cache_fRegular,
+        cache[GFONT_REGULAR],
         TextConfig_Create(
             .color        = (SDL_Color){0, 0, 0, 255},
             .scale_width  = 1 / 4.0,

@@ -1,7 +1,7 @@
 #ifndef APP_TASKMGR_H
 #define APP_TASKMGR_H
 
-#include"monitor_apps.h"
+#include"app_communs.h"
 
 /*
  * Task manager app: lists the running apps (every open window except its own),

@@ -1,7 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include<graphical.h>
+#include<SDL2/SDL.h>
 #include"game_globals.h"
 
 // Initialize all Elements
@@ -11,6 +11,9 @@ void Game_Quit();
 // Play methods
 void Game_PlayInit();
 void Game_PlayQuit();
+
+void Game_PlayGenerateProblem();
+void Game_PlayManageMathProblem();
 
 void Game_PlayDisplayBackground(GamePlay_Texture, SDL_Rect*, SDL_Rect*, double*, double*);
 void Game_PlayDisplayButtonArrow(Button*, SDL_Rect*, int, int);
