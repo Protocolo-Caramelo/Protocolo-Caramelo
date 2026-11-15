@@ -7,6 +7,7 @@ void game_globals_init()
     GameButtons_Init();
     GameState_Init();
     //
+    GameInfos_Init();
     GameMenu_Init();
     //
     GameDebug_Init();
@@ -18,6 +19,7 @@ void game_globals_quit()
     GameDebug_Quit();
     //
     GameMechanics_Quit();
+    GameInfos_Quit();
     GamePlay_Quit();
     GameMenu_Quit();
     //

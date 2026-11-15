@@ -12,10 +12,10 @@
  */
 
 // Area where the buttons live, in monitor units (between the power button and the divider)
-#define TASKBAR_AREA_X           765
-#define TASKBAR_AREA_Y           1345
-#define TASKBAR_AREA_W           825
-#define TASKBAR_AREA_H           125
+#define TASKBAR_AREA_X           763
+#define TASKBAR_AREA_Y           1235
+#define TASKBAR_AREA_W           887
+#define TASKBAR_AREA_H           169
 
 #define TASKBAR_BUTTON_MAX_W    260
 #define TASKBAR_BUTTON_GAP      10

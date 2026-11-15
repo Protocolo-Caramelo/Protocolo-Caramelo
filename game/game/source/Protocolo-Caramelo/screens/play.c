@@ -11,6 +11,82 @@ static Game_PlayState game_playStatePrev;
 //
 static int clock_timePrev;
 static int clock_timeDelay;
+//
+int mineSession_paused     = 1;
+int mineSession_pausedHour = -1;
+int mineSession_modTime    = -1;
+//
+static int w_prevWidth  = -1;
+static int w_prevHeight = -1;
+
+static const double mineSession_typeProbabilities[MATHPROBLEM_DIFFICULTY_COUNT][MATHPROBLEM_TYPE_COUNT] = {
+    {   /* EASY */
+        MINE_SEESSION_PROBLEMTYPE_PROB_EASY_NORMAL,
+        MINE_SEESSION_PROBLEMTYPE_PROB_EASY_EQUATION_1,
+        MINE_SEESSION_PROBLEMTYPE_PROB_EASY_EQUATION_2,
+        MINE_SEESSION_PROBLEMTYPE_PROB_EASY_NEWTON,
+        MINE_SEESSION_PROBLEMTYPE_PROB_EASY_FUNCTION_LINEAR,
+        MINE_SEESSION_PROBLEMTYPE_PROB_EASY_FUNCTION_QUADRACTIC,
+        MINE_SEESSION_PROBLEMTYPE_PROB_EASY_FUNCTION_EXPONENTIAL,
+        MINE_SEESSION_PROBLEMTYPE_PROB_EASY_FUNCTION_LOGARITHMICA
+    },
+    {   /* MEDIUM */
+        MINE_SEESSION_PROBLEMTYPE_PROB_MEDIUM_NORMAL,
+        MINE_SEESSION_PROBLEMTYPE_PROB_MEDIUM_EQUATION_1,
+        MINE_SEESSION_PROBLEMTYPE_PROB_MEDIUM_EQUATION_2,
+        MINE_SEESSION_PROBLEMTYPE_PROB_MEDIUM_NEWTON,
+        MINE_SEESSION_PROBLEMTYPE_PROB_MEDIUM_FUNCTION_LINEAR,
+        MINE_SEESSION_PROBLEMTYPE_PROB_MEDIUM_FUNCTION_QUADRACTIC,
+        MINE_SEESSION_PROBLEMTYPE_PROB_MEDIUM_FUNCTION_EXPONENTIAL,
+        MINE_SEESSION_PROBLEMTYPE_PROB_MEDIUM_FUNCTION_LOGARITHMICA
+    },
+    {   /* HARD */
+        MINE_SEESSION_PROBLEMTYPE_PROB_HARD_NORMAL,
+        MINE_SEESSION_PROBLEMTYPE_PROB_HARD_EQUATION_1,
+        MINE_SEESSION_PROBLEMTYPE_PROB_HARD_EQUATION_2,
+        MINE_SEESSION_PROBLEMTYPE_PROB_HARD_NEWTON,
+        MINE_SEESSION_PROBLEMTYPE_PROB_HARD_FUNCTION_LINEAR,
+        MINE_SEESSION_PROBLEMTYPE_PROB_HARD_FUNCTION_QUADRACTIC,
+        MINE_SEESSION_PROBLEMTYPE_PROB_HARD_FUNCTION_EXPONENTIAL,
+        MINE_SEESSION_PROBLEMTYPE_PROB_HARD_FUNCTION_LOGARITHMICA
+    },
+    {   /* IMPOSSIBLE */
+        MINE_SEESSION_PROBLEMTYPE_PROB_IMPOSSIBLE_NORMAL,
+        MINE_SEESSION_PROBLEMTYPE_PROB_IMPOSSIBLE_EQUATION_1,
+        MINE_SEESSION_PROBLEMTYPE_PROB_IMPOSSIBLE_EQUATION_2,
+        MINE_SEESSION_PROBLEMTYPE_PROB_IMPOSSIBLE_NEWTON,
+        MINE_SEESSION_PROBLEMTYPE_PROB_IMPOSSIBLE_FUNCTION_LINEAR,
+        MINE_SEESSION_PROBLEMTYPE_PROB_IMPOSSIBLE_FUNCTION_QUADRACTIC,
+        MINE_SEESSION_PROBLEMTYPE_PROB_IMPOSSIBLE_FUNCTION_EXPONENTIAL,
+        MINE_SEESSION_PROBLEMTYPE_PROB_IMPOSSIBLE_FUNCTION_LOGARITHMICA
+    }
+};
+static const double mineSession_diffProbalities[MATHPROBLEM_DIFFICULTY_COUNT][MATHPROBLEM_DIFFICULTY_COUNT] = {
+    {   /* EASY */
+        MINE_SEESSION_PROBLEMDIFFICULTY_PROB_EASY_EASY,
+        MINE_SEESSION_PROBLEMDIFFICULTY_PROB_EASY_MEDIUM,
+        MINE_SEESSION_PROBLEMDIFFICULTY_PROB_EASY_HARD,
+        MINE_SEESSION_PROBLEMDIFFICULTY_PROB_EASY_IMPOSSIBLE
+    },
+    {   /* MEDIUM */
+        MINE_SEESSION_PROBLEMDIFFICULTY_PROB_MEDIUM_EASY,
+        MINE_SEESSION_PROBLEMDIFFICULTY_PROB_MEDIUM_MEDIUM,
+        MINE_SEESSION_PROBLEMDIFFICULTY_PROB_MEDIUM_HARD,
+        MINE_SEESSION_PROBLEMDIFFICULTY_PROB_MEDIUM_IMPOSSIBLE
+    },
+    {   /* HARD */
+        MINE_SEESSION_PROBLEMDIFFICULTY_PROB_HARD_EASY,
+        MINE_SEESSION_PROBLEMDIFFICULTY_PROB_HARD_MEDIUM,
+        MINE_SEESSION_PROBLEMDIFFICULTY_PROB_HARD_HARD,
+        MINE_SEESSION_PROBLEMDIFFICULTY_PROB_HARD_IMPOSSIBLE
+    },
+    {   /* IMPOSSIBLE */
+        MINE_SEESSION_PROBLEMDIFFICULTY_PROB_IMPOSSIBLE_EASY,
+        MINE_SEESSION_PROBLEMDIFFICULTY_PROB_IMPOSSIBLE_MEDIUM,
+        MINE_SEESSION_PROBLEMDIFFICULTY_PROB_IMPOSSIBLE_HARD,
+        MINE_SEESSION_PROBLEMDIFFICULTY_PROB_IMPOSSIBLE_IMPOSSIBLE
+    }
+};
 
 // Display functions
 void Play_DisplayBackground(GamePlay_Texture tex, SDL_Rect *tex_rect, SDL_Rect *tex_rectRaw, double*scale_width, double*scale_height)
@@ -166,6 +242,26 @@ void Play_DisplayButtonArrow(Button*b, SDL_Rect*bg_texDest, int x, int y)
     free(str_prev);
 }
 
+void Play_DisplayStatus()
+{
+    size_t i;
+    SDL_GetWindowSize(
+        w,
+        &w_width,
+        &w_height
+    );
+
+    for(i=0; i < GSTATUS_TEX_COUNT && (w_width != w_prevWidth || w_height != w_prevHeight); ++i){
+        if(!tex_status[i]){
+            continue;
+        }
+        SDL_DestroyTexture(tex_status[i]);
+        tex_status[i] = NULL;
+    }
+    //
+
+}
+
 // Manage mechanics
 void Play_ManageClock()
 {
@@ -174,17 +270,104 @@ void Play_ManageClock()
     }
 
     clock_timeDelay = SDL_GetTicks() - clock_timePrev;
-    Clock_SumMs(clock, clock_timeDelay * CLOCK_TIME_PLAYER_TO_TIME_GAME);
+    Clock_SumMs(gclock, clock_timeDelay * CLOCK_TIME_PLAYER_TO_TIME_GAME);
     clock_timePrev = SDL_GetTicks();
-}
-
-void Play_ManageProblems()
-{
 }
 
 void Play_GetClockFormat(char*to, char*fmt)
 {
-    Clock_sprintf(clock, to, fmt);
+    Clock_sprintf(gclock, to, fmt);
+}
+
+
+void Play_QuitMineSession()
+{
+    size_t i;
+    for(i=0; i < MINESESSION_SIZE; ++i){
+        if(!mineSession[i]){
+            continue;
+        }
+        free(mineSession[i]);
+        mineSession[i] = NULL;
+    }
+}
+
+MathProblem_Type Play_GenMineSessionProblemType(Difficulty diff)
+{
+    double target = rand() / ((double)RAND_MAX + 1.0);
+    double accumulated = 0.0;
+    int chosen = MATHPROBLEM_NORMAL;
+
+    if ((int)diff < 0 || (int)diff >= MATHPROBLEM_DIFFICULTY_COUNT) {
+        return MATHPROBLEM_NORMAL;
+    }
+
+    for (int i = 0; i < MATHPROBLEM_TYPE_COUNT; i++) {
+        if (mineSession_typeProbabilities[diff][i] <= 0.0) {
+            continue;
+        }
+        accumulated += mineSession_typeProbabilities[diff][i];
+        chosen = i;
+        if (target < accumulated) {
+            break;
+        }
+    }
+    return (MathProblem_Type)chosen;
+}
+
+MathProblem_Difficulty Play_GenMineSessionProblemDiff(Difficulty diff)
+{
+    double target = rand() / ((double)RAND_MAX + 1.0);
+    double accumulated = 0.0;
+    int chosen = MATHPROBLEM_DIFFICULTY_EASY;
+
+    for (int i = 0; i < MATHPROBLEM_DIFFICULTY_COUNT; i++) {
+        if (mineSession_diffProbalities[diff][i] <= 0.0) {
+            continue;
+        }
+        accumulated += mineSession_diffProbalities[diff][i];
+        chosen = i;
+        if (target < accumulated) {
+            break;
+        }
+    }
+    return (MathProblem_Difficulty)chosen;
+}
+
+void Play_GenMineSession()
+{
+    size_t i;
+    MathProblem_Type m_type;
+    MathProblem_Difficulty m_diff;
+
+    Play_QuitMineSession();
+
+    for(i=0; i < MINESESSION_SIZE; ++i){
+        m_type = Play_GenMineSessionProblemType(gdiff);
+        m_diff = Play_GenMineSessionProblemDiff(gdiff);
+        mineSession[i] = malloc(sizeof(*mineSession[i]));
+        MathProblem_GenProblem(mineSession[i], m_type, m_diff);
+    }
+    mineSession_i = 0;
+}
+
+void Play_ManageMineSession()
+{
+    int hour;
+
+    hour = Clock_hour(gclock);
+    mineSession_modTime = (MAX(hour - MINESESSION_FIRST_HOUR, MINESESSION_FIRST_HOUR - hour) + MINESESSION_DURATION_IN_HOURS) % MINESESSION_DURATION_IN_HOURS;
+
+    if(!mineSession_modTime && mineSession_pausedHour != Clock_hour(gclock)){
+        mineSession_paused = !mineSession_paused;
+        mineSession_pausedHour = Clock_hour(gclock);
+        if(!mineSession_paused){
+            Play_GenMineSession();
+        }
+        else {
+            Play_QuitMineSession();
+        }
+    }
 }
 
 //
@@ -205,7 +388,7 @@ void Play_Render()
         Play_ResetButtons();
     }
     Play_ManageClock();
-    Play_ManageProblems();
+    Play_ManageMineSession();
     //
     game_statePrev = game_state;
     game_playStatePrev = game_playState;
@@ -230,6 +413,4 @@ void Play_Render()
         default:
             break;
     }
-    // Play_GetClockFormat(clock_buffer, PRINT_DEFAULT);
-    // printf("%s\n", clock_buffer);
 }

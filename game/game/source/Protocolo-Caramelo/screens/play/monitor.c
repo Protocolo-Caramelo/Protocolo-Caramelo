@@ -8,8 +8,12 @@
 static SDL_Rect m_texDest;
 static SDL_Rect m_texDestRaw;
 static double m_texScaleW, m_texScaleH;
-
+//
 static int leaved;
+//
+static char clock_buffer[250];
+static int clock_timeEdges[DRAW_EDGE_AMT];
+static int clock_dateEdges[DRAW_EDGE_AMT];
 
 //
 void Monitor_handleKeyDown(SDL_Event *e)
@@ -104,6 +108,44 @@ void Monitor_displayButtons()
     Monitor_displayButtonPower(b, x, y);
 }
 
+void Monitor_displayClock()
+{
+    Text *t;
+    TextConfig tc;
+
+    t = play_text[GPLAY_TEXT_MONITOR_CLOCK_TIME];
+    tc = t->config;
+    Play_GetClockFormat(clock_buffer, MONITOR_CLOCK_FMT_TIME);
+    Text_DrawUTF8(
+        t,
+        clock_buffer,
+        TextConfig_Create(
+            .scale_width  = tc.scale_width * m_texScaleW,
+            .scale_height = tc.scale_height * m_texScaleW,
+            .x = m_texDest.x + 1700 * m_texScaleW,
+            .y = m_texDest.y + 1230 * m_texScaleH,
+        ),
+        &clock_timeEdges
+    );
+    t->config = tc;
+
+    t = play_text[GPLAY_TEXT_MONITOR_CLOCK_DATE];
+    tc = t->config;
+    Play_GetClockFormat(clock_buffer, MONITOR_CLOCK_FMT_DATE);
+    Text_DrawUTF8(
+        t,
+        clock_buffer,
+        TextConfig_Create(
+            .scale_width  = tc.scale_width * m_texScaleW,
+            .scale_height = tc.scale_height * m_texScaleW,
+            .x = clock_timeEdges[DRAW_EDGE_XMAX] - clock_timeEdges[DRAW_WIDTH] / 2 - clock_dateEdges[DRAW_WIDTH] / 2,
+            .y = clock_timeEdges[DRAW_EDGE_YMAX] + 10 * m_texScaleH,
+        ),
+        &clock_dateEdges
+    );
+    t->config = tc;
+}
+
 //
 // Render
 //
@@ -126,6 +168,7 @@ void Monitor_Render()
         MonitorDesktop_Render();
     }
     Monitor_displayButtons();
+    Monitor_displayClock();
 
     while(SDL_PollEvent(&e)){
         Monitor_handleInput(&e);

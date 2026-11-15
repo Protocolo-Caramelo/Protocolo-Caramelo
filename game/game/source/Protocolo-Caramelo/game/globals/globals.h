@@ -8,6 +8,7 @@
 #include"game_state.h"
 
 // Game
+#include"game_infos.h"
 #include"game_menu.h"
 #include"game_play.h"
 #include"game_mechanics.h"

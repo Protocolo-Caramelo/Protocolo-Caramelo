@@ -17,7 +17,7 @@ static TextConfig scaledConfig(const MonitorText *mt, double scale)
         tc.scale_height *= scale;
     }
     if(tc.wrap != (unsigned)INVALID_VAL && tc.wrap != 0){
-        tc.wrap = (unsigned)(tc.wrap * scale);
+        // tc.wrap = (unsigned)(tc.wrap * scale);
     }
     return tc;
 }
@@ -58,11 +58,11 @@ void MonitorText_Measure(MonitorText *mt, double scale, int *w, int *h)
     // Same measuring sequence used by the other screens (see room/monitor buttons).
     // The config is only re-applied when the scale changed: applying it twice before
     // a draw would make the Text forget that its textures must be regenerated.
-    if(mt->applied_scale != scale){
-        tc = scaledConfig(mt, scale);
-        Text_UpdateConfig(mt->text, &tc);
-        mt->applied_scale = scale;
-    }
+    // if(mt->applied_scale != scale){
+    //     tc = scaledConfig(mt, scale);
+    //     Text_UpdateConfig(mt->text, &tc);
+    //     mt->applied_scale = scale;
+    // }
     Text_MeasureUTF8(mt->text, NULL, NULL);
     Text_MeasureMargin(mt->text, NULL, NULL);
     edges = Text_edgesBack(mt->text);

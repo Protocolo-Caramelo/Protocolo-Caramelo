@@ -14,14 +14,14 @@
  */
 
 // Size of Monitor_view_*.png, in units
-#define MONITOR_TEX_W 2283
-#define MONITOR_TEX_H 1568
+#define MONITOR_TEX_W 2344
+#define MONITOR_TEX_H 1465
 
 // Desktop area: where windows and icons live (inside the bezel, above the taskbar)
 #define MONITOR_AREA_X 285
-#define MONITOR_AREA_Y 118
-#define MONITOR_AREA_W 1675
-#define MONITOR_AREA_H 1180
+#define MONITOR_AREA_Y 105
+#define MONITOR_AREA_W 1734
+#define MONITOR_AREA_H 1114
 
 // Called every frame, right after drawing the monitor background
 void MonitorSpace_Update(const SDL_Rect *tex_dest, double scale_x, double scale_y);

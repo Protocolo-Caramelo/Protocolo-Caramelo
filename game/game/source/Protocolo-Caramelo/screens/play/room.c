@@ -54,7 +54,9 @@ void Room_displayClock()
                 .left   = p.left   * room_texScaleW,
             },
             .x = room_texDest.x + room_texDest.w - clock_timeEdges[DRAW_WIDTH] / 2 - clock_dateEdges[DRAW_WIDTH] / 2,
+            // .x = room_texDest.x + room_texDest.w - clock_dateEdges[DRAW_WIDTH],
             .y = room_texDest.y,
+            // .y = clock_timeEdges[DRAW_EDGE_YMAX],
         ),
         &clock_dateEdges
     );
@@ -67,6 +69,10 @@ void Room_displayClock()
     scale_width  = *Text_scaleWidth(t);
     scale_height = *Text_scaleHeight(t);
     p = *Text_padding(t);
+    if(clock_timeEdges[DRAW_WIDTH] != clock_dateEdges[DRAW_WIDTH]){
+        *Text_scaleWidth(t) *= clock_dateEdges[DRAW_WIDTH] / (double)clock_timeEdges[DRAW_WIDTH];
+        *Text_scaleHeight(t) *= clock_dateEdges[DRAW_WIDTH] / (double)clock_timeEdges[DRAW_WIDTH];
+    }
 
     Play_GetClockFormat(clock_buffer, ROOM_CLOCK_FMT_TIME);
     Text_DrawUTF8(
@@ -83,6 +89,7 @@ void Room_displayClock()
             },
             .x = room_texDest.x + room_texDest.w - clock_timeEdges[DRAW_WIDTH],
             .y = clock_dateEdges[DRAW_EDGE_YMAX],
+            // .y = room_texDest.y,
         ),
         &clock_timeEdges
     );
@@ -180,12 +187,6 @@ void Room1_displayButtons()
 
 void Room1_Render()
 {
-    //
-    while(SDL_PollEvent(&e)){
-        Room1_handleInput(&e);
-    }
-
-    //
     SDL_SetRenderDrawColor(r, 255, 0, 0, 255);
     SDL_RenderClear(r);
 
@@ -193,6 +194,10 @@ void Room1_Render()
     Room_displayBackground();
     Room1_displayButtons();
     Room_displayClock();
+
+    while(SDL_PollEvent(&e)){
+        Room1_handleInput(&e);
+    }
 }
 
 void Room1_Load()
@@ -250,16 +255,16 @@ void Room2_displayButtons()
 
 void Room2_Render()
 {
-    while(SDL_PollEvent(&e)){
-        Room2_handleInput(&e);
-    }
-
     SDL_SetRenderDrawColor(r, 255, 0, 0, 255);
     SDL_RenderClear(r);
 
     Room_displayBackground();
     Room2_displayButtons();
     Room_displayClock();
+
+    while(SDL_PollEvent(&e)){
+        Room2_handleInput(&e);
+    }
 }
 
 void Room2_Load()

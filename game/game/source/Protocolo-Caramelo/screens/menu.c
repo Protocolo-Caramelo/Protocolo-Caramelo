@@ -78,6 +78,7 @@ void Menu_handleEvent(SDL_Event*e)
 
     if(menu_buttons[MENU_BUTTON_INIT]->state[INP_STATE_SELECTED]){
         GamePlay_Init();
+        GameInfos_Init();
     }
 
     switch(e->type){

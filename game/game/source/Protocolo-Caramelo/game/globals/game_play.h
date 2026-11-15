@@ -83,8 +83,8 @@ extern Text *play_text[GPLAY_TEXT_COUNT];
         [GPLAY_TEXT_ROOM_CLOCK_TIME] = Text_Create(     \
             cache[GFONT_DIGITAL],                       \
             TextConfig_Create(                          \
-                .scale_width  = 1 / 1.0,                \
-                .scale_height = 1 / 1.0,                \
+                .scale_width  = 1 / 1.18,                \
+                .scale_height = 1 / 1.18,                \
                 .color    = (SDL_Color){255, 0, 0, 255},\
                 .padding  = (Padding){                  \
                     .right = 5,                         \
@@ -97,16 +97,16 @@ extern Text *play_text[GPLAY_TEXT_COUNT];
         [GPLAY_TEXT_MONITOR_CLOCK_DATE] = Text_Create(  \
             cache[GFONT_DIGITAL],                       \
             TextConfig_Create(                          \
-                .scale_width  = 1 / 6.0,                \
-                .scale_height = 1 / 6.0,                \
+                .scale_width  = 1 / 3.0,                \
+                .scale_height = 1 / 3.0,                \
                 .color = (SDL_Color){255, 0, 0, 255},   \
             ) \
         ), \
         [GPLAY_TEXT_MONITOR_CLOCK_TIME] = Text_Create(  \
             cache[GFONT_DIGITAL],                       \
             TextConfig_Create(                          \
-                .scale_width  = 1 / 7.0,                \
-                .scale_height = 1 / 7.0,                \
+                .scale_width  = 1 / 2.0,                \
+                .scale_height = 1 / 2.0,                \
                 .color = (SDL_Color){255, 0, 0, 255},   \
             ) \
         ), \

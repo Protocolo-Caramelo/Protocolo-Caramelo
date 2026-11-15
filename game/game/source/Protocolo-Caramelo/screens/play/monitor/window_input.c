@@ -202,6 +202,29 @@ static int finishDrag(void)
     return 1;
 }
 
+// 
+// KeyDown
+//
+static int onKey(const SDL_Event*e)
+{
+    DesktopWindow *win;
+    SDL_Rect body_units, body_px;
+    int count, i, pointer_inside;
+
+    win = WindowStack_Active();
+    if(!win){
+        return 0;
+    }
+
+    body_units = DesktopWindow_BodyRect(win);
+    body_px = MonitorSpace_RectToScreen(&body_units);
+    if(win->def->handle_event){
+        win->def->handle_event(e, &body_px, pointer_inside);
+    }
+    return 1;
+}
+
+//
 static void runButtonAction(DesktopWindow *win, DesktopWindowPart part)
 {
     switch(part){
@@ -275,6 +298,12 @@ int WindowInput_HandleEvent(const SDL_Event *e)
             return onMouseMotion(e);
         case SDL_MOUSEBUTTONUP:
             return onMouseUp(e);
+
+        case SDL_KEYDOWN:
+        case SDL_KEYUP:
+        case SDL_TEXTINPUT:
+            return onKey(e);
+
         default:
             return 0;
     }

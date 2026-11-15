@@ -20,6 +20,7 @@ target_sources(
         Protocolo-Caramelo/game/globals/game_buttons.c
         Protocolo-Caramelo/game/globals/game_state.c
 
+        Protocolo-Caramelo/game/globals/game_infos.c
         Protocolo-Caramelo/game/globals/game_menu.c
         Protocolo-Caramelo/game/globals/game_play.c
         Protocolo-Caramelo/game/globals/game_mechanics.c

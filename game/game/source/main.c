@@ -1,4 +1,5 @@
 #include"main.h"
+#include<time.h>
 
 void Test_libgraphical();
 void Test_inputs();
@@ -6,9 +7,8 @@ void Test_problems();
 
 int main(int argc, char*argv[])
 {
-    Game_Init();
-
     //*
+    Game_Init();
     while(1){
         switch(game_state){
             case GAME_STATE_SCREEN_MENU:
@@ -93,15 +93,8 @@ void Test_libgraphical()
     // */
 }
 
-/*
 void Test_inputs()
 {
-    extern SDL_Window *w;
-    extern SDL_Renderer *r;
-    extern SDL_Event e;
-    extern TextCache *cache[GFONT_REGULAR];
-    extern TextCache *cache[GFONT_TITLE];
-    //
     TextConfig *bi_tc[INP_STATES_MAX] = {
         [INP_STATE_NEUTRAL] = TextConfig_Create(
             .scale_width = 1 / 4.0,
@@ -241,29 +234,20 @@ void Test_inputs()
     
     graphical_init();
     w = SDL_CreateWindow(
-        ELEMENT_WINDOW_NAME,
-        ELEMENT_WINDOW_X_POSITION,
-        ELEMENT_WINDOW_Y_POSITION,
-        ELEMENT_WINDOW_W,
-        ELEMENT_WINDOW_H,
-        ELEMENT_WINDOW_FLAGS
+        GCORE_WINDOW_NAME,
+        GCORE_WINDOW_X_POSITION,
+        GCORE_WINDOW_Y_POSITION,
+        GCORE_WINDOW_W,
+        GCORE_WINDOW_H,
+        GCORE_WINDOW_FLAGS
     );
     r = SDL_CreateRenderer(
         w,
         -1,
-        ELEMENT_RENDERER_FLAGS
+        GCORE_RENDERER_FLAGS
     );
     //
-    cache[GFONT_REGULAR] = TextCache_Create(
-        r,
-        ELEMENT_CACHE_FREGULAR_PATH,
-        ELEMENT_CACHE_FREGULAR_PTSIZE
-    );
-    cache[GFONT_TITLE] = TextCache_Create(
-        r,
-        ELEMENT_CACHE_FTITLE_PATH,
-        ELEMENT_CACHE_FTITLE_PTSIZE
-    );
+    GameCache_Init();
     //
     bi = BarInput_Create(
         cache[GFONT_REGULAR], &bi_tc,
@@ -679,4 +663,3 @@ void Test_problems()
         SDL_Delay(16);
     }
 }
-// */
