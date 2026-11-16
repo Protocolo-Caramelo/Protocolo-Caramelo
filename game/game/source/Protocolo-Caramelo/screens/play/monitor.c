@@ -96,6 +96,11 @@ void Monitor_displayButtonPower(Button*b, int x, int y)
     }
 }
 
+void Monitor_displayStatus()
+{
+    Play_DisplayStatus(&m_texDest, m_texScaleW, m_texScaleH);
+}
+
 void Monitor_displayButtons()
 {
     Button *b;
@@ -169,6 +174,7 @@ void Monitor_Render()
     }
     Monitor_displayButtons();
     Monitor_displayClock();
+    Monitor_displayStatus();
 
     while(SDL_PollEvent(&e)){
         Monitor_handleInput(&e);

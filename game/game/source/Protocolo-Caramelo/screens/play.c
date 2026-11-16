@@ -16,9 +16,6 @@ int mineSession_paused     = 1;
 int mineSession_pausedHour = -1;
 int mineSession_modTime    = -1;
 //
-static int w_prevWidth  = -1;
-static int w_prevHeight = -1;
-
 static const double mineSession_typeProbabilities[MATHPROBLEM_DIFFICULTY_COUNT][MATHPROBLEM_TYPE_COUNT] = {
     {   /* EASY */
         MINE_SEESSION_PROBLEMTYPE_PROB_EASY_NORMAL,
@@ -242,24 +239,80 @@ void Play_DisplayButtonArrow(Button*b, SDL_Rect*bg_texDest, int x, int y)
     free(str_prev);
 }
 
-void Play_DisplayStatus()
+void Play_DisplayStatus(SDL_Rect *tex_dest, double texScale_w, double texScale_h)
 {
+    SDL_Rect dest, dest_src;
+    SDL_Rect destInv, destInv_src;
+    SDL_Texture *tex, *texInv;
+    int tex_w, tex_h;
+    int texInv_w, texInv_h;
+    //
+    int infos[] = {
+        i_health, 
+        i_energy,
+        i_tired
+    };
+    int x, y;
+    double p;
     size_t i;
-    SDL_GetWindowSize(
-        w,
-        &w_width,
-        &w_height
-    );
-
-    for(i=0; i < GSTATUS_TEX_COUNT && (w_width != w_prevWidth || w_height != w_prevHeight); ++i){
-        if(!tex_status[i]){
-            continue;
-        }
-        SDL_DestroyTexture(tex_status[i]);
-        tex_status[i] = NULL;
-    }
     //
 
+    //
+    x = tex_dest->x + 20 * texScale_w;
+    y = tex_dest->y + 50 * texScale_h;
+    for(i=0; i < sizeof(infos) / sizeof(infos[0]); ++i){
+        tex    = status_tex[i * 2];
+        texInv = status_tex[i * 2 + 1];
+
+        p = infos[i] / GINFO_MAX_VAL;
+        SDL_QueryTexture(
+            tex,
+            NULL, NULL,
+            &tex_w, &tex_h
+        );
+        SDL_QueryTexture(
+            tex,
+            NULL, NULL,
+            &texInv_w, &texInv_h
+        );
+        //
+        dest = (SDL_Rect){
+            .x = x,
+            .y = y,
+            .w = (p * GSTATUS_TEX_SIZE_W) * texScale_w,
+            .h = GSTATUS_TEX_SIZE_H * texScale_h
+        };
+        dest_src = (SDL_Rect){
+            .x = tex_w * (1 - p),
+            .w = (p * tex_w),
+            .h = tex_h,
+        };
+
+        destInv = (SDL_Rect) {
+            .x = dest.x + dest.w,
+            .y = dest.y,
+            .w = ((1 - p) * GSTATUS_TEX_SIZE_W) * texScale_w,
+            .h = GSTATUS_TEX_SIZE_H * texScale_h
+        };
+        destInv_src = (SDL_Rect){
+            .w = (1 - p) * texInv_w,
+            .h = texInv_h
+        };
+        SDL_RenderCopy(
+            r,
+            tex,
+            &dest_src,
+            &dest
+        );
+        SDL_RenderCopy(
+            r,
+            texInv,
+            &destInv_src,
+            &destInv
+        );
+        
+        y = dest.y + dest.h + 10 * texScale_h;
+    }
 }
 
 // Manage mechanics
@@ -370,6 +423,26 @@ void Play_ManageMineSession()
     }
 }
 
+
+void Play_ManageStatus()
+{
+    i_health = MAX(MIN(GINFO_MAX_VAL, i_health), 0);
+    i_energy = MAX(MIN(GINFO_MAX_VAL, i_energy), 0);
+    i_tired  = MAX(MIN(GINFO_MAX_VAL, i_tired), 0);
+
+    i_energy -= GINFO_ENERGY_LOSS_EACH_FRAME;
+    i_tired += GINFO_TIRED_GAIN_EACH_FRAME(i_energy);
+    i_health -= GINFO_HEALTH_LOSS_EACH_FRAME(i_tired);
+
+    /*
+    printf(
+        "(%.2lf %.2lf %.2lf) (%lf %lf %lf)\n",
+        i_energy, i_tired, i_health,
+        GINFO_ENERGY_LOSS_EACH_FRAME, GINFO_TIRED_GAIN_EACH_FRAME(i_energy), GINFO_HEALTH_LOSS_EACH_FRAME(i_tired)
+        );
+        // */
+}
+
 //
 void Play_ResetButtons()
 {
@@ -389,6 +462,7 @@ void Play_Render()
     }
     Play_ManageClock();
     Play_ManageMineSession();
+    Play_ManageStatus();
     //
     game_statePrev = game_state;
     game_playStatePrev = game_playState;

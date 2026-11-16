@@ -27,6 +27,11 @@ void Room_displayBackground()
     );
 }
 
+void Room_displayStatus()
+{
+    Play_DisplayStatus(&room_texDest, room_texScaleW, room_texScaleH);
+}
+
 void Room_displayClock()
 {
     Text *t;
@@ -192,6 +197,7 @@ void Room1_Render()
 
     //
     Room_displayBackground();
+    Room_displayStatus();
     Room1_displayButtons();
     Room_displayClock();
 
@@ -259,6 +265,7 @@ void Room2_Render()
     SDL_RenderClear(r);
 
     Room_displayBackground();
+    Room_displayStatus();
     Room2_displayButtons();
     Room_displayClock();
 

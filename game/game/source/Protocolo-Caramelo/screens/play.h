@@ -12,7 +12,7 @@ extern int mineSession_modTime;
 // Display functions
 void Play_DisplayBackground(GamePlay_Texture, SDL_Rect*, SDL_Rect*, double*, double*);
 void Play_DisplayButtonArrow(Button*, SDL_Rect*, int, int);
-void Play_DisplayStatus();
+void Play_DisplayStatus(SDL_Rect*, double, double);
 
 // Manage mechanics
 void Play_GetClockFormat(char*to, char*fmt);

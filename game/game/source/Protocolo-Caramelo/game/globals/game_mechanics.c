@@ -2,13 +2,21 @@
 #include"game_core.h"
 
 Clock *gclock;
+
 //
 MathProblem *mineSession[MINESESSION_SIZE];
 size_t mineSession_i;
+
 //
 SDL_Texture *chars_tex[C_COUNT][CS_COUNT];
 static const char* const chars_texPaths[C_COUNT][CS_COUNT] = CHARACTER_TEX_PATHS;
 Difficulty gdiff;
+
+// Status
+SDL_Texture *status_tex[GSTATUS_TEX_COUNT];
+static const char* const status_texPath[GSTATUS_TEX_COUNT] = 
+    GSTATUS_TEX_PATH
+    ;
 
 void GameMechanics_Init()
 {
@@ -34,6 +42,14 @@ void GameMechanics_Init()
     }
     
     gdiff = GDIFF_INIT;
+
+    //
+    for(i=0; i < GSTATUS_TEX_COUNT; ++i){
+        status_tex[i] = IMG_LoadTexture(r, status_texPath[i]);
+        if(!status_tex[i]){
+            printf("Error while opening image texture: %s\n", SDL_GetError());
+        }
+    }
 }
 
 void GameMechanics_Quit()
@@ -52,5 +68,9 @@ void GameMechanics_Quit()
         }
         free(mineSession[i]);
         mineSession[i] = NULL;
+    }
+
+    for(i=0; i < GSTATUS_TEX_COUNT; ++i){
+        SDL_DestroyTexture(status_tex[i]);
     }
 }

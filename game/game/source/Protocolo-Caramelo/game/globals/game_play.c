@@ -5,6 +5,7 @@
 #include"game_state.h"
 #include"game_buttons.h"
 #include"game_mechanics.h"
+#include"game_infos.h"
 #include"game_others.h"
 
 #include"screens/play/room.h"
@@ -65,6 +66,7 @@ void GamePlay_Init()
     gamePlay_tex = GPLAY_TEX_ROOM_1;
 
     GameMechanics_Init();
+    GameInfos_LoadNewGame();
 }
 
 void GamePlay_Quit()

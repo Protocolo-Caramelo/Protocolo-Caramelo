@@ -206,6 +206,29 @@ extern SDL_Texture *chars_tex[C_COUNT][CS_COUNT];
 #define GDIFF_INIT GDIFF_EASY
 extern Difficulty gdiff;
 
+//
+#define GSTATUS_TEX_SIZE_W 400
+#define GSTATUS_TEX_SIZE_H 100
+#define GSTATUS_TEX_PATH \
+    { \
+        [GSTATUS_TEX_HEALTH]     = "./assets/images/status/StatusHealth.png",    \
+        [GSTATUS_TEX_HEALTH_INV] = "./assets/images/status/StatusHealthInv.png", \
+        [GSTATUS_TEX_ENERGY]     = "./assets/images/status/StatusEnergy.png",    \
+        [GSTATUS_TEX_ENERGY_INV] = "./assets/images/status/StatusEnergyInv.png", \
+        [GSTATUS_TEX_TIRED]      = "./assets/images/status/StatusTired.png",     \
+        [GSTATUS_TEX_TIRED_INV]  = "./assets/images/status/StatusTiredInv.png",  \
+    }
+enum {
+    GSTATUS_TEX_HEALTH,
+    GSTATUS_TEX_HEALTH_INV,
+    GSTATUS_TEX_ENERGY,
+    GSTATUS_TEX_ENERGY_INV,
+    GSTATUS_TEX_TIRED,
+    GSTATUS_TEX_TIRED_INV,
+
+    GSTATUS_TEX_COUNT
+};
+extern SDL_Texture *status_tex[GSTATUS_TEX_COUNT];
 
 void GameMechanics_Init();
 void GameMechanics_Quit();
