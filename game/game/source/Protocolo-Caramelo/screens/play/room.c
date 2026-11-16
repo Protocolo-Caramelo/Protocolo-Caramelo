@@ -3,6 +3,7 @@
 #include"screens/play/pause.h"
 #include"screens/play/monitor.h"
 #include"screens/screens_communs.h"
+#include"mechanics/mechanics.h"
 
 static SDL_Rect room_texDest;
 static SDL_Rect room_texDestRaw;
@@ -18,6 +19,11 @@ void Room_displayButtonArrow(Button*b, int x, int y)
     Play_DisplayButtonArrow(b, &room_texDestRaw, x, y);
 }
 
+void Room_displayStatus()
+{
+    Play_DisplayStatus(&room_texDest, room_texScaleW, room_texScaleH);
+}
+
 void Room_displayBackground()
 {
     Play_DisplayBackground(
@@ -25,11 +31,6 @@ void Room_displayBackground()
         &room_texDest, &room_texDestRaw,
         &room_texScaleW, &room_texScaleH 
     );
-}
-
-void Room_displayStatus()
-{
-    Play_DisplayStatus(&room_texDest, room_texScaleW, room_texScaleH);
 }
 
 void Room_displayClock()
@@ -116,6 +117,18 @@ void Room_handleKeyDown(SDL_Event*e)
             Pause_Load(&room_texDest);
             break;
 
+#ifdef GAME_DEBUG
+        case SDLK_F2:
+            // Dev shortcut: plays the demo dialog (see mechanics/Dialog/dialog_scripts.c)
+            DialogScripts_FelipeCall();
+            break;
+
+        case SDLK_F3:
+            // Dev shortcut: the call with choices (Ana)
+            // DialogScripts_AnaCall();
+            break;
+#endif
+
         default:
             break;
     }
@@ -142,6 +155,11 @@ void Room_handleInput(SDL_Event*e)
 void Room1_handleInput(SDL_Event*e)
 {
     size_t i;
+
+    // An active dialog owns the mouse and the confirm keys
+    if(Dialog_HandleInput(e)){
+        return;
+    }
 
     for(i=GPLAY_BUTTON_ARROW_ROOM1_BED ; i <= GPLAY_BUTTON_ARROW_ROOM1_MONITOR; ++i){
         Button_handleInput(play_buttons[i], e);
@@ -225,6 +243,10 @@ void Room2_handleInput(SDL_Event*e)
 {
     size_t i;
 
+    if(Dialog_HandleInput(e)){
+        return;
+    }
+
     for(i=GPLAY_BUTTON_ARROW_ROOM2_BACK; i <= GPLAY_BUTTON_ARROW_ROOM2_DOOR; ++i){
         Button_handleInput(play_buttons[i], e);
     }
@@ -261,8 +283,7 @@ void Room2_displayButtons()
 
 void Room2_Render()
 {
-    SDL_SetRenderDrawColor(r, 255, 0, 0, 255);
-    SDL_RenderClear(r);
+    SDL_SetRenderDrawColor(r, 255, 0, 0, 255); SDL_RenderClear(r);
 
     Room_displayBackground();
     Room_displayStatus();

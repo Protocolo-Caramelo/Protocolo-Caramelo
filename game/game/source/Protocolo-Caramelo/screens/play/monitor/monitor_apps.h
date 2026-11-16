@@ -14,7 +14,7 @@
  */
 typedef enum MonitorAppId MonitorAppId;
 enum MonitorAppId {
-    MONITOR_APP_TRASH,
+    MONITOR_APP_BATEBOCA,
     MONITOR_APP_MINE,
     MONITOR_APP_DELIVERY,
     MONITOR_APP_TASKMGR,

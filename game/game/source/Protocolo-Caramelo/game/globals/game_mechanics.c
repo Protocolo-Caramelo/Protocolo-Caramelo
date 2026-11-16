@@ -50,6 +50,8 @@ void GameMechanics_Init()
             printf("Error while opening image texture: %s\n", SDL_GetError());
         }
     }
+
+    Dialog_Init();
 }
 
 void GameMechanics_Quit()
@@ -73,4 +75,6 @@ void GameMechanics_Quit()
     for(i=0; i < GSTATUS_TEX_COUNT; ++i){
         SDL_DestroyTexture(status_tex[i]);
     }
+
+    Dialog_Quit();
 }

@@ -1,15 +1,20 @@
 #include"monitor_apps.h"
 #include"app/taskmgr.h"
 #include"app/miner.h"
+#include"app/bateboca.h"
 
 static const MonitorApp apps[MONITOR_APP_COUNT] = {
-    [MONITOR_APP_TRASH] = {
-        .icon_label     = "Lixeira",
-        .window_title   = "Lixeira",
-        .icon_path      = "./assets/images/monitor/icon_trash.png",
+    [MONITOR_APP_BATEBOCA] = {
+        .icon_label     = "Bate-boca",
+        .window_title   = "Bate-boca",
+        .icon_path      = "./assets/images/monitor/icon_bateboca.png",
         .icon_cell      = {7, 0},
-        .window_w       = 720,  .window_h     = 520,
-        .window_min_w   = 420,  .window_min_h = 300,
+        .window_w       = 1000, .window_h     = 700,
+        .window_min_w   = 700,  .window_min_h = 420,
+        .init           = AppBateBoca_Init,
+        .quit           = AppBateBoca_Quit,
+        .draw_content   = AppBateBoca_Draw,
+        .handle_event   = AppBateBoca_HandleEvent,
     },
     [MONITOR_APP_MINE] = {
         .icon_label     = "Minerar",

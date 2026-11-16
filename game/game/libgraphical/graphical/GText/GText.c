@@ -524,6 +524,10 @@ SDL_Texture* Text_GenTextureSpacing(Text*t, int w, int h, SDL_Color*c, void(*f_a
     SDL_Texture *target_prev;
     //
 
+    if(w <= 0 || h <= 0){
+        return NULL;
+    }
+
     *Texture_renderer(&tex) = *Text_renderer(t);
     *Texture_raw(&tex) = SDL_CreateTexture(
         *Texture_renderer(&tex),

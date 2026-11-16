@@ -54,6 +54,8 @@ static int appWantsEvent(const SDL_Event *e, const DesktopWindow *win, int point
             return pointer_inside;
         case SDL_MOUSEBUTTONUP:
             return (int)win->app == body_press_app;
+        case SDL_MOUSEWHEEL:
+            return pointer_inside;
         default:
             return 0;
     }
@@ -209,12 +211,13 @@ static int onKey(const SDL_Event*e)
 {
     DesktopWindow *win;
     SDL_Rect body_units, body_px;
-    int count, i, pointer_inside;
+    int pointer_inside;
 
     win = WindowStack_Active();
     if(!win){
         return 0;
     }
+    pointer_inside = 0;     // teclas nao tem posicao
 
     body_units = DesktopWindow_BodyRect(win);
     body_px = MonitorSpace_RectToScreen(&body_units);
@@ -286,12 +289,28 @@ static int onMouseUp(const SDL_Event *e)
     return used || top != NULL;
 }
 
+// The wheel has no position of its own: it goes to the window under the mouse
+static int onMouseWheel(const SDL_Event *e)
+{
+    DesktopWindowHit hit;
+    DesktopWindow *top;
+    int mx, my;
+
+    SDL_GetMouseState(&mx, &my);
+    top = WindowStack_TopmostAt(MonitorSpace_FromScreenX(mx), MonitorSpace_FromScreenY(my), &hit);
+    notifyApps(e, top, &hit);
+    return top != NULL;
+}
+
 //
 // Public
 //
 int WindowInput_HandleEvent(const SDL_Event *e)
 {
     switch(e->type){
+        case SDL_MOUSEWHEEL:
+            return onMouseWheel(e);
+
         case SDL_MOUSEBUTTONDOWN:
             return onMouseDown(e);
         case SDL_MOUSEMOTION:

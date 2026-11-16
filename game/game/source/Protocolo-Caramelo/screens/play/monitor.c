@@ -4,6 +4,7 @@
 #include"screens/play/room.h"
 #include"screens/play/pause.h"
 #include"screens/screens_communs.h"
+#include"mechanics/mechanics.h"
 
 static SDL_Rect m_texDest;
 static SDL_Rect m_texDestRaw;
@@ -27,6 +28,17 @@ void Monitor_handleKeyDown(SDL_Event *e)
             Pause_Load(&m_texDest);
             break;
 
+#ifdef GAME_DEBUG
+        // Dev shortcuts: play the demo scenes while the monitor is open, to see
+        // them show up in the Bate-boca app (see mechanics/Dialog/dialog_scripts.c)
+        case SDLK_F2:
+            DialogScripts_FelipeCall();
+            break;
+        case SDLK_F3:
+            // DialogScripts_AnaCall();
+            break;
+#endif
+
         default:
             break;
     }
@@ -35,6 +47,11 @@ void Monitor_handleKeyDown(SDL_Event *e)
 void Monitor_handleInput(SDL_Event*e)
 {
     if(leaved){
+        return;
+    }
+
+    // An active dialog owns the mouse and the confirm keys
+    if(Dialog_HandleInput(e)){
         return;
     }
 
@@ -173,8 +190,8 @@ void Monitor_Render()
         MonitorDesktop_Render();
     }
     Monitor_displayButtons();
-    Monitor_displayClock();
     Monitor_displayStatus();
+    Monitor_displayClock();
 
     while(SDL_PollEvent(&e)){
         Monitor_handleInput(&e);

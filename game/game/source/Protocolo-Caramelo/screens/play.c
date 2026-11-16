@@ -487,4 +487,6 @@ void Play_Render()
         default:
             break;
     }
+
+    Dialog_Render();
 }

@@ -39,6 +39,7 @@ target_sources(
         Protocolo-Caramelo/screens/play/monitor/app/taskmgr.c
         Protocolo-Caramelo/screens/play/monitor/app/miner.c
         Protocolo-Caramelo/screens/play/monitor/app/entregas_rapidas.c
+        Protocolo-Caramelo/screens/play/monitor/app/bateboca.c
 
         Protocolo-Caramelo/screens/play/monitor/monitor_space.c
         Protocolo-Caramelo/screens/play/monitor/monitor_draw.c
@@ -65,6 +66,12 @@ target_sources(
         Protocolo-Caramelo/mechanics/MathProblem/mathproblem_generators.c
 
         Protocolo-Caramelo/mechanics/Clock/clock.c
+
+        Protocolo-Caramelo/mechanics/Dialog/dialog_fx.c
+        Protocolo-Caramelo/mechanics/Dialog/dialog_log.c
+        Protocolo-Caramelo/mechanics/Dialog/dialog_style.c
+        Protocolo-Caramelo/mechanics/Dialog/dialog.c
+        Protocolo-Caramelo/mechanics/Dialog/dialog_scripts.c
     )
 target_include_directories(
     ${MAIN_NAME}
