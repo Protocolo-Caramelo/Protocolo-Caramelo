@@ -29,7 +29,7 @@ header {
     padding: 20px;
 }
 
-ul {
+nav ul {
     display: flex;
     list-style: none;
     justify-content: center;
@@ -79,7 +79,7 @@ p{
 .card{
     display: block;
     margin: 10px auto 30px;
-    background-color: #0f252e;
+    background-color: #0f1838;
     max-width: 1200px;
     height: 100%;
     padding: 5px 20px;
@@ -143,6 +143,136 @@ footer p {
 
 #error-alert p {
     width: 100%;
+}
+
+#mechanics h2 {
+    color: #f05e23;
+    text-align: center;
+    font-size: 22px;
+    margin: 40px 0 15px;
+}
+
+#mechanics .card {
+    padding: 15px 25px;
+    overflow: hidden;
+}
+
+#mechanics .card p {
+    font-size: 19px;
+    line-height: 1.5;
+    letter-spacing: 1px;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+#mechanics .card h3 {
+    color: #f05e23;
+    text-align: left;
+    font-size: 16px;
+    margin: 25px 0 5px;
+}
+
+#mechanics .card-intro {
+    width: auto;
+    margin: -15px -25px 15px;
+    padding: 12px 25px;
+    background: #f05e23;
+    border-radius: 0;
+}
+
+.card-row {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin: 10px 0;
+}
+.card-text {
+    flex: 1 1 60%;
+    min-width: 0;
+}
+
+#mechanics .card .card-text p {
+    font-size: 21px;
+    line-height: 1.6;
+}
+
+.card-extra{
+    background-color: #D8E2DC;
+    color: black;
+    border-radius: 10px;
+    padding: 5px;
+    border: 2px dashed #f05e23;
+}
+
+.card-image {
+    flex: 0 0 35%;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.card-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 260px;
+    object-fit: contain;
+}
+
+.card-image-M {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    gap: 20px;
+    margin: 15px 0;
+}
+
+.card-image-M img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 7px;
+}
+
+
+#levels-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 10px auto 30px;
+}
+
+.mini-card {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    background-color: #0f1838;
+    border: 2px solid #f05e23;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.mini-card h3 {
+    background-color: #f05e23;
+    color: #D8E2DC;
+    text-align: center;
+    font-size: 15px;
+    padding: 12px 10px;
+}
+
+.mini-card p {
+    margin: 0;
+    padding: 12px 20px;
+    text-align: justify;
+    font-size: 18px;
+    line-height: 1.5;
+    letter-spacing: 1px;
+    overflow-wrap: break-word;
+}
+
+#down .card .card-intro{
+    background-color: #0f1838;
 }
 
 #dev-guide h2 {
@@ -258,7 +388,11 @@ footer p {
     letter-spacing: 1.3;
     text-align: justify;
     font-size: 16px;
+    hyphens: auto;
 }
+
+
+
 
 @media (max-width: 1500px) {
 
@@ -298,6 +432,10 @@ footer p {
     #error-alert p{
         font-size: 35px;
         margin: 0 auto 30px;
+    }
+
+     #levels-container{
+        width: 70%;
     }
 }
 
@@ -342,6 +480,49 @@ footer p {
 
     footer p{
         font-size: 13px;
+    }
+
+        #levels-container{
+        width: 80%;
+        gap: 15px;
+    }
+
+    #mechanics h2{
+        font-size: 18px;
+    }
+
+    #mechanics .card{
+        padding: 12px 18px;
+    }
+
+    #mechanics .card-intro{
+        margin: -12px -18px 15px;
+        padding: 10px 18px;
+    }
+
+    #mechanics .card p{
+        font-size: 16px;
+    }
+
+    #mechanics .card .card-text p{
+        font-size: 18px;
+    }
+
+    #mechanics .card h3{
+        font-size: 12px;
+    }
+
+    .card-row{
+        gap: 18px;
+    }
+
+    .mini-card h3{
+        font-size: 13px;
+    }
+
+    .mini-card p{
+        font-size: 16px;
+        padding: 10px 15px;
     }
 
     #dev-guide h2{
@@ -443,6 +624,63 @@ footer p {
 
     footer p{
         font-size: 11px;
+    }
+
+        #levels-container{
+        width: 85%;
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    #mechanics h2{
+        font-size: 14px;
+    }
+
+    #mechanics .card{
+        padding: 12px 14px;
+    }
+
+    #mechanics .card-intro{
+        margin: -12px -14px 12px;
+        padding: 10px 14px;
+    }
+
+    #mechanics .card p{
+        font-size: 15px;
+    }
+
+    #mechanics .card .card-text p{
+        font-size: 16px;
+    }
+
+    #mechanics .card h3{
+        font-size: 11px;
+    }
+
+    .card-row{
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .card-text,
+    .card-image{
+        flex: none;
+        width: 100%;
+    }
+
+    .card-images{
+        grid-template-columns: 1fr;
+    }
+
+    .mini-card h3{
+        font-size: 12px;
+        padding: 10px 8px;
+    }
+
+    .mini-card p{
+        font-size: 15px;
+        line-height: 1.6;
+        padding: 10px 17px;
     }
 
     #dev-guide h2{
