@@ -149,7 +149,8 @@ footer p {
     color: #f05e23;
     text-align: center;
     font-size: 22px;
-    margin: 40px 0 15px;
+    font-family: 'PressStart2P';
+     margin: 40px 0 15px;
 }
 
 #mechanics .card {
@@ -169,6 +170,7 @@ footer p {
     color: #f05e23;
     text-align: left;
     font-size: 16px;
+    font-family: 'PressStart2P';
     margin: 25px 0 5px;
 }
 
@@ -200,7 +202,7 @@ footer p {
     background-color: #D8E2DC;
     color: black;
     border-radius: 10px;
-    padding: 5px;
+    padding: 7px;
     border: 2px dashed #f05e23;
 }
 
@@ -232,7 +234,6 @@ footer p {
     height: auto;
     border-radius: 7px;
 }
-
 
 #levels-container {
     display: grid;
@@ -273,6 +274,152 @@ footer p {
 
 #down .card .card-intro{
     background-color: #0f1838;
+}
+#character-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 520px));
+    justify-content: center;
+    align-items: start;
+    gap: 40px;
+    width: 100%;
+    padding: 40px 20px;
+}
+
+.character-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    border: 2px solid #f05e23;
+    border-radius: 10px;
+    background-color: #0f1838;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.character-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(240, 94, 35, 0.3);
+}
+
+.character-name {
+    width: 100%;
+    padding: 16px 10px;
+    text-align: center;
+}
+
+.character-name h2 {
+    color: #D8E2DC;
+    font-size: 20px;
+}
+
+.character-image {
+    width: 310px;
+    height: 360px;
+    margin: 20px 0;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.character-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.character-role {
+    width: 100%;
+    text-align: center;
+    background-color: #f05e23;
+}
+
+.character-role h3 {
+    color: white;
+    font-size: 15px;
+    margin: 12px;
+}
+
+.character-data {
+    width: 100%;
+    padding: 12px 20px;
+}
+
+.character-data p {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 15px;
+    margin: 0;
+    padding: 8px 0;
+    font-size: 18px;
+    line-height: 1.4;
+    border-bottom: 1px dashed rgba(216, 226, 220, 0.25);
+}
+
+.character-data p:last-child {
+    border-bottom: none;
+}
+
+.character-data strong {
+    flex: none;
+    font-family: 'PressStart2P', sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+    color: #f05e23;
+}
+
+.character-data span {
+    min-width: 0;
+    text-align: right;
+    overflow-wrap: break-word;
+}
+
+.character-info {
+    width: 100%;
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    background-color: #bdc0be;
+    color: rgb(26, 25, 25);
+    transition: grid-template-rows 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease-out;
+}
+
+.character-info-content {
+    min-height: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    transition: padding 1s ease;
+}
+
+.character-card.expanded .character-info {
+    grid-template-rows: 1fr;
+    opacity: 1;
+}
+
+.character-card.expanded .character-info-content {
+    padding: 15px 20px;
+}
+
+.character-info h3 {
+    font-size: 13px;
+    margin: 14px 0 6px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #f05e23;
+}
+
+.character-info h3:first-child {
+    margin-top: 0;
+}
+
+.character-info p {
+    font-size: 17px;
+    line-height: 1.5;
+    text-align: justify;
+    hyphens: auto;
 }
 
 #dev-guide h2 {
@@ -391,9 +538,6 @@ footer p {
     hyphens: auto;
 }
 
-
-
-
 @media (max-width: 1500px) {
 
     ul{
@@ -482,7 +626,7 @@ footer p {
         font-size: 13px;
     }
 
-        #levels-container{
+    #levels-container{
         width: 80%;
         gap: 15px;
     }
@@ -523,6 +667,32 @@ footer p {
     .mini-card p{
         font-size: 16px;
         padding: 10px 15px;
+    }
+
+        #character-container{
+        gap: 25px;
+        padding: 30px 15px;
+    }
+
+    .character-name h2{
+        font-size: 17px;
+    }
+
+    .character-image{
+        width: 240px;
+        height: 300px;
+    }
+
+    .character-data p{
+        font-size: 16px;
+    }
+
+    .character-data strong{
+        font-size: 10px;
+    }
+
+    .character-info p{
+        font-size: 16px;
     }
 
     #dev-guide h2{
@@ -681,6 +851,50 @@ footer p {
         font-size: 15px;
         line-height: 1.6;
         padding: 10px 17px;
+    }
+
+    #character-container{
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 30px;
+        padding: 25px 12px;
+    }
+
+    .character-card{
+        max-width: 480px;
+    }
+
+    .character-name h2{
+        font-size: 15px;
+    }
+
+    .character-image{
+        width: 220px;
+        height: 280px;
+    }
+
+    .character-role h3{
+        font-size: 12px;
+    }
+
+    .character-data{
+        padding: 10px 15px;
+    }
+
+    .character-data p{
+        font-size: 15px;
+    }
+
+    .character-info p{
+        font-size: 15px;
+    }
+
+    .character-info h3{
+        font-size: 12px;
+    }
+
+    .character-card.expanded .character-info-content{
+        padding: 12px 15px;
     }
 
     #dev-guide h2{

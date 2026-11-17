@@ -302,6 +302,288 @@ function showMechanics() {
     </section>`;
 }
 
+function showCharacters(){
+    app.innerHTML =
+    `<section id="characters-section">
+        <div id="dev-guide">
+            <h2>Clique em um personagem para saber mais</h2>
+        </div>
+
+        <div id="character-container">
+
+            <div class="character-card" onclick="expandCard(this)">
+                <div class="character-name">
+                    <h2>Pedro Monteiro Rocha</h2>
+                </div>
+                <div class="character-image">
+                    <img src="img/pedro.JPG" alt="Pedro">
+                </div>
+                <div class="character-role">
+                    <h3>Protagonista</h3>
+                </div>
+                <div class="character-data">
+                    <p><strong>Idade</strong><span>24</span></p>
+                    <p><strong>Altura</strong><span>1,75 m</span></p>
+                    <p><strong>Peso</strong><span>69 kg</span></p>
+                    <p><strong>Gostos</strong><span>Jogar videogames e dormir</span></p>
+                    <p><strong>Cor favorita</strong><span>Verde</span></p>
+                    <p><strong>Gênero</strong><span>Homem</span></p>
+                    <p><strong>Ocupação</strong><span>Minerador de caramelos</span></p>
+                    <p><strong>Personalidade</strong><span>Determinado, curioso e sensato</span></p>
+                </div>
+                <div class="character-info">
+                    <div class="character-info-content">
+                        <h3>Aparência</h3>
+                        <p>
+                            Cabelos lisos, curtos e pretos, pele parda e olhos grandes e expressivos. Tem um rosto 
+                            quadrado que se destaca e uma expressão geralmente cansada. Veste camisas comuns e calça 
+                            jeans, e em uma das camisas aparece a logo do Space-Brillig.
+                        </p>
+                        <h3>Sobre o personagem</h3>
+                        <p>
+                            Pedro nasceu no interior, longe da evolução tecnológica e principalmente da Inteligência
+                            Artificial, mas após a morte de seus pais ele é forçado a ir para a cidade grande em busca
+                            de uma vida melhor. Porém, ele não conseguiu acompanhar a velocidade de produção esmagadora
+                            da IA e foi rapidamente demitido. Como última alternativa, decide se juntar à comunidade
+                            de mineradores de caramelo para sobreviver e manter sua casa. Agora Pedro deve fazer de tudo
+                            para sobreviver por 30 dias, superando desafios e homens de terno enquanto descobre segredos
+                            de seus conhecidos e sobre o mundo em que vive.
+                        </p>
+                        <h3>Função no jogo</h3>
+                        <p>
+                            É o personagem controlado pelo jogador. Cabe a VOCÊ administrar o dinheiro, a energia, o sono
+                            e as relações de Pedro para sobreviver até o final do jogo.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="character-card" onclick="expandCard(this)">
+                <div class="character-name">
+                    <h2>Felipe Brito</h2>
+                </div>
+                <div class="character-image">
+                    <img src="img/felipe.png" alt="Felipe">
+                </div>
+                <div class="character-role">
+                    <h3>Coadjuvante</h3>
+                </div>
+                <div class="character-data">
+                    <p><strong>Idade</strong><span>25</span></p>
+                    <p><strong>Altura</strong><span>1,80 m</span></p>
+                    <p><strong>Peso</strong><span>72 kg</span></p>
+                    <p><strong>Gostos</strong><span>Conversar e jogar videogames</span></p>
+                    <p><strong>Cor favorita</strong><span>Ciano</span></p>
+                    <p><strong>Gênero</strong><span>Homem</span></p>
+                    <p><strong>Ocupação</strong><span>Minerador de caramelos</span></p>
+                    <p><strong>Personalidade</strong><span>Otimista, engraçado e extrovertido</span></p>
+                </div>
+                <div class="character-info">
+                    <div class="character-info-content">
+                        <h3>Aparência</h3>
+                        <p>
+                            Cabelos cacheados de tamanho médio de cor escura, pele clara com algumas manchas e
+                            olhos grandes cobertos por óculos escuros. É notavelmente magro, tem o rosto arredondado e
+                            uma expressão alegre, cheia de vida. Usa roupas simples, com camisas e calças comuns.
+                        </p>
+                        <h3>Sobre o personagem</h3>
+                        <p>
+                            Velho amigo de Pedro e a única família que lhe resta. Amante da vida e do tipo que
+                            "desenrola as coisas na hora", sempre está lá quando precisa oferecendo apoio ao Pedro,
+                            e ainda por cima é um extrovertido por natureza o que fez ele conhecer e ganhar contato
+                            com várias pessoas diferentes. Além disso, ele é muito informado sobre o Protocolo-Caramelo
+                            contendo grandes infomações sobre sua história, mesmo que boa parte dela ainda seja um mistério
+                            para a sociedade.
+                        </p>
+                        <h3>Função no jogo</h3>
+                        <p>
+                            Guia do jogador do inicío ao fim do jogo, ele  é responsável por apresentar o Protocolo-Caramelo
+                            para o jogador e como ele funciona, e ele também passa o contato de vários conhecidos para Pedro
+                            para que Pedro tenha acesso a diferentes serviços. Por fim, sempre que estiver em dúvida ou com 
+                            insegurança sobre o que fazer a seguir, pode contar com seu lindo e maravilhoso amigo Felipe Brito!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="character-card" onclick="expandCard(this)">
+                <div class="character-name">
+                    <h2>José</h2>
+                </div>
+                <div class="character-image">
+                    <img src="img/jose.png" alt="José">
+                </div>
+                <div class="character-role">
+                    <h3>Personagem secundário</h3>
+                </div>
+                <div class="character-data">
+                    <p><strong>Idade</strong><span>36</span></p>
+                    <p><strong>Altura</strong><span>1,70 m</span></p>
+                    <p><strong>Peso</strong><span>80 kg</span></p>
+                    <p><strong>Gostos</strong><span>Café e ler livros</span></p>
+                    <p><strong>Cor favorita</strong><span>Preto e branco</span></p>
+                    <p><strong>Gênero</strong><span>Homem</span></p>
+                    <p><strong>Ocupação</strong><span>Técnico de Informática</span></p>
+                    <p><strong>Personalidade</strong><span>Simpático, altruísta e otimista</span></p>
+                </div>
+                <div class="character-info">
+                    <div class="character-info-content">
+                        <h3>Aparência</h3>
+                        <p>
+                            Homem de postura firme, com cabelo curto e preto, com um pequeno topete na frente.
+                            pele negra e barba. Sua expressão é neutra, e no dia a dia usa roupas formais de escritório.
+                        </p>
+                        <h3>Sobre o personagem</h3>
+                        <p>
+                            Colega de Pedro no último emprego e a pessoa mais simpática que ele conheceu ali. Foi quem
+                            ajudou Pedro a entrar na comunidade Caramelo. José é um homem simples que o único objetivo
+                            é ajudar o maior número possível de pessoas até o dia de sua morte, pelo menos depois de não
+                            ter conseguido ajudar a pessoa que mais precisava dele...
+                        </p>
+                        <h3>Função no jogo</h3>
+                        <p>
+                            Contato da comunidade que ajuda o jogador com informações sobre a VERA. José é um técnico 
+                            disposto a fazer upgrades em seu computador por um preço amigável, e ainda por cima sempre
+                            vai estar disposto a conversar ou formatar seu computador quando precisar como um gentleman. 
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="character-card" onclick="expandCard(this)">
+                <div class="character-name">
+                    <h2>Ana</h2>
+                </div>
+                <div class="character-image">
+                    <img src="img/ana.png" alt="Ana">
+                </div>
+                <div class="character-role">
+                    <h3>Personagem secundária</h3>
+                </div>
+                <div class="character-data">
+                    <p><strong>Idade</strong><span>28</span></p>
+                    <p><strong>Altura</strong><span>1,62 m</span></p>
+                    <p><strong>Peso</strong><span>50 kg</span></p>
+                    <p><strong>Gostos</strong><span>Desenhar e gatos</span></p>
+                    <p><strong>Cor favorita</strong><span>Vermelho</span></p>
+                    <p><strong>Gênero</strong><span>Mulher</span></p>
+                    <p><strong>Ocupação</strong><span>Artista</span></p>
+                    <p><strong>Personalidade</strong><span>Forte e decisiva</span></p>
+                </div>
+                <div class="character-info">
+                    <div class="character-info-content">
+                        <h3>Aparência</h3>
+                        <p>
+                            Cabelo longo, liso e ruivo alaranjado, que chega até a cintura, com uma franja que cobre a testa.
+                            Seus olhos são pequenos e difíceis de decifrar. Tem postura ruim por passar muito tempo
+                            sentada, pele clara e bem cuidada e rosto arredondado. Sua expressão é de alguém estressada e
+                            insatisfeita, e as roupas comuns têm lápis nos bolsos e leves manchas de tinta.
+                        </p>
+                        <h3>Sobre o personagem</h3>
+                        <p>
+                            Artista por natureza, ficou sem espaço quando as pessoas deixaram de valorizar o trabalho humano 
+                            para vangloriar a velocidade de criação da IA, desde então ninguém mais valorizou a arte feita à mão.
+                            Mesmo assim ela ainda tenta vender seus desenhos e espalha grafites pelas ruas com a esperança que algum
+                            dia a humanidade acorde.
+                        </p>
+                        <h3>Função no jogo</h3>
+                        <p>
+                            Personagem da comunidade com quem o jogador pode conversar e negociar para conseguir artes, quadros
+                            e todos os tipos de decorações para sua casa.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="character-card" onclick="expandCard(this)">
+                <div class="character-name">
+                    <h2>Ricardo</h2>
+                </div>
+                <div class="character-image">
+                    <img src="img/ricardo.png" alt="Ricardo">
+                </div>
+                <div class="character-role">
+                    <h3>Personagem secundário</h3>
+                </div>
+                <div class="character-data">
+                    <p><strong>Idade</strong><span>40</span></p>
+                    <p><strong>Altura</strong><span>1,89 m</span></p>
+                    <p><strong>Peso</strong><span>85 kg</span></p>
+                    <p><strong>Gostos</strong><span>Jogos de azar</span></p>
+                    <p><strong>Cor favorita</strong><span>nenhuma</span></p>
+                    <p><strong>Gênero</strong><span>Homem</span></p>
+                    <p><strong>Ocupação</strong><span>Apostador</span></p>
+                    <p><strong>Personalidade</strong><span>Competitivo e cheio de energia</span></p>
+                </div>
+                <div class="character-info">
+                    <div class="character-info-content">
+                        <h3>Aparência</h3>
+                        <p>
+                            Careca, com olhos médios e pele clara. Normalmente tem o rosto de um homem
+                            modesto e de postura normal, mas quando está jogando fica com uma expressão elétrica, de olhos
+                            bem abertos. Usa roupas estranhas e sem nexo, e claramente não tem bom gosto em moda.
+                        </p>
+                        <h3>Sobre o personagem</h3>
+                        <p>
+                            Ricardo é um homem competitivo, viciado em jogos de azar e refém do próprio vício. Um dia ele
+                            já esteve no topo do mundo, mas hoje ele perdeu tudo, mesmo assim, Ricardo acredita fortemente 
+                            que não exista emoção melhor no mundo do que apostar com nada mais que sua própria sorte.
+                        </p>
+                        <h3>Função no jogo</h3>
+                        <p>
+                            Ricardo pode convidar o jogador para partidas de vinte e um valendo uma quantia de caramelos com  
+                            o vencedor levando o bolo. Se você estiver se sentindo com venha até o cassino se divertir um pouco!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="character-card" onclick="expandCard(this)">
+                <div class="character-name">
+                    <h2>Dono do Prédio</h2>
+                </div>
+                <div class="character-image">
+                    <img src="img/dono.JPG" alt="Dono do prédio">
+                </div>
+                <div class="character-role">
+                    <h3>Vilão</h3>
+                </div>
+                <div class="character-data">
+                    <p><strong>Idade</strong><span>64</span></p>
+                    <p><strong>Altura</strong><span>1,69 m</span></p>
+                    <p><strong>Peso</strong><span>78 kg</span></p>
+                    <p><strong>Gostos</strong><span>Dinheiros e vinho</span></p>
+                    <p><strong>Cor favorita</strong><span>amarelo</span></p>
+                    <p><strong>Gênero</strong><span>Homem</span></p>
+                    <p><strong>Ocupação</strong><span>Proprietário do prédio</span></p>
+                    <p><strong>Personalidade</strong><span>Estressado, orgulhoso e rancoroso</span></p>
+                </div>
+                <div class="character-info">
+                    <div class="character-info-content">
+                        <h3>Aparência</h3>
+                        <p>
+                            Senhor de cabelo grisalho, liso, curto e muito bem cuidado, com olhos escuros.
+                            Tem pele clara e velha, com rugas e pintas pelo corpo. Seu rosto é o de um homem cansado e
+                            carregado de raiva, mas mantém a postura de alguém modesto. Quando se irrita, perde a postura
+                            e o cabelo fica bagunçado. Usa roupas caras e formais.
+                        </p>
+                        <h3>Sobre o personagem</h3>
+                        <p>
+                            Dono da casa popular onde Pedro mora. Estressa-se com extrema facilidade e, por algum motivo,
+                            parece não gostar de Pedro.
+                        </p>
+                        <h3>Função no jogo</h3>
+                        <p>
+                            Responsável pelas cobranças do jogo. O dono vem de 5 em 5 dias bater na porta de Pedro cobrando 
+                            contas cada vez mais absurdas forçando o jogador a correr contra o tempo para não ser despejado de seu apartamento.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>`;
+}
+
 function showDevs(){
     app.innerHTML = 
     `<section id="devs-section">
@@ -415,6 +697,10 @@ function loadPage() {
 
         case "#mechanics":
             showMechanics();
+            break;
+
+        case "#characters":
+            showCharacters();
             break;
 
         case "#devs":
