@@ -32,8 +32,10 @@ Para minerar criptomoedas, você deve resolver problemas matemáticos. Embora pa
 Por último, mas não menos importante, o Protocolo-Caramelo pretende ser um jogo leve e portátil a qualquer dispositivo, dado que está sendo desenvolvido na linguagem _C_ usando da biblioteca gráfica _**SDL**_.
 
 ## 2 Execução
+Para compilar o jogo em sua máquina local usando os métoods listados abaixo, garanta que o seu sistema operacional seja Windows 11 com a última versão estável do WSL ou Linux com Wayland.
+
 ### 2.1 Execução Web
-Para executar o site do jogo localmente em sua máquina, você deve, após a clonagem do repositório, acessar o diretório <a href="https://github.com/Protocolo-Caramelo/Protocolo-Caramelo/tree/web/web">./web</a> e executar ./run.sh em qualquer terminal que suporte a linguagem shell, tal como _Bash_, _Powershell_, _Zh_ etc. Garanta que você tenha **docker-desktop** e **docker-compose** propriamente instalados em seu sistema.
+Para executar o site do jogo localmente em sua máquina, você deve, após a clonagem do repositório, acessar o diretório <a href="https://github.com/Protocolo-Caramelo/Protocolo-Caramelo/tree/web/web">./web</a> e executar ./run.sh em qualquer terminal que suporte a linguagem shell, tal como _Bash_, _Powershell_, _Zh_ etc.
 ```bash
 ./run.sh
 ```
@@ -45,6 +47,33 @@ Logo após, execute o comando
 E... pronto, você terá o site do jogando localmente em seu computador!
 
 ### 2.1 Execução Protocolo-Caramelo
+Caso deseje contribuir para a grande família Caramelo, clone este repositório em sua máquina local por meio do git clone e acesse a _branch_ game_v2 e o diretório game. Após isso, execute o comando ./run.sh em qualquer terminal que suporte a linguagem bash.
+
+Após isso, caso queria uma build jogável do jogo, sem opções de debug, execute o seguinte comando:
+```bash
+# Para ambientes Linux(incluso o container usando para realizar essa build)
+cmake --preset build
+cmake --build __build__
+./__Protocolo-Caramelo__
+
+# Para ambientes windows(11)
+cmake --preset windows
+cmake --build __build_windows__
+./__Protocolo-Caramelo_windows__
+```
+
+Caso queira ativar as opções de desenvolvedor, siga esses seguintes comandos:
+```bash
+# Linux
+cmake --preset devquote
+cmake --build __build_devquote__
+./__Protocolo-Caramelo_devquote__
+
+# Windows(11)
+cmake --preset windows_devquote
+cmake --build __build_windows_devquote__
+./__Protocolo-Caramelo_windows_devquote__
+```
 
 ## 3 Ficha Técnica
 ### 3.1 Arquitetura Web
@@ -60,6 +89,22 @@ E... pronto, você terá o site do jogando localmente em seu computador!
 
 #### _Protocolo-Caramelo_
 <img width="2014" height="1707" alt="ProtocoloCaramelo" src="https://github.com/user-attachments/assets/f0f60468-76ff-4a71-b9f5-1343a46a7050" />
+
+## 4 Mecânicas
+### 4.1 Saúde
+
+
+### 4.2 Energia
+
+### 4.3 Sono
+
+### 4.4 Caramelos
+
+### 4.5 Problemas
+
+### 4.6 Dívidas
+
+### 4.7 Diálogos
 
 ## 4 Sobre nós
 <table>
