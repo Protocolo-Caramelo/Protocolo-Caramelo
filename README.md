@@ -130,7 +130,6 @@ A energia é adquirida ao dormir ou ao ingerir um energético/café. Ela indica 
 ### 4.3 Sono
 <img width="240" alt="ConceptBoost_Pílula" src="https://github.com/user-attachments/assets/5c6d15b4-7300-4a1d-9fec-78597eb138a2" />
 
-
 O descanso é vital para o bem-estar, desenvolvimento e saúde humana, tanto no jogo quanto na vida real. Assim, caso o personagem não durma corretamente, ele começará a perder saúde.
 
 O sono é reduzido apenas quando o personagem descansa, e é reduzido exponencialmente quanto mais horas o jogador dorme continuamente.
@@ -140,24 +139,48 @@ O sonífero pode ser utilizado para aumentar qualidade de sono e, portanto, o qu
 ### 4.4 Caramelos
 <img width="240" alt="Caramelos" src="https://github.com/user-attachments/assets/86d85804-249b-4838-b580-9e24d802c9a8" />
 
-
 O Caramelo é a moeda do jogo, ou seja, é a o recurso que o jogador vai receber sempre que ele finalizar uma sessão de mineração.
-
 O caramelo é utilizado principalmente para pagar as contas e comprar os itens disponíveis na loja do jogo.
-
 O jogo também pode apostar seus caramelos com o Personagem Ricardo caso esteja se sentindo com sorte.
 
 ### 4.5 Tempo
+O tempo é o recurso mais vital do jogo.
+Você deve manejar nele de forma a conseguir gerenciar as suas dívidas e status.
 
 ### 4.6 Problemas Matemáticos
 _Gerado com o auxílio da I.A(Claude)_
 
+Os problemas matemáticos são gerados aleatoriamente através de uma estrutura-tipo geradora do próprio jogo.
+Os tipos de problema podem ser do tipo:
+
+- Contas com as quatro operações
+- Equações do 1º e 2º grau
+- Binômio de Newton
+- Funções lineares
+- Funções quadráticas
+- Funções logarítmicas
+
+Que podem ser da dificuldade:
+- **Fácil:** contas que podem ser resolvidas de cabeça
+- **Médio:** contas que podem ser resolvidas de cabeça mas com algum esforço
+- **Díficil:** precisa de papel e caneta
+- **Impossível:** só com calculadora e fé
 
 ### 4.7 Dívidas
 _Gerado com o auxílio da I.A(GPT)_
 
+As divídas são cobradas semanalmente e divididas em três categorias:
+
+- Água, Luz
+- Internet
+- Aluguel
+
+E aumentam conforme as semanas passam.
+
 ### 4.8 Diálogos
 _Gerado com o auxílio da I.A(Claude)_
+
+Os dialógos são exibidos durante momentos específicos.
 
 ## 5 Sobre nós
 <table>
