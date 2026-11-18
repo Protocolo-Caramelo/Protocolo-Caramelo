@@ -1,6 +1,10 @@
 #include "dialog_scripts.h"
 #include "dialog.h"
 #include "dialog_log.h"
+#include "mechanics/Bills/bills.h"
+#include <stdio.h>
+#include <math.h>
+#include "game/globals/game_infos.h"
 
 /*
  * Como escrever uma cena
@@ -246,4 +250,142 @@ void DialogScripts_AnaCall(void)
     Ana_EnsureStyle();
     DialogLog_AddNote("Ana", "Chamada iniciada");
     Dialog_PlayScene(&ana_call);
+}
+
+/* ================================================================== */
+/* Dono do prédio: pagamento das contas semanais (menu dinâmico)       */
+/* ================================================================== */
+/*
+ * O menu depende das contas pendentes, então as cenas desta seção são
+ * montadas em buffers estáticos a cada vez que o jogador interage com a
+ * porta (o sistema guarda ponteiros, não cópias: tudo precisa continuar vivo).
+ */
+#define DOOR_SLOTS      BILLS_KIND_COUNT
+#define DOOR_LABEL_SIZE 64
+
+static char        door_text[200];
+static char        door_labels[DOOR_SLOTS + 2][DOOR_LABEL_SIZE];
+static char        door_result_text[160];
+static DialogLine  door_line[1];
+static DialogLine  door_result_line[1];
+static DialogChoice door_choices[DOOR_SLOTS + 2];
+static DialogScene door_scene;
+static DialogScene door_result_scene;
+/* Conta e valor que cada opção mostrava quando o menu foi montado */
+static Bill *door_slotBill[DOOR_SLOTS];
+static long  door_slotAmount[DOOR_SLOTS];
+static long  door_allAmount;
+
+static void Door_SetResult(Character_State mood, const char *fmt, double value)
+{
+    door_result_line[0].speaker = C_DONODOPREDIO;
+    door_result_line[0].state   = mood;
+    snprintf(door_result_text, sizeof(door_result_text), fmt, value);
+}
+
+static void Door_ReportPay(BillsPayResult res, long needed)
+{
+    switch(res){
+        case BILLS_PAY_OK:
+            Door_SetResult(CS_HAPPY, "Pagamento recebido, Pedro. Até a próxima semana!", 0);
+            break;
+        case BILLS_PAY_NO_FUNDS:
+            Door_SetResult(CS_ANGRY,
+                "Você ainda precisa de mais %.2f caramelos para isso. Não me faça esperar!",
+                (needed - i_caramelos) / 100.0);
+            break;
+        default:
+            Door_SetResult(CS_DISTRUSTING, "Hum? Essas contas já mudaram. Fale comigo de novo.", 0);
+            break;
+    }
+}
+
+static void Door_PaySlot(int i)
+{
+    Bill *b = door_slotBill[i];
+
+    if(!b || b->paid || b->amount != door_slotAmount[i]){
+        Door_ReportPay(BILLS_PAY_NOTHING, 0);
+        return;
+    }
+    Door_ReportPay(Bills_Pay(b, &i_caramelos), b->amount);
+}
+
+static void Door_PayAll(void)
+{
+    if(Bills_PendingTotal() != door_allAmount){
+        Door_ReportPay(BILLS_PAY_NOTHING, 0);
+        return;
+    }
+    Door_ReportPay(Bills_PayAll(&i_caramelos), door_allAmount);
+}
+
+static void Door_PaySlot0(void){ Door_PaySlot(0); }
+static void Door_PaySlot1(void){ Door_PaySlot(1); }
+static void Door_PaySlot2(void){ Door_PaySlot(2); }
+static void Door_PaySlot3(void){ Door_PaySlot(3); }
+static void (*const door_slotFn[DOOR_SLOTS])(void) = {
+    Door_PaySlot0, Door_PaySlot1, Door_PaySlot2, Door_PaySlot3
+};
+
+void DialogScripts_DoorOwner(void)
+{
+    static DialogLine clean_line;
+    Bill  *b;
+    double due;
+    int    n, count, c;
+
+    count = Bills_PendingCount();
+    door_line[0] = clean_line;
+    door_line[0].speaker = C_DONODOPREDIO;
+
+    door_result_line[0]         = clean_line;
+    door_result_line[0].speaker = C_DONODOPREDIO;
+    door_result_line[0].text    = door_result_text;
+    door_result_scene = (DialogScene){ DIALOG_SCENE_LINES(door_result_line) };
+
+    door_scene = (DialogScene){ DIALOG_SCENE_LINES(door_line) };
+    door_line[0].text = door_text;
+
+    if(count == 0){
+        door_line[0].state = CS_HAPPY;
+        snprintf(door_text, sizeof(door_text),
+            "Está tudo em dia, Pedro. Nenhuma conta pendente por enquanto.");
+        Dialog_PlayScene(&door_scene);
+        return;
+    }
+
+    due = Bills_SecondsUntilDue();
+    door_allAmount = Bills_PendingTotal();
+    door_line[0].state = (due < 86400.0)? CS_ANGRY: CS_NORMAL;
+    snprintf(door_text, sizeof(door_text),
+        "Ei! Você tem %d conta(s) pendente(s): %.2f caramelos no total.\n"
+        "É melhor pagar em %dd %02dh, senão é rua!",
+        count, door_allAmount / 100.0,
+        (int)(due / 86400.0), (int)(fmod(due, 86400.0) / 3600.0));
+
+    c = 0;
+    snprintf(door_labels[c], DOOR_LABEL_SIZE, "Pagar tudo (%.2f)", door_allAmount / 100.0);
+    door_choices[c] = (DialogChoice){
+        .label = door_labels[c], .on_select = Door_PayAll, .next = &door_result_scene
+    };
+    ++c;
+
+    for(n = 0; n < DOOR_SLOTS && (b = Bills_PendingAt(n)); ++n){
+        door_slotBill[n]   = b;
+        door_slotAmount[n] = b->amount;
+        snprintf(door_labels[c], DOOR_LABEL_SIZE, "%s (%.2f)", b->name, b->amount / 100.0);
+        door_choices[c] = (DialogChoice){
+            .label = door_labels[c], .on_select = door_slotFn[n], .next = &door_result_scene
+        };
+        ++c;
+    }
+
+    snprintf(door_labels[c], DOOR_LABEL_SIZE, "Sair");
+    door_choices[c] = (DialogChoice){ .label = door_labels[c] };
+    ++c;
+
+    door_scene.choices      = door_choices;
+    door_scene.choice_count = (size_t)c;
+    Dialog_PlayScene(&door_scene);
 }

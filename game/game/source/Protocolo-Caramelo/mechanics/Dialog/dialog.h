@@ -37,6 +37,9 @@
 #include"dialog_chars.h"
 #include"dialog_style.h"
 
+//
+extern int in_dialog;
+
 /* Uma fala. Os campos nao citados ficam 0/NULL (= padrao). */
 typedef struct DialogLine {
     Character          speaker;   /* quem fala: C_PEDRO, C_FELIPE... */

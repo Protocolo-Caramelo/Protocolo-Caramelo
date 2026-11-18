@@ -265,6 +265,11 @@ void Room2_handleInput(SDL_Event*e)
         Room1_Load();
     }
 
+    if(play_buttons[GPLAY_BUTTON_ARROW_ROOM2_DOOR]->state[INP_STATE_SELECTED] && !in_transition && !in_dialog){
+        DialogScripts_DoorOwner();
+        play_buttons[GPLAY_BUTTON_ARROW_ROOM2_DOOR]->state[INP_STATE_SELECTED] = 0;
+    }
+
     Room_handleInput(e);
 }
 

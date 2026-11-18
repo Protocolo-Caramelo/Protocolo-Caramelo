@@ -16,6 +16,7 @@ Difficulty gdiff;
 // Status
 SDL_Texture *status_tex[GSTATUS_TEX_COUNT];
 Text *coins_t;
+Text *bills_t;
 static const char* const status_texPath[GSTATUS_TEX_COUNT] = 
     GSTATUS_TEX_PATH
     ;
@@ -46,6 +47,10 @@ void GameMechanics_Init()
     }
     
     gdiff = GDIFF_NORMAL;
+    {
+        static const double costFactor[GDIFF_COUNT] = GDIFF_BILLS_COST_FACTOR;
+        Bills_Reset(costFactor[gdiff]);
+    }
 
     //
     for(i=0; i < GSTATUS_TEX_COUNT; ++i){
@@ -69,6 +74,16 @@ void GameMechanics_Init()
                 .a = 255
             },
             .func_alterBorder = coins_t_alterBorder,
+        )
+    );
+
+    bills_t = Text_Create(
+        cache[GFONT_REGULAR],
+        TextConfig_Create(
+            .scale_width  = 1 / 5.5,
+            .scale_height = 1 / 5.5,
+            .color = (SDL_Color){255, 180, 27, 255},
+            .padding = (Padding){2, 2, 2, 2, (SDL_Color){0,0,0,200}},
         )
     );
 
@@ -97,6 +112,7 @@ void GameMechanics_Quit()
         SDL_DestroyTexture(status_tex[i]);
     }
     Text_Destroy(&coins_t);
+    Text_Destroy(&bills_t);
 
     Dialog_Quit();
 }

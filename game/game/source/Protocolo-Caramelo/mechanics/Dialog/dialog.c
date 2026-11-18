@@ -6,6 +6,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+//
+int in_dialog = 0;
+
 /* ================================================================== */
 /* Estado                                                              */
 /* ================================================================== */
@@ -203,10 +206,12 @@ static void Runner_Clear(void)
     dlg.archive_title = NULL;
     dlg.choices       = NULL;
     dlg.choice_count  = 0;
+    in_dialog = 0;
 }
 
 static void Runner_BeginLine(size_t index)
 {
+    in_dialog = 1;
     const char *txt;
     const char *cursor;
     size_t i;

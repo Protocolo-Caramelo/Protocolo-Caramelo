@@ -21,6 +21,8 @@ enum GamePlay_Text {
     GPLAY_TEXT_PAUSED_TITLE_CARAMELO,
 
     GPLAY_TEXT_BED_TIME_SLEEP,
+    GPLAY_TEXT_BED_STATUS,
+    GPLAY_TEXT_BED_WARNING,
 
     GPLAY_TEXT_COUNT
 };
@@ -137,6 +139,22 @@ extern Text *play_text[GPLAY_TEXT_COUNT];
                 .scale_width  = 4, \
                 .scale_height = 4, \
                 .color = (SDL_Color){255, 0, 0, 255} \
+            ) \
+        ), \
+        [GPLAY_TEXT_BED_STATUS] = Text_Create( \
+            cache[GFONT_REGULAR], \
+            TextConfig_Create( \
+                .scale_width  = 1 / 3.0, \
+                .scale_height = 1 / 3.0, \
+                .color = (SDL_Color){255, 255, 255, 255} \
+            ) \
+        ), \
+        [GPLAY_TEXT_BED_WARNING] = Text_Create( \
+            cache[GFONT_REGULAR], \
+            TextConfig_Create( \
+                .scale_width  = 1 / 4.0, \
+                .scale_height = 1 / 4.0, \
+                .color = (SDL_Color){255, 70, 60, 255} \
             ) \
         ), \
     }
@@ -293,36 +311,64 @@ extern Text *play_text[GPLAY_TEXT_COUNT];
     }
 
 
-// Type bed
-#define GPLAY_BUTTON_BED_CONFIG_NEUTRAL    \
+// Type sleep/wake
+#define GPLAY_BUTTON_BED_SLEEP_CONFIG_NEUTRAL    \
     TextConfig_Create(                          \
-        .scale_width = 1 / 5.5,                 \
-        .scale_height = 1 / 5.5,                \
+        .scale_width = 1 / 4.5,                 \
+        .scale_height = 1 / 4.5,                \
         .color = (SDL_Color){255, 180, 27, 255}, \
-        .border = (Border){2, 2, 2, 2},         \
+        .border = (Border){2, 2, 2, 2, (SDL_Color){255, 180, 27, 255}},         \
         .padding = (Padding){5, 5, 5, 5, (SDL_Color){255, 255, 255, 255}}, \
     )
-#define GPLAY_BUTTON_BED_CONFIG_SELECTED   \
+#define GPLAY_BUTTON_BED_SLEEP_CONFIG_SELECTED   \
     TextConfig_Create(                          \
-        .scale_width = 1 / 5.5,                 \
-        .scale_height = 1 / 5.5,                \
+        .scale_width = 1 / 4.5,                 \
+        .scale_height = 1 / 4.5,                \
         .color = (SDL_Color){255, 180, 27, 255}, \
-        .border = (Border){5, 5, 5, 5},         \
+        .border = (Border){5, 5, 5, 5, (SDL_Color){255, 180, 27, 255}},         \
         .padding = (Padding){5, 5, 5, 5, (SDL_Color){255, 255, 255, 255}}, \
     )
-#define GPLAY_BUTTON_BED_CONFIG_HOVER      \
+#define GPLAY_BUTTON_BED_SLEEP_CONFIG_HOVER      \
     TextConfig_Create(                          \
-        .scale_width = 1 / 5.5,                 \
-        .scale_height = 1 / 5.5,                \
+        .scale_width = 1 / 4.5,                 \
+        .scale_height = 1 / 4.5,                \
         .color = (SDL_Color){255, 180, 27, 255}, \
-        .border = (Border){5, 5, 5, 5},         \
+        .border = (Border){5, 5, 5, 5, (SDL_Color){255, 180, 27, 255}},         \
         .padding = (Padding){5, 5, 5, 5, (SDL_Color){255, 255, 255, 255}}, \
     )
-#define GPLAY_BUTTON_BED_CONFIG \
+#define GPLAY_BUTTON_BED_SLEEP_CONFIG \
     { \
-        [INP_STATE_NEUTRAL]  = GPLAY_BUTTON_BED_CONFIG_NEUTRAL,   \
-        [INP_STATE_SELECTED] = GPLAY_BUTTON_BED_CONFIG_SELECTED,  \
-        [INP_STATE_HOVER]    = GPLAY_BUTTON_BED_CONFIG_HOVER,     \
+        [INP_STATE_NEUTRAL]  = GPLAY_BUTTON_BED_SLEEP_CONFIG_NEUTRAL,   \
+        [INP_STATE_SELECTED] = GPLAY_BUTTON_BED_SLEEP_CONFIG_SELECTED,  \
+        [INP_STATE_HOVER]    = GPLAY_BUTTON_BED_SLEEP_CONFIG_HOVER,     \
+    }
+
+// Type back
+#define GPLAY_BUTTON_BED_BED_CONFIG_NEUTRAL    \
+    TextConfig_Create(                          \
+        .scale_width =  1 / 2.0,                \
+        .scale_height = 1 / 2.0,                \
+        .color = (SDL_Color){255, 255, 255, 255}, \
+    )
+#define GPLAY_BUTTON_BED_BED_CONFIG_SELECTED   \
+    TextConfig_Create(                          \
+        .scale_width =  1 / 2.0,                \
+        .scale_height = 1 / 2.0,                \
+        .color = (SDL_Color){255, 255, 255, 255}, \
+        .chr_fmt = CHAR_FMT_BOLD \
+    )
+#define GPLAY_BUTTON_BED_BED_CONFIG_HOVER      \
+    TextConfig_Create(                          \
+        .scale_width =  1 / 2.0,                \
+        .scale_height = 1 / 2.0,                \
+        .color = (SDL_Color){255, 255, 255, 255}, \
+        .chr_fmt = CHAR_FMT_BOLD \
+    )
+#define GPLAY_BUTTON_BED_BACK_CONFIG \
+    { \
+        [INP_STATE_NEUTRAL]  = GPLAY_BUTTON_BED_BED_CONFIG_NEUTRAL,   \
+        [INP_STATE_SELECTED] = GPLAY_BUTTON_BED_BED_CONFIG_SELECTED,  \
+        [INP_STATE_HOVER]    = GPLAY_BUTTON_BED_BED_CONFIG_HOVER,     \
     }
 
 //
@@ -341,8 +387,8 @@ extern Text *play_text[GPLAY_TEXT_COUNT];
         [GPLAY_BUTTON_BED_INCR_MIN]        = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])GPLAY_BUTTON_BED_ARROW_2_CONFIG), ""), \
         [GPLAY_BUTTON_BED_DECR_HOUR]       = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])GPLAY_BUTTON_BED_ARROW_1_CONFIG), ""), \
         [GPLAY_BUTTON_BED_DECR_MIN]        = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])GPLAY_BUTTON_BED_ARROW_1_CONFIG), ""), \
-        [GPLAY_BUTTON_BED_SLEEP]           = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])GPLAY_BUTTON_BED_CONFIG), "Descansar"), \
-        [GPLAY_BUTTON_BED_BACK]            = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])GPLAY_BUTTON_BED_CONFIG), "Acordar"), \
+        [GPLAY_BUTTON_BED_SLEEP]           = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])GPLAY_BUTTON_BED_SLEEP_CONFIG), NULL), \
+        [GPLAY_BUTTON_BED_BACK]            = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])GPLAY_BUTTON_BED_BACK_CONFIG), "X"), \
         \
         [GPLAY_BUTTON_PAUSED_RESUME]        = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])MENU_BUTTON_CONFIG), "Retornar"),         \
         [GPLAY_BUTTON_PAUSED_LOAD]          = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])MENU_BUTTON_CONFIG), "Carregar"),         \

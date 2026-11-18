@@ -69,7 +69,7 @@ void Monitor_handleInput(SDL_Event*e)
     else {
         gamePlay_tex = GPLAY_TEX_MONITOR_POWER_BUTTON_UNSELECTED;
     }
-    if(play_buttons[GPLAY_BUTTON_MONITOR_BACK]->state[INP_STATE_SELECTED]){
+    if(play_buttons[GPLAY_BUTTON_MONITOR_BACK]->state[INP_STATE_SELECTED] && !in_transition){
         Monitor_Leave();
         Room1_Load();
     }

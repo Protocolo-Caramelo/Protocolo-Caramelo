@@ -4,5 +4,6 @@
 #include"config.h"
 #include"menu.h"
 #include"play.h"
+#include"gameover.h"
 
 #endif

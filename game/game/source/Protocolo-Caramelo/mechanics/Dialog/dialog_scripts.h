@@ -15,4 +15,8 @@ void DialogScripts_FelipeCall(void);
  * Fica guardada no Bate-boca, na conversa "Ana". */
 void DialogScripts_AnaCall(void);
 
+/* A porta: Pedro conversa com o dono do prédio e paga as contas semanais.
+ * O menu é montado na hora, com as contas que estiverem pendentes. */
+void DialogScripts_DoorOwner(void);
+
 #endif

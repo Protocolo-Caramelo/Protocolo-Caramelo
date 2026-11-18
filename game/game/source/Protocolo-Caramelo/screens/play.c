@@ -1,8 +1,10 @@
+#include<math.h>
 #include"play.h"
 #include"play/room.h"
 #include"play/monitor.h"
 #include"play/pause.h"
 #include"play/bed.h"
+#include"gameover.h"
 
 #include"game/game.h"
 #include"screens_communs.h"
@@ -86,7 +88,7 @@ static const double mineSession_diffProbalities[MATHPROBLEM_DIFFICULTY_COUNT][MA
     }
 };
 // Status 
-static char displayStatus_buffer[10];
+static char displayStatus_buffer[64];
 // Transition
 int in_transition;
 static int trans_init;
@@ -95,6 +97,8 @@ static int trans_duration;
 static Game_State       trans_newGameState;
 static Game_PlayState   trans_newGamePlayState;
 static GamePlay_Texture trans_newGamePlayTexture;
+// Bill
+static int bill_tW, bill_tH;
 
 // Display functions
 void Play_DisplayBackground(GamePlay_Texture tex, SDL_Rect *tex_rect, SDL_Rect *tex_rectRaw, double*scale_width, double*scale_height)
@@ -250,6 +254,40 @@ void Play_DisplayButtonArrow(Button*b, SDL_Rect*bg_texDest, int x, int y)
     free(str_prev);
 }
 
+static void Play_DisplayBills(int x, int y, double texScale_h)
+{
+    Bill *b;
+    double due;
+    int days, hours, n;
+    SDL_Color color;
+
+    if(Bills_PendingCount() == 0){
+        return;
+    }
+
+    due   = Bills_SecondsUntilDue();
+    days  = (int)(due / 86400.0);
+    hours = (int)(fmod(due, 86400.0) / 3600.0);
+    // Under 1 day left: red
+    color = (due < 86400.0)? (SDL_Color){255, 70, 60, 255}: (SDL_Color){255, 180, 27, 255};
+    bill_tW = bill_tH = 0;
+
+    sprintf(displayStatus_buffer, "Contas - vence em %dd %02dh", days, hours);
+    Text_DrawUTF8(bills_t, displayStatus_buffer,
+        TextConfig_Create(.x = x, .y = y, .color = color), NULL);
+    y += (*Text_edges(bills_t))[DRAW_HEIGHT] + 2 * texScale_h;
+
+    for(n = 0; (b = Bills_PendingAt(n)); ++n){
+        sprintf(displayStatus_buffer, "%s: %.2lf", b->name, b->amount / 100.0);
+        Text_DrawUTF8(bills_t, displayStatus_buffer,
+            TextConfig_Create(.x = x, .y = y, .color = color), NULL);
+        y += (*Text_edges(bills_t))[DRAW_HEIGHT] + 2 * texScale_h;
+        //
+        bill_tW = MAX(bill_tW, (*Text_edges(bills_t))[DRAW_WIDTH]);
+        bill_tH += (*Text_edges(bills_t))[DRAW_HEIGHT] + 2 * texScale_h;
+    }
+}
+
 void Play_DisplayStatus(SDL_Rect *tex_dest, double texScale_w, double texScale_h)
 {
     SDL_Rect dest, dest_src;
@@ -349,6 +387,10 @@ void Play_DisplayStatus(SDL_Rect *tex_dest, double texScale_w, double texScale_h
         ),
         NULL
     );
+    y += (*Text_edges(coins_t))[DRAW_HEIGHT] + 4 * texScale_h;
+
+    // Pending bills (below the caramelos)
+    Play_DisplayBills(x, tex_dest->y + tex_dest->h - bill_tH, texScale_h);
 
     //
     tex = status_tex[GSTATUS_TEX_ENERGY_MASK];
@@ -479,13 +521,16 @@ SDL_Texture* Play_TakeWindowScreenShot()
 // Manage mechanics
 void Play_ManageClock()
 {
-    if(game_statePrev != game_state || game_playStatePrev == GAME_PLAY_STATE_PAUSED){
+    if(game_statePrev != game_state || game_playStatePrev == GAME_PLAY_STATE_PAUSED || game_playStatePrev == GAME_PLAY_STATE_BED){
         clock_timePrev = SDL_GetTicks();
     }
 
     clock_timeDelay = SDL_GetTicks() - clock_timePrev;
     Clock_SumMs(gclock, clock_timeDelay * CLOCK_TIME_PLAYER_TO_TIME_GAME);
     clock_timePrev = SDL_GetTicks();
+
+    // Weekly bills follow the game time
+    Bills_Advance(clock_timeDelay * (double)CLOCK_TIME_PLAYER_TO_TIME_GAME / 1000.0);
 }
 
 void Play_GetClockFormat(char*to, char*fmt)
@@ -587,7 +632,7 @@ void Play_ManageMineSession()
 
 void Play_ManageStatus()
 {
-    if(game_statePrev != game_state || game_playStatePrev == GAME_PLAY_STATE_PAUSED){
+    if(game_statePrev != game_state || game_playStatePrev == GAME_PLAY_STATE_PAUSED || game_playState == GAME_PLAY_STATE_BED){
         return;
     }
 
@@ -628,6 +673,16 @@ void Play_Render()
     Play_ManageClock();
     Play_ManageMineSession();
     Play_ManageStatus();
+    //
+    if(i_health <= 0){
+        GameOver_Trigger(GAMEOVER_HEALTH);
+    }
+    else if(Bills_Failed()){
+        GameOver_Trigger(GAMEOVER_BILL);
+    }
+    if(game_state == GAME_STATE_SCREEN_GAMEOVER){
+        return;
+    }
     //
     game_statePrev = game_state;
     game_playStatePrev = game_playState;

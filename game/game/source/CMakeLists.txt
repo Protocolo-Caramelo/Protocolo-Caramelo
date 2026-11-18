@@ -60,12 +60,14 @@ target_sources(
 
         Protocolo-Caramelo/screens/menu.c
         Protocolo-Caramelo/screens/play.c
+        Protocolo-Caramelo/screens/gameover.c
         #
         Protocolo-Caramelo/mechanics/MathProblem/aes128.c
         Protocolo-Caramelo/mechanics/MathProblem/mathproblem.c
         Protocolo-Caramelo/mechanics/MathProblem/mathproblem_generators.c
 
         Protocolo-Caramelo/mechanics/Clock/clock.c
+        Protocolo-Caramelo/mechanics/Bills/bills.c
 
         Protocolo-Caramelo/mechanics/Dialog/dialog_fx.c
         Protocolo-Caramelo/mechanics/Dialog/dialog_log.c

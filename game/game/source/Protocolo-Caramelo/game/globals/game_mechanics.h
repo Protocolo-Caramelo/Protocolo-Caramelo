@@ -12,6 +12,7 @@
 #define CLOCK_INIT_MONTH MAI_
 #define CLOCK_INIT_YEAR  2046
 #define CLOCK_TIME_PLAYER_TO_TIME_GAME (60)
+#define CLOCK_SLEEP_TIME_PLAYER_TO_TIME_GAME (60 * 30)
 extern Clock *gclock;
 
 #define MINESESSION_DURATION_IN_HOURS 3
@@ -211,6 +212,12 @@ enum {
 extern SDL_Texture *status_tex[GSTATUS_TEX_COUNT];
 #define COIN_ICON_WIDTH 50
 extern Text *coins_t;
+extern Text *bills_t;   /* lista de contas pendentes (abaixo dos caramelos) */
+
+/* Multiplicador do valor das contas por dificuldade */
+#define GDIFF_BILLS_COST_FACTOR { \
+    [GDIFF_EASY] = 0.8, [GDIFF_NORMAL] = 1.0, \
+    [GDIFF_HARD] = 1.25, [GDIFF_IMPOSSIBLE] = 1.5 }
 
 void coins_t_alterBorder(Text*, Texture*);
 
