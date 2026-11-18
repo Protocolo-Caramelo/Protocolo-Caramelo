@@ -158,7 +158,7 @@ DialogStyle DialogStyle_Make(void)
     };
 
     /* Rosto */
-    s.face.side  = DIALOG_FACE_RIGHT;
+    s.face.side  = DIALOG_FACE_LEFT;
     s.face.inset = 8;
     s.face.gap   = 16;
     s.face.jelly = (DialogJellyStyle){
@@ -178,7 +178,7 @@ DialogStyle DialogStyle_Make(void)
 
     /* Menu de opcoes */
     s.choice = (DialogChoiceStyle){
-        .align            = DIALOG_CHOICE_ALIGN_LEFT,
+        .align            = DIALOG_CHOICE_ALIGN_RIGHT,
         .gap              = 10,
         .min_width        = 260,
         .row_gap          = 6,

@@ -29,8 +29,8 @@ static const MonitorApp apps[MONITOR_APP_COUNT] = {
         .handle_event   = AppMiner_HandleEvent,
     },
     [MONITOR_APP_DELIVERY] = {
-        .icon_label     = "EntregasRápidas",
-        .window_title   = "Entregas Rápidas",
+        .icon_label     = "Entregas-Rápidas",
+        .window_title   = "Entregas-Rápidas",
         .icon_path      = "./assets/images/monitor/icon_delivery.png",
         .icon_cell      = {7, 2},
         .window_w       = 900,  .window_h     = 680,

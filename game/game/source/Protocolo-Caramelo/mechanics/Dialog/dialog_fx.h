@@ -44,7 +44,9 @@ typedef struct DialogRevealStyle {
 typedef struct DialogWaveStyle {
     double amplitude_px;      /* altura da onda (0 desliga) */
     double frequency_hz;      /* ciclos por segundo */
-    double phase_per_char;    /* defasagem entre letras vizinhas, em radianos */
+    double phase_per_char;    /* defasagem entre COLUNAS vizinhas, em radianos. A fase depende so
+                                  da posicao horizontal: a mesma coluna ondula igual em todas as
+                                  linhas e o bloco todo parece uma grande onda. */
 } DialogWaveStyle;
 
 /* Efeito "gelatina" no rosto enquanto o personagem fala */
@@ -95,8 +97,13 @@ double DialogFx_Alpha(double elapsed_ms, double start_ms, double duration_ms);
 /* Ondulacao                                                           */
 /* ------------------------------------------------------------------ */
 
-/* Deslocamento vertical (px, entre -amplitude e +amplitude) da letra de indice char_idx. */
-double DialogFx_Wave(const DialogWaveStyle *wave, double time_ms, size_t char_idx);
+/*
+ * Deslocamento vertical (px, entre -amplitude e +amplitude) de uma letra que esta
+ * na coluna `column` (posicao horizontal dividida pela largura media de uma letra;
+ * pode ser fracionaria). Letras na mesma coluna, em linhas diferentes, recebem o
+ * mesmo valor.
+ */
+double DialogFx_Wave(const DialogWaveStyle *wave, double time_ms, double column);
 
 /* ------------------------------------------------------------------ */
 /* Gelatina                                                            */

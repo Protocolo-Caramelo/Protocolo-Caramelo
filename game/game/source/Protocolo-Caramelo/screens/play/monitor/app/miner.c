@@ -20,7 +20,12 @@ static MonitorText *tip;
 #define T_MINESESSIONTIME_CLOCK_SPRINTF "%02i:%02i:%02is"
 static MonitorText *t_mineSessionTime_title;
 static MonitorText *t_mineSessionTime_clock;
-char t_mineSessionTime_buffer[43];
+static char t_mineSessionTime_buffer[43];
+#define T_MINESESSION_COIN_REWARD_SPRINTF "Recompensa: %.2lf"
+static MonitorText *t_mineSessionCoinReward;
+static char t_mineSessionCoinReward_buffer[20];
+//
+static int question_init;
 
 enum SUBMIT_STATUS {
     SUBMIT_WRONG,
@@ -29,15 +34,15 @@ enum SUBMIT_STATUS {
 };
 static int status = SUBMIT_NOT_SEND;
 
-
 #define STATUS_WRONG        " Errado"
 #define STATUS_CORRECT      " Correto"
 #define STATUS_NOT_SUBMITED " N/A"
-//
+
 #define STATUS_WRONG_COLOR        (SDL_Color){255, 0, 0, 255}
 #define STATUS_CORRECT_COLOR      (SDL_Color){0, 255, 0, 255}
 #define STATUS_NOT_SUBMITED_COLOR (SDL_Color){0, 0, 0, 125}
 
+//
 void AppMiner_drawVertical(const SDL_Rect *body)
 {
 }
@@ -189,6 +194,18 @@ void AppMiner_drawHorizontal(const SDL_Rect *body)
     );
     Text_SetUTF8(t->text, t_mineSessionTime_buffer);
     MonitorText_Draw(t, x, y, scale);
+
+    // Reward
+    t = t_mineSessionCoinReward;
+    x = (*Text_edges(t_question->text))[DRAW_EDGE_XMIN];
+    y = (*Text_edges(t_question->text))[DRAW_EDGE_YMAX] + 10 * scale;
+    sprintf(
+        t_mineSessionCoinReward_buffer,
+        T_MINESESSION_COIN_REWARD_SPRINTF,
+        (!mineSession_paused)? GINFO_CARAMELOS_GAIN_EACH_QUESTION_CORRECT(mineSession[mineSession_i]->difficulty, question_init, SDL_GetTicks()) / 100.0: 0
+    );
+    Text_SetUTF8(t->text, t_mineSessionCoinReward_buffer);
+    MonitorText_Draw(t, x, y, scale);
 }
 
 
@@ -204,6 +221,15 @@ void AppMiner_handleKeyDown(const SDL_Event *e)
             }
 
             status = MathProblem_CheckAnswer(mineSession[mineSession_i], *Text_raw(ti_answer->text));
+            if(status == SUBMIT_CORRECT){
+                i_energy    -= GINFO_ENERGY_LOSS_EACH_QUESTION_CORRECT;
+                i_caramelos += GINFO_CARAMELOS_GAIN_EACH_QUESTION_CORRECT(mineSession[mineSession_i]->difficulty, question_init, SDL_GetTicks());
+                question_init = SDL_GetTicks();
+            }
+            else {
+                i_energy    -= GINFO_ENERGY_LOSS_EACH_QUESTION_WRONG;
+            }
+
             break;
 
         default:
@@ -225,7 +251,7 @@ void AppMiner_handlerButtonDown(const SDL_Event *e)
         && y >= (*edges)[DRAW_EDGE_YMIN] && y <= (*edges)[DRAW_EDGE_YMAX]
         ;
 
-    if(ti_answer_clicked && !strcmp(*Text_raw(ti_answer->text), TI_ANSWER_PLACEHOLD)){
+    if(ti_answer_clicked && (*Text_raw(ti_answer->text)) && !strcmp(*Text_raw(ti_answer->text), TI_ANSWER_PLACEHOLD)){
         Text_SetUTF8(ti_answer->text, NULL);
     }
     if(!ti_answer_clicked && !Text_GetSizeUTF8(ti_answer->text)){
@@ -306,8 +332,8 @@ void AppMiner_Init(void)
     t_question = MonitorText_Create(
         cache[GFONT_REGULAR],
         TextConfig_Create(
-            .scale_width  = 1 / 2.5,
-            .scale_height = 1 / 2.5,
+            .scale_width  = 1 / 4.0,
+            .scale_height = 1 / 4.0,
             .color = (SDL_Color){0, 0, 0, 255},
         ),
         MINESESSION_PAUSED
@@ -369,6 +395,16 @@ void AppMiner_Init(void)
         ),
         NULL
     );
+    t_mineSessionCoinReward = MonitorText_Create(
+        cache[GFONT_REGULAR],
+        TextConfig_Create(
+            .scale_width = 1 / 4.0,
+            .scale_height = 1 / 4.0,
+            .color = (SDL_Color){.a=255},
+            .chr_fmt = CHAR_FMT_UNDERLINE,
+        ),
+        NULL
+    );
 }
 
 void AppMiner_Quit(void)
@@ -399,8 +435,6 @@ void AppMiner_HandleEvent(const SDL_Event *e, const SDL_Rect *body, int pointer_
     if(status == SUBMIT_CORRECT){
         status = SUBMIT_NOT_SEND;
     }
-
-    // printf("%i\n", SDL_GetTicks());
     switch(e->type){
         case SDL_KEYDOWN:
             AppMiner_handleKeyDown(e);

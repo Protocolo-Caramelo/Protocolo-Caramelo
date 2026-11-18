@@ -35,12 +35,10 @@ target_sources(
         Protocolo-Caramelo/inputs/text.c
         #
         Protocolo-Caramelo/screens/play/monitor.c
-
         Protocolo-Caramelo/screens/play/monitor/app/taskmgr.c
         Protocolo-Caramelo/screens/play/monitor/app/miner.c
         Protocolo-Caramelo/screens/play/monitor/app/entregas_rapidas.c
         Protocolo-Caramelo/screens/play/monitor/app/bateboca.c
-
         Protocolo-Caramelo/screens/play/monitor/monitor_space.c
         Protocolo-Caramelo/screens/play/monitor/monitor_draw.c
         Protocolo-Caramelo/screens/play/monitor/monitor_text.c
@@ -58,6 +56,8 @@ target_sources(
         Protocolo-Caramelo/screens/play/monitor/monitor_desktop.c
         Protocolo-Caramelo/screens/play/room.c
         Protocolo-Caramelo/screens/play/pause.c
+        Protocolo-Caramelo/screens/play/bed.c
+
         Protocolo-Caramelo/screens/menu.c
         Protocolo-Caramelo/screens/play.c
         #

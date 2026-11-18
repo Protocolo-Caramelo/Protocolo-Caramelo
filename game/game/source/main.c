@@ -37,7 +37,6 @@ int main(int argc, char*argv[])
 //
 void Test_libgraphical()
 {
-    /*
     const char font_path[] = 
         // "./assets/fonts/Ubuntu/Ubuntu-Regular.ttf"
         "./assets/fonts/Press_Start_2P/PressStart2P-Regular.ttf"

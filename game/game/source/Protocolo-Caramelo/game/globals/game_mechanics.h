@@ -5,16 +5,6 @@
 #include<SDL2/SDL_image.h>
 #include"mechanics/mechanics.h"
 
-typedef enum Difficulty Difficulty;
-enum Difficulty {
-    GDIFF_EASY,
-    GDIFF_NORMAL,
-    GDIFF_HARD,
-    GDIFF_IMPOSSIBLE,
-
-    GDIFF_COUNT
-};
-
 #define CLOCK_INIT_SEC   0
 #define CLOCK_INIT_MIN   0
 #define CLOCK_INIT_HOUR  21
@@ -176,6 +166,16 @@ extern SDL_Texture *chars_tex[C_COUNT][CS_COUNT];
         \
     }
 
+
+typedef enum Difficulty Difficulty;
+enum Difficulty {
+    GDIFF_EASY,
+    GDIFF_NORMAL,
+    GDIFF_HARD,
+    GDIFF_IMPOSSIBLE,
+
+    GDIFF_COUNT
+};
 #define GDIFF_INIT GDIFF_EASY
 extern Difficulty gdiff;
 
@@ -184,25 +184,37 @@ extern Difficulty gdiff;
 #define GSTATUS_TEX_SIZE_H 100
 #define GSTATUS_TEX_PATH \
     { \
-        [GSTATUS_TEX_HEALTH]     = "./assets/images/status/StatusHealth.png",    \
-        [GSTATUS_TEX_HEALTH_INV] = "./assets/images/status/StatusHealthInv.png", \
-        [GSTATUS_TEX_ENERGY]     = "./assets/images/status/StatusEnergy.png",    \
-        [GSTATUS_TEX_ENERGY_INV] = "./assets/images/status/StatusEnergyInv.png", \
-        [GSTATUS_TEX_TIRED]      = "./assets/images/status/StatusTired.png",     \
-        [GSTATUS_TEX_TIRED_INV]  = "./assets/images/status/StatusTiredInv.png",  \
+        [GSTATUS_TEX_HEALTH]      = "./assets/images/status/StatusHealth.png",    \
+        [GSTATUS_TEX_HEALTH_INV]  = "./assets/images/status/StatusHealthInv.png", \
+        [GSTATUS_TEX_HEALTH_MASK] = "./assets/images/status/StatusHealthMask.png", \
+        [GSTATUS_TEX_ENERGY]      = "./assets/images/status/StatusEnergy.png",    \
+        [GSTATUS_TEX_ENERGY_INV]  = "./assets/images/status/StatusEnergyInv.png", \
+        [GSTATUS_TEX_ENERGY_MASK] = "./assets/images/status/StatusEnergyMask.png", \
+        [GSTATUS_TEX_TIRED]       = "./assets/images/status/StatusTired.png",     \
+        [GSTATUS_TEX_TIRED_INV]   = "./assets/images/status/StatusTiredInv.png",  \
+        \
+        [GSTATUS_TEX_COINS]       = "./assets/images/status/Caramelos.png",       \
     }
 enum {
     GSTATUS_TEX_HEALTH,
     GSTATUS_TEX_HEALTH_INV,
+    GSTATUS_TEX_HEALTH_MASK,
     GSTATUS_TEX_ENERGY,
     GSTATUS_TEX_ENERGY_INV,
+    GSTATUS_TEX_ENERGY_MASK,
     GSTATUS_TEX_TIRED,
     GSTATUS_TEX_TIRED_INV,
+    GSTATUS_TEX_COINS,
 
     GSTATUS_TEX_COUNT
 };
 extern SDL_Texture *status_tex[GSTATUS_TEX_COUNT];
+#define COIN_ICON_WIDTH 50
+extern Text *coins_t;
 
+void coins_t_alterBorder(Text*, Texture*);
+
+//
 void GameMechanics_Init();
 void GameMechanics_Quit();
 

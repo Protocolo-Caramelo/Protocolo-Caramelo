@@ -15,7 +15,6 @@
 GamePlay_Texture gamePlay_tex;
 //
 TextConfig  *play_buttonsArrowConfig[INP_STATES_MAX];
-TextConfig  *play_buttonMonitorPowerConfig[INP_STATES_MAX];
 Text        *play_text[GPLAY_TEXT_COUNT];
 SDL_Texture *play_tex[GPLAY_TEX_COUNT];
 Button      *play_buttons[GPLAY_BUTTON_COUNT];
@@ -27,7 +26,6 @@ void GamePlay_Init()
     size_t i;
 
     memcpy(play_buttonsArrowConfig, (TextConfig*[INP_STATES_MAX])GPLAY_BUTTON_ARROW_CONFIG, sizeof(play_buttonsArrowConfig));
-    memcpy(play_buttonMonitorPowerConfig, (TextConfig*[INP_STATES_MAX])GPLAY_BUTTON_MONITOR_POWER_CONFIG, sizeof(play_buttonMonitorPowerConfig));
 
     // Texts
     memcpy(play_text, (Text*[GPLAY_TEXT_COUNT])GPLAY_TEXT, sizeof(play_text));
@@ -101,14 +99,14 @@ void GamePlay_Quit()
     GameMechanics_Quit();
 }
 
-// Button type alternate functions
+// Button Arrow 1 type alternate functions
 void gamePlay_Button_Arrow_Neutral_alterBorder(Text*t, Texture*tex)
 {
     SDL_Rect dest;
 
     SDL_GetWindowSize(w, &w_width, &w_height);
     //
-    dest = b_arrowState[GBUTTON_ARROW_STATE_NEUTRAL];
+    dest = gbuttons_rects[GBUTTON_TYPE_ARROW_1][GBUTTON_STATE_NEUTRAL];
     if(w_width / (double)w_height < dest.w / (double)dest.h){
         dest.w *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_width / (double)GCORE_WINDOW_W;
         dest.h *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_width / (double)GCORE_WINDOW_W;
@@ -123,8 +121,8 @@ void gamePlay_Button_Arrow_Neutral_alterBorder(Text*t, Texture*tex)
     //
     SDL_RenderCopy(
         r,
-        b_arrowTex,
-        &b_arrowState[GBUTTON_ARROW_STATE_NEUTRAL],
+        gbuttons_tex[GBUTTON_TYPE_ARROW_1],
+        &gbuttons_rects[GBUTTON_TYPE_ARROW_1][GBUTTON_STATE_NEUTRAL],
         &dest
     );
 }
@@ -135,7 +133,7 @@ void gamePlay_Button_Arrow_Selected_alterBorder(Text*t, Texture*tex)
 
     SDL_GetWindowSize(w, &w_width, &w_height);
     //
-    dest = b_arrowState[GBUTTON_ARROW_STATE_NEUTRAL];
+    dest = gbuttons_rects[GBUTTON_TYPE_ARROW_1][GBUTTON_STATE_SELECTED];
     if(w_width / (double)w_height < dest.w / (double)dest.h){
         dest.w *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_width / (double)GCORE_WINDOW_W;
         dest.h *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_width / (double)GCORE_WINDOW_W;
@@ -150,8 +148,8 @@ void gamePlay_Button_Arrow_Selected_alterBorder(Text*t, Texture*tex)
     //
     SDL_RenderCopy(
         r,
-        b_arrowTex,
-        &b_arrowState[GBUTTON_ARROW_STATE_SELECTED],
+        gbuttons_tex[GBUTTON_TYPE_ARROW_1],
+        &gbuttons_rects[GBUTTON_TYPE_ARROW_1][GBUTTON_STATE_SELECTED],
         &dest
     );
 }
@@ -163,7 +161,7 @@ void gamePlay_Button_Arrow_Hover_alterBorder(Text*t, Texture*tex)
 
     SDL_GetWindowSize(w, &w_width, &w_height);
     //
-    dest = b_arrowState[GBUTTON_ARROW_STATE_NEUTRAL];
+    dest = gbuttons_rects[GBUTTON_TYPE_ARROW_1][GBUTTON_STATE_HOVER];
     if(w_width / (double)w_height < dest.w / (double)dest.h){
         dest.w *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_width / (double)GCORE_WINDOW_W;
         dest.h *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_width / (double)GCORE_WINDOW_W;
@@ -178,8 +176,93 @@ void gamePlay_Button_Arrow_Hover_alterBorder(Text*t, Texture*tex)
     //
     SDL_RenderCopy(
         r,
-        b_arrowTex,
-        &b_arrowState[GBUTTON_ARROW_STATE_HOVER],
+        gbuttons_tex[GBUTTON_TYPE_ARROW_1],
+        &gbuttons_rects[GBUTTON_TYPE_ARROW_1][GBUTTON_STATE_HOVER],
+        &dest
+    );
+}
+
+// Button Arrow 2 type alternate functions
+void gamePlay_Button_Arrow_2_Neutral_alterBorder(Text*t, Texture*tex)
+{
+    SDL_Rect dest;
+    int w_width, w_height;
+
+    SDL_GetWindowSize(w, &w_width, &w_height);
+    //
+    dest = gbuttons_rects[GBUTTON_TYPE_ARROW_2][GBUTTON_STATE_NEUTRAL];
+    if(w_width / (double)w_height < dest.w / (double)dest.h){
+        dest.w *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_width / (double)GCORE_WINDOW_W;
+        dest.h *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_width / (double)GCORE_WINDOW_W;
+    }
+    else {
+        dest.w *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_height / (double)GCORE_WINDOW_W;
+        dest.h *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_height / (double)GCORE_WINDOW_W;
+    }
+    //
+    dest.x = ((*Text_edgesBack(t))[DRAW_TEXT_WIDTH] + *Text_borderLeft(t) + *Text_borderRight(t)) / 2 - dest.w / 2;
+    dest.y = (*Text_edgesBack(t))[DRAW_EDGE_TEXT_YMAX];
+    //
+    SDL_RenderCopy(
+        r,
+        gbuttons_tex[GBUTTON_TYPE_ARROW_2],
+        &gbuttons_rects[GBUTTON_TYPE_ARROW_2][GBUTTON_STATE_NEUTRAL],
+        &dest
+    );
+}
+
+void gamePlay_Button_Arrow_2_Selected_alterBorder(Text*t, Texture*tex)
+{
+    SDL_Rect dest;
+    int w_width, w_height;
+
+    SDL_GetWindowSize(w, &w_width, &w_height);
+    //
+    dest = gbuttons_rects[GBUTTON_TYPE_ARROW_2][GBUTTON_STATE_SELECTED];
+    if(w_width / (double)w_height < dest.w / (double)dest.h){
+        dest.w *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_width / (double)GCORE_WINDOW_W;
+        dest.h *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_width / (double)GCORE_WINDOW_W;
+    }
+    else {
+        dest.w *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_height / (double)GCORE_WINDOW_W;
+        dest.h *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_height / (double)GCORE_WINDOW_W;
+    }
+    //
+    dest.x = ((*Text_edgesBack(t))[DRAW_TEXT_WIDTH] + *Text_borderLeft(t) + *Text_borderRight(t)) / 2 - dest.w / 2;
+    dest.y = (*Text_edgesBack(t))[DRAW_EDGE_TEXT_YMAX];
+    //
+    SDL_RenderCopy(
+        r,
+        gbuttons_tex[GBUTTON_TYPE_ARROW_2],
+        &gbuttons_rects[GBUTTON_TYPE_ARROW_2][GBUTTON_STATE_SELECTED],
+        &dest
+    );
+}
+
+void gamePlay_Button_Arrow_2_Hover_alterBorder(Text*t, Texture*tex)
+{
+    SDL_Rect dest;
+    int w_width, w_height;
+
+    SDL_GetWindowSize(w, &w_width, &w_height);
+    //
+    dest = gbuttons_rects[GBUTTON_TYPE_ARROW_2][GBUTTON_STATE_HOVER];
+    if(w_width / (double)w_height < dest.w / (double)dest.h){
+        dest.w *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_width / (double)GCORE_WINDOW_W;
+        dest.h *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_width / (double)GCORE_WINDOW_W;
+    }
+    else {
+        dest.w *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_height / (double)GCORE_WINDOW_W;
+        dest.h *= GPLAY_BUTTON_ARROW_TEXTURE_SCALE * w_height / (double)GCORE_WINDOW_W;
+    }
+    //
+    dest.x = ((*Text_edgesBack(t))[DRAW_TEXT_WIDTH] + *Text_borderLeft(t) + *Text_borderRight(t)) / 2 - dest.w / 2;
+    dest.y = (*Text_edgesBack(t))[DRAW_EDGE_TEXT_YMAX];
+    //
+    SDL_RenderCopy(
+        r,
+        gbuttons_tex[GBUTTON_TYPE_ARROW_2],
+        &gbuttons_rects[GBUTTON_TYPE_ARROW_2][GBUTTON_STATE_HOVER],
         &dest
     );
 }

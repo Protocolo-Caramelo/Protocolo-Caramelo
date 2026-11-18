@@ -40,8 +40,8 @@ typedef void (*DialogCharFn)(TextChar *c, const DialogCharInfo *info);
 /* Partes do estilo                                                    */
 /* ------------------------------------------------------------------ */
 typedef enum DialogFaceSide {
-    DIALOG_FACE_RIGHT,   /* rosto na direita, texto na esquerda (padrao) */
-    DIALOG_FACE_LEFT,    /* rosto na esquerda, texto na direita (estilo Undertale) */
+    DIALOG_FACE_LEFT,    /* rosto na esquerda, texto na direita (padrao) */
+    DIALOG_FACE_RIGHT,   /* rosto na direita, texto na esquerda */
     DIALOG_FACE_NONE     /* sem rosto: so o texto */
 } DialogFaceSide;
 
@@ -94,8 +94,8 @@ typedef struct DialogPromptStyle {
  * entao margem, borda, preenchimento e os func_alter* da caixa valem aqui tambem.
  */
 typedef enum DialogChoiceAlign {
-    DIALOG_CHOICE_ALIGN_LEFT,    /* canto esquerdo da caixa de fala (padrao) */
-    DIALOG_CHOICE_ALIGN_RIGHT    /* canto direito */
+    DIALOG_CHOICE_ALIGN_LEFT,    /* canto esquerdo da caixa de fala */
+    DIALOG_CHOICE_ALIGN_RIGHT    /* canto direito (padrao: acima da area do texto) */
 } DialogChoiceAlign;
 
 typedef struct DialogChoiceStyle {

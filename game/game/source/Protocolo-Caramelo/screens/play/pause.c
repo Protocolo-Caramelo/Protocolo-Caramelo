@@ -76,16 +76,6 @@ void Pause_displayButtons()
 
 void Pause_displayBackground()
 {
-    SDL_Texture *t;
-    int tex_w, tex_h;
-
-    t = play_tex[GPLAY_TEX_PAUSED];
-    SDL_QueryTexture(
-        t,
-        NULL, NULL,
-        &tex_w, &tex_h
-    );
-    //
     SDL_RenderCopy(
         r,
         screen_prev,
@@ -154,8 +144,6 @@ void Pause_Render()
 void Pause_Load(SDL_Rect *texDest)
 {
     SDL_Texture *screen;
-    SDL_Surface *screen_surf;
-    int s_w, s_h;
 
     game_playStatePrev = game_playState;
     game_statePrev = game_state;
@@ -165,29 +153,13 @@ void Pause_Load(SDL_Rect *texDest)
     gamePlay_tex   = GPLAY_TEX_PAUSED;
     button_stateChanged = 0;
 
-    // Make a "screenshot" of window
-    SDL_GetRendererOutputSize(r, &s_w, &s_h);
-    screen_surf = SDL_CreateRGBSurfaceWithFormat(
-        0,
-        s_w, s_h,
-        32, SDL_PIXELFORMAT_RGBA8888
-    );
-    SDL_RenderReadPixels(
-        r,
-        NULL,
-        SDL_PIXELFORMAT_RGBA8888,
-        screen_surf->pixels,
-        screen_surf->pitch
-    );
-    screen = SDL_CreateTextureFromSurface(r, screen_surf);
-    SDL_FreeSurface(screen_surf);
-    //
     screen_prev = SDL_CreateTexture(
         r,
         SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
         texDest->w, texDest->h
     );
     //
+    screen = Play_TakeWindowScreenShot();
     SDL_SetRenderTarget(r, screen_prev);
     SDL_RenderCopy(
         r,
@@ -197,12 +169,6 @@ void Pause_Load(SDL_Rect *texDest)
     );
     SDL_SetRenderTarget(r, NULL);
 
-    int w, h;
-    SDL_QueryTexture(
-        screen,
-        NULL, NULL,
-        &w, &h
-    );
     SDL_DestroyTexture(screen);
 }
 

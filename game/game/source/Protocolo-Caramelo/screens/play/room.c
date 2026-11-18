@@ -2,6 +2,7 @@
 #include"screens/play.h"
 #include"screens/play/pause.h"
 #include"screens/play/monitor.h"
+#include"screens/play/bed.h"
 #include"screens/screens_communs.h"
 #include"mechanics/mechanics.h"
 
@@ -112,6 +113,9 @@ void Room_handleKeyDown(SDL_Event*e)
     key = e->key.keysym.sym;
     switch(key){
         case SDLK_ESCAPE:
+            if(in_transition){
+                break;
+            }
             Room1_Leave();
             Room2_Leave();
             Pause_Load(&room_texDest);
@@ -123,9 +127,9 @@ void Room_handleKeyDown(SDL_Event*e)
             DialogScripts_FelipeCall();
             break;
 
-        case SDLK_F3:
+        case SDLK_F4:
             // Dev shortcut: the call with choices (Ana)
-            // DialogScripts_AnaCall();
+            DialogScripts_AnaCall();
             break;
 #endif
 
@@ -166,13 +170,14 @@ void Room1_handleInput(SDL_Event*e)
     }
 
     if(play_buttons[GPLAY_BUTTON_ARROW_ROOM1_BED]->state[INP_STATE_SELECTED]){
-        printf("Feature not avaible yet\n");
+        Room1_Quit();
+        Bed_Load(&room_texDest);
     }
-    if(play_buttons[GPLAY_BUTTON_ARROW_ROOM1_BACK]->state[INP_STATE_SELECTED]){
+    if(play_buttons[GPLAY_BUTTON_ARROW_ROOM1_BACK]->state[INP_STATE_SELECTED] && !in_transition){
         Room1_Leave();
         Room2_Load();
     }
-    if(play_buttons[GPLAY_BUTTON_ARROW_ROOM1_MONITOR]->state[INP_STATE_SELECTED]){
+    if(play_buttons[GPLAY_BUTTON_ARROW_ROOM1_MONITOR]->state[INP_STATE_SELECTED] && !in_transition){
         Room1_Leave();
         Monitor_Load();
     }
@@ -215,9 +220,9 @@ void Room1_Render()
 
     //
     Room_displayBackground();
-    Room_displayStatus();
     Room1_displayButtons();
     Room_displayClock();
+    Room_displayStatus();
 
     while(SDL_PollEvent(&e)){
         Room1_handleInput(&e);
@@ -226,8 +231,12 @@ void Room1_Render()
 
 void Room1_Load()
 {
-    game_playState  = GAME_PLAY_STATE_VIEW_ROOM_1;
-    gamePlay_tex    = GPLAY_TEX_ROOM_1;
+    Play_TransitionInit(
+        500,
+        game_state,
+        GAME_PLAY_STATE_VIEW_ROOM_1,
+        GPLAY_TEX_ROOM_1
+    );
 }
 
 void Room1_Leave()
@@ -251,7 +260,7 @@ void Room2_handleInput(SDL_Event*e)
         Button_handleInput(play_buttons[i], e);
     }
 
-    if(play_buttons[GPLAY_BUTTON_ARROW_ROOM2_BACK]->state[INP_STATE_SELECTED]){
+    if(play_buttons[GPLAY_BUTTON_ARROW_ROOM2_BACK]->state[INP_STATE_SELECTED] && !in_transition){
         Room2_Leave();
         Room1_Load();
     }
@@ -286,9 +295,9 @@ void Room2_Render()
     SDL_SetRenderDrawColor(r, 255, 0, 0, 255); SDL_RenderClear(r);
 
     Room_displayBackground();
-    Room_displayStatus();
     Room2_displayButtons();
     Room_displayClock();
+    Room_displayStatus();
 
     while(SDL_PollEvent(&e)){
         Room2_handleInput(&e);
@@ -297,8 +306,14 @@ void Room2_Render()
 
 void Room2_Load()
 {
-    game_playState  = GAME_PLAY_STATE_VIEW_ROOM_2;
-    gamePlay_tex    = GPLAY_TEX_ROOM_2;
+    // game_playState  = GAME_PLAY_STATE_VIEW_ROOM_2;
+    // gamePlay_tex    = GPLAY_TEX_ROOM_2;
+    Play_TransitionInit(
+        500,
+        game_state,
+        GAME_PLAY_STATE_VIEW_ROOM_2,
+        GPLAY_TEX_ROOM_2
+    );
 }
 
 void Room2_Leave()

@@ -192,14 +192,14 @@ double DialogFx_Alpha(double elapsed_ms, double start_ms, double duration_ms)
 /* ------------------------------------------------------------------ */
 /* Ondulacao                                                           */
 /* ------------------------------------------------------------------ */
-double DialogFx_Wave(const DialogWaveStyle *wave, double time_ms, size_t char_idx)
+double DialogFx_Wave(const DialogWaveStyle *wave, double time_ms, double column)
 {
     if(!wave || wave->amplitude_px == 0.0){
         return 0.0;
     }
     return wave->amplitude_px * sin(
         FX_TWO_PI * wave->frequency_hz * (time_ms / 1000.0)
-        + wave->phase_per_char * (double)char_idx
+        + wave->phase_per_char * column
     );
 }
 

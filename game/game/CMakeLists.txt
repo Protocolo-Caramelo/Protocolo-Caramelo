@@ -59,7 +59,8 @@ set(
     -mwindows
 )
 #
-set(compile_options -Wall -Wextra -D COMPILATION_NORMAL)
+set(compile_options_flags_default -Wall -Wextra -Wno-override-init )
+set(compile_options ${compile_options_flags_default} -D COMPILATION_NORMAL)
 set(compile_features c_std_99)
 
 # Check compilation mode
@@ -71,8 +72,7 @@ endif()
 if(${compilation_mode} STREQUAL "NORMAL")
 elseif(${compilation_mode} STREQUAL "DEVQUOTE")
     set(compile_options
-        -Wall
-        -Wextra
+        ${compile_options_flags_default}
         # -fsanitize=address,undefined -fno-omit-frame-pointer
         -g -O0
         # -O4
@@ -85,9 +85,9 @@ elseif(${compilation_mode} STREQUAL "DEVQUOTE")
     )
 elseif(${compilation_mode} STREQUAL TOOLCHAIN_WINDOWS_DEVQUOTE OR ${compilation_mode} STREQUAL TOOLCHAIN_WINDOWS)
     if(NOT ${compilation_mode} STREQUAL "TOOLCHAIN_WINDOWS_DEVQUOTE")
-        set(compile_options -Wall -Wextra -D COMPILATION_TOOLCHAIN_WINDOWS)
+        set(compile_options ${compile_options_flags_default} -D COMPILATION_TOOLCHAIN_WINDOWS)
     else()
-        set(compile_options -Wall -Wextra -D COMPILATION_TOOLCHAIN_WINDOWS_DEVQUOTE)
+        set(compile_options ${compile_options_flags_default} -D COMPILATION_TOOLCHAIN_WINDOWS_DEVQUOTE)
     endif()
     set(compile_features c_std_99)
 

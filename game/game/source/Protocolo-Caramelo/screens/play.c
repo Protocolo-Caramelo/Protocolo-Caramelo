@@ -2,20 +2,21 @@
 #include"play/room.h"
 #include"play/monitor.h"
 #include"play/pause.h"
+#include"play/bed.h"
 
 #include"game/game.h"
 #include"screens_communs.h"
 
 static Game_State game_statePrev;
 static Game_PlayState game_playStatePrev;
-//
+// Clock
 static int clock_timePrev;
 static int clock_timeDelay;
-//
+// MineSession
 int mineSession_paused     = 1;
 int mineSession_pausedHour = -1;
 int mineSession_modTime    = -1;
-//
+
 static const double mineSession_typeProbabilities[MATHPROBLEM_DIFFICULTY_COUNT][MATHPROBLEM_TYPE_COUNT] = {
     {   /* EASY */
         MINE_SEESSION_PROBLEMTYPE_PROB_EASY_NORMAL,
@@ -84,6 +85,16 @@ static const double mineSession_diffProbalities[MATHPROBLEM_DIFFICULTY_COUNT][MA
         MINE_SEESSION_PROBLEMDIFFICULTY_PROB_IMPOSSIBLE_IMPOSSIBLE
     }
 };
+// Status 
+static char displayStatus_buffer[10];
+// Transition
+int in_transition;
+static int trans_init;
+static int trans_end;
+static int trans_duration;
+static Game_State       trans_newGameState;
+static Game_PlayState   trans_newGamePlayState;
+static GamePlay_Texture trans_newGamePlayTexture;
 
 // Display functions
 void Play_DisplayBackground(GamePlay_Texture tex, SDL_Rect *tex_rect, SDL_Rect *tex_rectRaw, double*scale_width, double*scale_height)
@@ -225,7 +236,7 @@ void Play_DisplayButtonArrow(Button*b, SDL_Rect*bg_texDest, int x, int y)
     }
 
     //
-    tex_w = b_arrowState[GBUTTON_ARROW_STATE_NEUTRAL].w;
+    tex_w = gbuttons_rects[GBUTTON_TYPE_ARROW_1][GBUTTON_STATE_NEUTRAL].w;
     for(i=0; i < INP_STATES_MAX && (*Text_edges(b->text))[DRAW_WIDTH] < tex_w * GPLAY_BUTTON_ARROW_TEXTURE_SCALE * scale; ++i){
         b->state_tc[i]->border.right =
         b->state_tc[i]->border.left =
@@ -245,6 +256,7 @@ void Play_DisplayStatus(SDL_Rect *tex_dest, double texScale_w, double texScale_h
     SDL_Rect destInv, destInv_src;
     SDL_Texture *tex, *texInv;
     int tex_w, tex_h;
+    int tex_nW, tex_nH;
     int texInv_w, texInv_h;
     //
     int infos[] = {
@@ -261,8 +273,8 @@ void Play_DisplayStatus(SDL_Rect *tex_dest, double texScale_w, double texScale_h
     x = tex_dest->x + 20 * texScale_w;
     y = tex_dest->y + 50 * texScale_h;
     for(i=0; i < sizeof(infos) / sizeof(infos[0]); ++i){
-        tex    = status_tex[i * 2];
-        texInv = status_tex[i * 2 + 1];
+        tex    = status_tex[i * 3];
+        texInv = status_tex[i * 3 + 1];
 
         p = infos[i] / GINFO_MAX_VAL;
         SDL_QueryTexture(
@@ -313,6 +325,155 @@ void Play_DisplayStatus(SDL_Rect *tex_dest, double texScale_w, double texScale_h
         
         y = dest.y + dest.h + 10 * texScale_h;
     }
+
+    // Coin
+    tex = status_tex[GSTATUS_TEX_COINS];
+    SDL_QueryTexture(
+        tex, 
+        NULL, NULL,
+        &tex_w, &tex_h
+    );
+
+    tex_nH = (*Text_edges(coins_t))[DRAW_HEIGHT];
+    tex_nW = tex_w / tex_h * tex_nH;
+
+    sprintf(displayStatus_buffer, "%.2lf", i_caramelos / 100.0);
+    Text_DrawUTF8(
+        coins_t,
+        displayStatus_buffer,
+        TextConfig_Create(
+            .x = x,
+            .y = y,
+            .border.left = tex_nW,
+            .padding.left = 10 * texScale_w,
+        ),
+        NULL
+    );
+
+    //
+    tex = status_tex[GSTATUS_TEX_ENERGY_MASK];
+    SDL_SetTextureAlphaMod(
+        tex,
+        250 * (1 - i_energy / GINFO_MAX_VAL)
+    );
+    SDL_RenderCopy(
+        r,
+        tex,
+        NULL,
+        NULL
+    );
+
+    //
+    tex = status_tex[GSTATUS_TEX_HEALTH_MASK];
+    SDL_SetTextureAlphaMod(
+        tex,
+        250 * (1 - i_health / GINFO_MAX_VAL)
+    );
+    SDL_RenderCopy(
+        r,
+        tex,
+        NULL,
+        NULL
+    );
+}
+
+void Play_DisplayText(Text*t, double scale)
+{
+    TextConfig tc_prev;
+
+    tc_prev = *Text_config(t);
+    //
+    Text_DrawUTF8(
+        t,
+        NULL,
+        TextConfig_Create(
+            .scale_width  = *Text_scaleWidth(t)  * scale,
+            .scale_height = *Text_scaleHeight(t) * scale,
+            //
+            .padding.top    = *Text_paddingTop(t)    * scale,
+            .padding.bottom = *Text_paddingBottom(t) * scale,
+            .padding.left   = *Text_paddingLeft(t)   * scale,
+            .padding.right  = *Text_paddingRight(t)  * scale,
+
+            .border.top    = *Text_borderTop(t)    * scale,
+            .border.bottom = *Text_borderBottom(t) * scale,
+            .border.left   = *Text_borderLeft(t)   * scale,
+            .border.right  = *Text_borderRight(t)  * scale,
+
+            .margin.top    = *Text_marginTop(t)    * scale,
+            .margin.bottom = *Text_marginBottom(t) * scale,
+            .margin.left   = *Text_marginLeft(t)   * scale,
+            .margin.right  = *Text_marginRight(t)  * scale,
+        ),
+        NULL
+    );
+    //
+    *Text_config(t) = tc_prev;
+}
+
+// Transition
+void Play_TransitionInit(int ms, Game_State n_gs, Game_PlayState n_gps, GamePlay_Texture n_gpt)
+{
+    trans_init     = SDL_GetTicks();
+    trans_end      = trans_init + ms;
+    trans_duration = ms;
+    trans_newGameState        = n_gs;
+    trans_newGamePlayState    = n_gps;
+    trans_newGamePlayTexture  = n_gpt;
+    in_transition = 1;
+}
+
+void Play_RenderTransition()
+{
+    int expand;
+    if(SDL_GetTicks() > trans_end){
+        in_transition = 0;
+        return;
+    }
+
+    expand = SDL_GetTicks() < (trans_init + trans_duration / 2);
+    if(!expand){
+        game_state     = trans_newGameState;
+        game_playState = trans_newGamePlayState;
+        gamePlay_tex   = trans_newGamePlayTexture;
+    }
+
+    SDL_SetTextureAlphaMod(
+        status_tex[GSTATUS_TEX_ENERGY_MASK],
+        255 * (((expand)? (SDL_GetTicks() - trans_init): trans_end - SDL_GetTicks()) / (trans_duration / 2.0))
+    );
+    SDL_RenderCopy(
+        r,
+        status_tex[GSTATUS_TEX_ENERGY_MASK],
+        NULL,
+        NULL
+    );
+}
+
+// Screenshot
+SDL_Texture* Play_TakeWindowScreenShot()
+{
+    SDL_Texture *screen;
+    SDL_Surface *screen_surf;
+    int s_w, s_h;
+
+    SDL_GetRendererOutputSize(r, &s_w, &s_h);
+    screen_surf = SDL_CreateRGBSurfaceWithFormat(
+        0,
+        s_w, s_h,
+        32, SDL_PIXELFORMAT_RGBA8888
+    );
+    SDL_RenderReadPixels(
+        r,
+        NULL,
+        SDL_PIXELFORMAT_RGBA8888,
+        screen_surf->pixels,
+        screen_surf->pitch
+    );
+    screen = SDL_CreateTextureFromSurface(r, screen_surf);
+    SDL_FreeSurface(screen_surf);
+    //
+    return screen;
 }
 
 // Manage mechanics
@@ -426,6 +587,10 @@ void Play_ManageMineSession()
 
 void Play_ManageStatus()
 {
+    if(game_statePrev != game_state || game_playStatePrev == GAME_PLAY_STATE_PAUSED){
+        return;
+    }
+
     i_health = MAX(MIN(GINFO_MAX_VAL, i_health), 0);
     i_energy = MAX(MIN(GINFO_MAX_VAL, i_energy), 0);
     i_tired  = MAX(MIN(GINFO_MAX_VAL, i_tired), 0);
@@ -484,9 +649,14 @@ void Play_Render()
             Pause_Render();
             break;
 
+        case GAME_PLAY_STATE_BED:
+            Bed_Render();
+            break;
+
         default:
             break;
     }
 
+    Play_RenderTransition();
     Dialog_Render();
 }

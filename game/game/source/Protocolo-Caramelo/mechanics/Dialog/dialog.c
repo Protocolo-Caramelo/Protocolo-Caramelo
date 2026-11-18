@@ -32,6 +32,7 @@ typedef struct DialogRunner {
     size_t menu_chars;
     double menu_slack_px;          /* lidos pelo func_alterText do menu */
     double menu_slot_px;
+    double col_px;                 /* largura media de uma coluna (px): converte x em coluna da onda */
 
     /* fala atual */
     const DialogLine  *line;
@@ -140,7 +141,7 @@ static void Dialog_alterChar(Text *t, TextChar *c)
     /* folga no topo: a onda e a subida nunca empurram a letra para fora da textura */
     c->y += dlg.slack_px;
     /* ondulacao continua (todas as letras, mesmo as ainda invisiveis) */
-    c->y += DialogFx_Wave(&st->wave, dlg.age_ms, idx) * dlg.ui_scale;
+    c->y += DialogFx_Wave(&st->wave, dlg.age_ms, c->x / dlg.col_px) * dlg.ui_scale;
     /* aparicao: sobe de baixo para cima enquanto ganha opacidade */
     c->y += (1.0 - progress) * st->reveal.rise_px * dlg.ui_scale;
     c->color.a = (Uint8)lround(c->color.a * alpha);
@@ -760,7 +761,7 @@ static void Menu_alterChar(TextChar *c)
     c->y += dlg.menu_slack_px;                        /* folga para onda e subida */
     c->y += (1.0 - progress) * cs->rise_px * dlg.ui_scale;
     if(selected){
-        c->y += DialogFx_Wave(&cs->selected_wave, dlg.menu_ms, idx) * dlg.ui_scale;
+        c->y += DialogFx_Wave(&cs->selected_wave, dlg.menu_ms, c->x / dlg.col_px) * dlg.ui_scale;
     }
     c->color = selected? cs->selected_color: cs->idle_color;
     c->color.a = (Uint8)lround(c->color.a * alpha);
@@ -1083,6 +1084,19 @@ static void Runner_drawPrompt(const DialogLayout *L)
     SDL_SetRenderDrawColor(r, old[0], old[1], old[2], old[3]);
 }
 
+/* Largura media de uma coluna: a da letra 'n' mais o espacamento entre letras. */
+static void Runner_updateColumnWidth(const DialogLayout *L)
+{
+    DialogWidthCtx ctx;
+    double w;
+
+    ctx.font_cache  = cache[dlg.style->text.font];
+    ctx.fmt         = dlg.style->text.fmt;
+    ctx.glyph_scale = L->glyph_scale;
+    w = (double)(Dialog_glyphWidth(&ctx, 'n') + L->chr_dist);
+    dlg.col_px = (w >= 1.0)? w: 1.0;
+}
+
 void Dialog_Render(void)
 {
     DialogLayout L;
@@ -1112,6 +1126,7 @@ void Dialog_Render(void)
     Runner_Update(dt);
     Runner_computeLayout(&L, win_w, win_h);
     Runner_ensureWrap(&L);
+    Runner_updateColumnWidth(&L);
 
     Runner_drawBox(&L);
     Runner_drawFace(&L);

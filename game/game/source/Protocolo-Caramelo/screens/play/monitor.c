@@ -24,6 +24,9 @@ void Monitor_handleKeyDown(SDL_Event *e)
     key = e->key.keysym.sym;
     switch(key){
         case SDLK_ESCAPE:
+            if(in_transition){
+                break;
+            }
             Monitor_Leave();
             Pause_Load(&m_texDest);
             break;
@@ -190,8 +193,8 @@ void Monitor_Render()
         MonitorDesktop_Render();
     }
     Monitor_displayButtons();
-    Monitor_displayStatus();
     Monitor_displayClock();
+    Monitor_displayStatus();
 
     while(SDL_PollEvent(&e)){
         Monitor_handleInput(&e);
@@ -201,8 +204,13 @@ void Monitor_Render()
 
 void Monitor_Load()
 {
-    game_playState  = GAME_PLAY_STATE_VIEW_MONITOR;
-    gamePlay_tex    = GPLAY_TEX_MONITOR_POWER_BUTTON_UNSELECTED;
+    Play_TransitionInit(
+        500,
+        game_state,
+        GAME_PLAY_STATE_VIEW_MONITOR,
+        GPLAY_TEX_MONITOR_POWER_BUTTON_UNSELECTED
+    );
+
     MonitorDesktop_Init();
     leaved = 0;
 }

@@ -1,9 +1,10 @@
 #include "mathproblem.h"
 
 #include<stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+#include<stdlib.h>
+#include<string.h>
+#include<time.h>
+#include<SDL2/SDL.h>
 
 #include "mathproblem_generators.h"
 
@@ -18,7 +19,8 @@
  */
 static double SecondsSinceProgramStart(void)
 {
-    return (double)clock() / (double)CLOCKS_PER_SEC;
+    // return (double)clock() / (double)CLOCKS_PER_SEC;
+    return (double)SDL_GetTicks() / 1000.0;
 }
 
 /* Semeia o rand() uma única vez, na primeira geração de problema. */

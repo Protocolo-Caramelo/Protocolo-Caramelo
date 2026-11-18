@@ -3,21 +3,27 @@
 
 #include"inputs/inputs.h"
 
-// Arrow type
-#define GBUTTON_TEXTURE_PATH_SEELCTED 
-#define GBUTTON_TEXTURE_PATH_HOVER
-#define GBUTTON_TEXTURE_PATH_NEUTRAL
+enum ButtonType {
+    GBUTTON_TYPE_ARROW_1,
+    GBUTTON_TYPE_ARROW_2,
 
-#define GBUTTON_ARROW_TEXTURE_PATH  "./assets/images/button/arrow.png"
-typedef enum ButtonArrow_TexState ButtonArrow_TexState;
-enum ButtonArrow_TextState {
-    GBUTTON_ARROW_STATE_NEUTRAL,
-    GBUTTON_ARROW_STATE_SELECTED,
-    GBUTTON_ARROW_STATE_HOVER,
-    GBUTTON_ARROW_STATE_COUNT
+    GBUTTON_TYPE_COUNT
 };
-extern SDL_Rect b_arrowState[GBUTTON_ARROW_STATE_COUNT];
-extern SDL_Texture *b_arrowTex;
+enum Button_Sates{
+    GBUTTON_STATE_NEUTRAL,
+    GBUTTON_STATE_SELECTED,
+    GBUTTON_STATE_HOVER,
+
+    GBUTTON_STATE_COUNT
+};
+
+#define GBUTTON_TEX_PATH \
+    { \
+        [GBUTTON_TYPE_ARROW_1] = "./assets/images/button/arrow.png", \
+        [GBUTTON_TYPE_ARROW_2] = "./assets/images/button/arrow2.png", \
+    }
+extern SDL_Rect gbuttons_rects[GBUTTON_TYPE_COUNT][GBUTTON_STATE_COUNT];
+extern SDL_Texture *gbuttons_tex[GBUTTON_TYPE_COUNT];
 
 void GameButtons_Init();
 void GameButtons_Quit();

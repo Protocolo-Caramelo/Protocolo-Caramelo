@@ -42,7 +42,7 @@ static const DialogLine felipe_call_lines[] = {
     DIALOG_LINE_STYLED(C_PEDRO, CS_DISTRUSTING,
         "Hum? Como assim?", &dialog_styleWhisper),
     DIALOG_LINE(C_FELIPE, CS_NORMAL,
-        "Bom, eu vou ser direto. Você deve saber sobre a crise e os debates "
+        "Bom, eu vou ser direto. Você deve saber sobre a crise e o debate "
         "que ocorreram alguns anos antes da gente nascer, não é?"),
     DIALOG_LINE(C_PEDRO, CS_NORMAL,
         "Mais ou menos, eu lembro dos meus pais comentando sobre quando eu "
@@ -69,7 +69,8 @@ void DialogScripts_FelipeCall(void)
 /* Ana: cena com opcoes                                                */
 /* ================================================================== */
 
-/* Estilo proprio da Ana: borda laranja, rosto na esquerda, menu na direita.
+/* Estilo proprio da Ana: borda laranja, rosto na direita, menu na esquerda
+ * (o inverso do padrao, so para mostrar como trocar).
  * Precisa ser criado depois de Dialog_Init (DialogStyle_Make le o padrao). */
 static DialogStyle ana_style;
 static int ana_style_ready;
@@ -84,10 +85,10 @@ static void Ana_EnsureStyle(void)
     ana_style.box.padding.color     = (SDL_Color){38, 20, 12, 240};
     ana_style.box.accent            = (SDL_Color){120, 58, 20, 240};
     ana_style.text.color            = (SDL_Color){255, 236, 220, 255};
-    ana_style.face.side             = DIALOG_FACE_LEFT;
+    ana_style.face.side             = DIALOG_FACE_RIGHT;
     ana_style.wave.amplitude_px     = 3.2;
     ana_style.reveal.char_interval_ms = 30;
-    ana_style.choice.align          = DIALOG_CHOICE_ALIGN_RIGHT;
+    ana_style.choice.align          = DIALOG_CHOICE_ALIGN_LEFT;
     ana_style.choice.selected_color = (SDL_Color){255, 170, 90, 255};
     ana_style.choice.marker_color   = (SDL_Color){255, 170, 90, 255};
     ana_style_ready = 1;

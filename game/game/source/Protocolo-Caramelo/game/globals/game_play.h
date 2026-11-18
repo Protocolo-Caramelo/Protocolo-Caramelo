@@ -20,6 +20,8 @@ enum GamePlay_Text {
     GPLAY_TEXT_PAUSED_TITLE_PROTOCOLO,
     GPLAY_TEXT_PAUSED_TITLE_CARAMELO,
 
+    GPLAY_TEXT_BED_TIME_SLEEP,
+
     GPLAY_TEXT_COUNT
 };
 enum GamePlay_Texture {
@@ -42,6 +44,13 @@ enum GamePlay_Button {
     GPLAY_BUTTON_ARROW_ROOM2_DOOR,
 
     GPLAY_BUTTON_MONITOR_BACK,
+
+    GPLAY_BUTTON_BED_INCR_HOUR,
+    GPLAY_BUTTON_BED_INCR_MIN,
+    GPLAY_BUTTON_BED_DECR_HOUR,
+    GPLAY_BUTTON_BED_DECR_MIN,
+    GPLAY_BUTTON_BED_SLEEP,
+    GPLAY_BUTTON_BED_BACK,
 
     GPLAY_BUTTON_PAUSED_RESUME,
     GPLAY_BUTTON_PAUSED_LOAD,
@@ -121,43 +130,58 @@ extern Text *play_text[GPLAY_TEXT_COUNT];
             MENU_TITLE_CONFIG,                            \
             "C.A.R.A.M.E.L.O"                             \
         ), \
+        \
+        [GPLAY_TEXT_BED_TIME_SLEEP] = Text_Create( \
+            cache[GFONT_DIGITAL], \
+            TextConfig_Create( \
+                .scale_width  = 4, \
+                .scale_height = 4, \
+                .color = (SDL_Color){255, 0, 0, 255} \
+            ) \
+        ), \
     }
 
 
 //
 //  Buttons
 //
-extern TextConfig *play_buttonsArrowConfig[INP_STATES_MAX];
+// Type Arrow 1
 #define GPLAY_BUTTON_ARROW_TEXTURE_SCALE (1 / 1.5)
 #define GPLAY_BUTTON_ARROW_CONFIG_NEUTRAL    \
-    TextConfig_Create(                          \
-        .scale_width = 1 / 5.5,                 \
-        .scale_height = 1 / 5.5,                \
-        .color = (SDL_Color){0, 0, 0, 255},     \
-        .border = (Border){                     \
-            .bottom = (b_arrowState[GBUTTON_ARROW_STATE_NEUTRAL].h * GPLAY_BUTTON_ARROW_TEXTURE_SCALE * GPLAY_BUTTON_ARROW_TEXTURE_SCALE), \
-        },                                      \
+    TextConfig_Create(                           \
+        .scale_width = 1 / 5.5,                  \
+        .scale_height = 1 / 5.5,                 \
+        .color = (SDL_Color){255, 180, 27, 255}, \
+        .border = (Border){                      \
+            .bottom = \
+                gbuttons_rects[GBUTTON_TYPE_ARROW_1][GBUTTON_STATE_NEUTRAL].h         \
+                * GPLAY_BUTTON_ARROW_TEXTURE_SCALE * GPLAY_BUTTON_ARROW_TEXTURE_SCALE \
+        }, \
         .padding = (Padding){2, 2, 2, 2, (SDL_Color){}}, \
         .func_alterBorder = &gamePlay_Button_Arrow_Neutral_alterBorder \
     )
 #define GPLAY_BUTTON_ARROW_CONFIG_SELECTED   \
-    TextConfig_Create(                          \
-        .scale_width = 1 / 5.5,                 \
-        .scale_height = 1 / 5.5,                \
-        .color = (SDL_Color){0, 0, 0, 255},     \
-        .border = (Border){                     \
-            .bottom = (b_arrowState[GBUTTON_ARROW_STATE_NEUTRAL].h * GPLAY_BUTTON_ARROW_TEXTURE_SCALE * GPLAY_BUTTON_ARROW_TEXTURE_SCALE), \
+    TextConfig_Create(                           \
+        .scale_width = 1 / 5.5,                  \
+        .scale_height = 1 / 5.5,                 \
+        .color = (SDL_Color){255, 180, 27, 255}, \
+        .border = (Border){                      \
+            .bottom = \
+                gbuttons_rects[GBUTTON_TYPE_ARROW_1][GBUTTON_STATE_NEUTRAL].h         \
+                * GPLAY_BUTTON_ARROW_TEXTURE_SCALE * GPLAY_BUTTON_ARROW_TEXTURE_SCALE \
         },                                      \
         .padding = (Padding){2, 2, 2, 2, (SDL_Color){}}, \
         .func_alterBorder = &gamePlay_Button_Arrow_Selected_alterBorder, \
     )
 #define GPLAY_BUTTON_ARROW_CONFIG_HOVER      \
-    TextConfig_Create(                          \
-        .scale_width = 1 / 5.5,                 \
-        .scale_height = 1 / 5.5,                \
-        .color = (SDL_Color){0, 0, 0, 255},     \
-        .border = (Border){                     \
-            .bottom = (b_arrowState[GBUTTON_ARROW_STATE_NEUTRAL].h * GPLAY_BUTTON_ARROW_TEXTURE_SCALE * GPLAY_BUTTON_ARROW_TEXTURE_SCALE), \
+    TextConfig_Create(                           \
+        .scale_width = 1 / 5.5,                  \
+        .scale_height = 1 / 5.5,                 \
+        .color = (SDL_Color){255, 180, 27, 255}, \
+        .border = (Border){                      \
+            .bottom = \
+                gbuttons_rects[GBUTTON_TYPE_ARROW_1][GBUTTON_STATE_NEUTRAL].h         \
+                * GPLAY_BUTTON_ARROW_TEXTURE_SCALE * GPLAY_BUTTON_ARROW_TEXTURE_SCALE \
         },                                      \
         .padding = (Padding){2, 2, 2, 2, (SDL_Color){}}, \
         .func_alterBorder = &gamePlay_Button_Arrow_Hover_alterBorder \
@@ -169,6 +193,139 @@ extern TextConfig *play_buttonsArrowConfig[INP_STATES_MAX];
         [INP_STATE_HOVER]    = GPLAY_BUTTON_ARROW_CONFIG_HOVER,     \
     }
 
+// Bed Buttons Arrow Type 1
+#define GPLAY_BUTTON_BED_ARROW_1_TEXTURE_SCALE (1 / 1.5)
+#define GPLAY_BUTTON_BED_ARROW_1_CONFIG_NEUTRAL    \
+    TextConfig_Create(                          \
+        .scale_width = 1 / 5.5,                 \
+        .scale_height = 1 / 5.5,                \
+        .color = (SDL_Color){255, 180, 27, 255}, \
+        .border = (Border){                     \
+            .bottom = \
+                gbuttons_rects[GBUTTON_TYPE_ARROW_1][GBUTTON_STATE_NEUTRAL].h         \
+                * GPLAY_BUTTON_BED_ARROW_1_TEXTURE_SCALE * GPLAY_BUTTON_BED_ARROW_1_TEXTURE_SCALE \
+        },                                      \
+        .padding = (Padding){2, 2, 2, 2, (SDL_Color){}}, \
+        .func_alterBorder = &gamePlay_Button_Arrow_2_Neutral_alterBorder \
+    )
+#define GPLAY_BUTTON_BED_ARROW_1_CONFIG_SELECTED   \
+    TextConfig_Create(                          \
+        .scale_width = 1 / 5.5,                 \
+        .scale_height = 1 / 5.5,                \
+        .color = (SDL_Color){255, 180, 27, 255}, \
+        .border = (Border){                     \
+            .bottom = \
+                gbuttons_rects[GBUTTON_TYPE_ARROW_1][GBUTTON_STATE_NEUTRAL].h         \
+                * GPLAY_BUTTON_BED_ARROW_1_TEXTURE_SCALE * GPLAY_BUTTON_BED_ARROW_1_TEXTURE_SCALE \
+        },                                      \
+        .padding = (Padding){2, 2, 2, 2, (SDL_Color){}}, \
+        .func_alterBorder = &gamePlay_Button_Arrow_2_Selected_alterBorder, \
+    )
+#define GPLAY_BUTTON_BED_ARROW_1_CONFIG_HOVER      \
+    TextConfig_Create(                          \
+        .scale_width = 1 / 5.5,                 \
+        .scale_height = 1 / 5.5,                \
+        .color = (SDL_Color){255, 180, 27, 255}, \
+        .border = (Border){                     \
+            .bottom = \
+                gbuttons_rects[GBUTTON_TYPE_ARROW_1][GBUTTON_STATE_NEUTRAL].h         \
+                * GPLAY_BUTTON_BED_ARROW_1_TEXTURE_SCALE * GPLAY_BUTTON_BED_ARROW_1_TEXTURE_SCALE \
+        },                                      \
+        .padding = (Padding){2, 2, 2, 2, (SDL_Color){}}, \
+        .func_alterBorder = &gamePlay_Button_Arrow_2_Hover_alterBorder \
+    )
+#define GPLAY_BUTTON_BED_ARROW_1_CONFIG \
+    { \
+        [INP_STATE_NEUTRAL]  = GPLAY_BUTTON_BED_ARROW_1_CONFIG_NEUTRAL,   \
+        [INP_STATE_SELECTED] = GPLAY_BUTTON_BED_ARROW_1_CONFIG_SELECTED,  \
+        [INP_STATE_HOVER]    = GPLAY_BUTTON_BED_ARROW_1_CONFIG_HOVER,     \
+    }
+
+// Bed Buttons Arrow Type 1
+#define GPLAY_BUTTON_BED_ARROW_2_TEXTURE_SCALE (1 / 1.5)
+#define GPLAY_BUTTON_BED_ARROW_2_CONFIG_NEUTRAL    \
+    TextConfig_Create(                          \
+        .scale_width = 1 / 5.5,                 \
+        .scale_height = 1 / 5.5,                \
+        .color = (SDL_Color){255, 180, 27, 255}, \
+        .border = (Border){                     \
+            .bottom = \
+                gbuttons_rects[GBUTTON_TYPE_ARROW_1][GBUTTON_STATE_NEUTRAL].h         \
+                * GPLAY_BUTTON_BED_ARROW_1_TEXTURE_SCALE * GPLAY_BUTTON_BED_ARROW_1_TEXTURE_SCALE \
+        },                                      \
+        .padding = (Padding){2, 2, 2, 2, (SDL_Color){}}, \
+        .func_alterBorder = &gamePlay_Button_Arrow_2_Neutral_alterBorder, \
+        .flip = SDL_FLIP_VERTICAL, \
+    )
+#define GPLAY_BUTTON_BED_ARROW_2_CONFIG_SELECTED   \
+    TextConfig_Create(                          \
+        .scale_width = 1 / 5.5,                 \
+        .scale_height = 1 / 5.5,                \
+        .color = (SDL_Color){255, 180, 27, 255}, \
+        .border = (Border){                     \
+            .bottom = \
+                gbuttons_rects[GBUTTON_TYPE_ARROW_1][GBUTTON_STATE_NEUTRAL].h         \
+                * GPLAY_BUTTON_BED_ARROW_1_TEXTURE_SCALE * GPLAY_BUTTON_BED_ARROW_1_TEXTURE_SCALE \
+        },                                      \
+        .padding = (Padding){2, 2, 2, 2, (SDL_Color){}}, \
+        .func_alterBorder = &gamePlay_Button_Arrow_2_Selected_alterBorder, \
+        .flip = SDL_FLIP_VERTICAL, \
+    )
+#define GPLAY_BUTTON_BED_ARROW_2_CONFIG_HOVER      \
+    TextConfig_Create(                          \
+        .scale_width = 1 / 5.5,                 \
+        .scale_height = 1 / 5.5,                \
+        .color = (SDL_Color){255, 180, 27, 255}, \
+        .border = (Border){                     \
+            .bottom = \
+                gbuttons_rects[GBUTTON_TYPE_ARROW_1][GBUTTON_STATE_NEUTRAL].h         \
+                * GPLAY_BUTTON_BED_ARROW_1_TEXTURE_SCALE * GPLAY_BUTTON_BED_ARROW_1_TEXTURE_SCALE \
+        },                                      \
+        .padding = (Padding){2, 2, 2, 2, (SDL_Color){}}, \
+        .func_alterBorder = &gamePlay_Button_Arrow_2_Hover_alterBorder, \
+        .flip = SDL_FLIP_VERTICAL, \
+    )
+#define GPLAY_BUTTON_BED_ARROW_2_CONFIG \
+    { \
+        [INP_STATE_NEUTRAL]  = GPLAY_BUTTON_BED_ARROW_2_CONFIG_NEUTRAL,   \
+        [INP_STATE_SELECTED] = GPLAY_BUTTON_BED_ARROW_2_CONFIG_SELECTED,  \
+        [INP_STATE_HOVER]    = GPLAY_BUTTON_BED_ARROW_2_CONFIG_HOVER,     \
+    }
+
+
+// Type bed
+#define GPLAY_BUTTON_BED_CONFIG_NEUTRAL    \
+    TextConfig_Create(                          \
+        .scale_width = 1 / 5.5,                 \
+        .scale_height = 1 / 5.5,                \
+        .color = (SDL_Color){255, 180, 27, 255}, \
+        .border = (Border){2, 2, 2, 2},         \
+        .padding = (Padding){5, 5, 5, 5, (SDL_Color){255, 255, 255, 255}}, \
+    )
+#define GPLAY_BUTTON_BED_CONFIG_SELECTED   \
+    TextConfig_Create(                          \
+        .scale_width = 1 / 5.5,                 \
+        .scale_height = 1 / 5.5,                \
+        .color = (SDL_Color){255, 180, 27, 255}, \
+        .border = (Border){5, 5, 5, 5},         \
+        .padding = (Padding){5, 5, 5, 5, (SDL_Color){255, 255, 255, 255}}, \
+    )
+#define GPLAY_BUTTON_BED_CONFIG_HOVER      \
+    TextConfig_Create(                          \
+        .scale_width = 1 / 5.5,                 \
+        .scale_height = 1 / 5.5,                \
+        .color = (SDL_Color){255, 180, 27, 255}, \
+        .border = (Border){5, 5, 5, 5},         \
+        .padding = (Padding){5, 5, 5, 5, (SDL_Color){255, 255, 255, 255}}, \
+    )
+#define GPLAY_BUTTON_BED_CONFIG \
+    { \
+        [INP_STATE_NEUTRAL]  = GPLAY_BUTTON_BED_CONFIG_NEUTRAL,   \
+        [INP_STATE_SELECTED] = GPLAY_BUTTON_BED_CONFIG_SELECTED,  \
+        [INP_STATE_HOVER]    = GPLAY_BUTTON_BED_CONFIG_HOVER,     \
+    }
+
+//
 #define GPLAY_BUTTONS \
     { \
         [GPLAY_BUTTON_ARROW_ROOM1_BACK]    = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])GPLAY_BUTTON_ARROW_CONFIG), "Virar"),      \
@@ -180,6 +337,13 @@ extern TextConfig *play_buttonsArrowConfig[INP_STATES_MAX];
         \
         [GPLAY_BUTTON_MONITOR_BACK]        = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])GPLAY_BUTTON_MONITOR_POWER_CONFIG), ""),   \
         \
+        [GPLAY_BUTTON_BED_INCR_HOUR]       = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])GPLAY_BUTTON_BED_ARROW_2_CONFIG), ""), \
+        [GPLAY_BUTTON_BED_INCR_MIN]        = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])GPLAY_BUTTON_BED_ARROW_2_CONFIG), ""), \
+        [GPLAY_BUTTON_BED_DECR_HOUR]       = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])GPLAY_BUTTON_BED_ARROW_1_CONFIG), ""), \
+        [GPLAY_BUTTON_BED_DECR_MIN]        = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])GPLAY_BUTTON_BED_ARROW_1_CONFIG), ""), \
+        [GPLAY_BUTTON_BED_SLEEP]           = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])GPLAY_BUTTON_BED_CONFIG), "Descansar"), \
+        [GPLAY_BUTTON_BED_BACK]            = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])GPLAY_BUTTON_BED_CONFIG), "Acordar"), \
+        \
         [GPLAY_BUTTON_PAUSED_RESUME]        = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])MENU_BUTTON_CONFIG), "Retornar"),         \
         [GPLAY_BUTTON_PAUSED_LOAD]          = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])MENU_BUTTON_CONFIG), "Carregar"),         \
         [GPLAY_BUTTON_PAUSED_CONFIG]        = Button_Create(cache[GFONT_REGULAR], &((TextConfig*[INP_STATES_MAX])MENU_BUTTON_CONFIG), "Configurar"),       \
@@ -189,7 +353,6 @@ extern TextConfig *play_buttonsArrowConfig[INP_STATES_MAX];
 //
 // Monitor
 //
-extern TextConfig *play_buttonMonitorPowerConfig[INP_STATES_MAX];
 extern Button *play_buttons[GPLAY_BUTTON_COUNT];
 #define GPLAY_BUTTON_MONITOR_POWER_CONFIG_NEUTRAL  \
     TextConfig_Create(                          \
@@ -213,5 +376,10 @@ void GamePlay_Quit();
 void gamePlay_Button_Arrow_Neutral_alterBorder(Text*, Texture*);
 void gamePlay_Button_Arrow_Selected_alterBorder(Text*, Texture*);
 void gamePlay_Button_Arrow_Hover_alterBorder(Text*, Texture*);
+//
+void gamePlay_Button_Arrow_2_Neutral_alterBorder(Text*, Texture*);
+void gamePlay_Button_Arrow_2_Selected_alterBorder(Text*, Texture*);
+void gamePlay_Button_Arrow_2_Hover_alterBorder(Text*, Texture*);
+
 
 #endif
