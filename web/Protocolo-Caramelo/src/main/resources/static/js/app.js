@@ -1,5 +1,20 @@
 const app = document.getElementById("app");
 
+function createEl(tag, className, text) {
+    const el = document.createElement(tag);
+    if (className) el.className = className;
+    if (text !== undefined) el.textContent = text;
+    return el;
+}
+
+async function fetchJSON(url) {
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error("Erro " + response.status + " em " + url);
+    }
+    return await response.json();
+}
+
 function showHome() {
     app.innerHTML = 
     `<section id="Home">
@@ -46,6 +61,7 @@ function showHome() {
         <button>Jogue agora</button>           
     </section>`;
 }
+
 function showMechanics() {
     app.innerHTML =
     `<section id="mechanics">
@@ -302,374 +318,112 @@ function showMechanics() {
     </section>`;
 }
 
-function showCharacters(){
+function createCharacterCard(c) {
+    const card = createEl("div", "character-card");
+    card.addEventListener("click", () => card.classList.toggle("expanded"));
+
+    const name = createEl("div", "character-name");
+    name.appendChild(createEl("h2", "", c.name));
+
+    const imageBox = createEl("div", "character-image");
+    const img = document.createElement("img");
+    img.src = c.image;
+    img.alt = c.name;
+    imageBox.appendChild(img);
+
+    const role = createEl("div", "character-role");
+    role.appendChild(createEl("h3", "", c.role));
+
+    const data = createEl("div", "character-data");
+    c.stats.forEach(stat => {
+        const row = document.createElement("p");
+        row.appendChild(createEl("strong", "", stat.label));
+        row.appendChild(createEl("span", "", stat.value));
+        data.appendChild(row);
+    });
+
+    const info = createEl("div", "character-info");
+    const content = createEl("div", "character-info-content");
+    [
+        ["Aparência", c.appearance],
+        ["Sobre o personagem", c.about],
+        ["Função no jogo", c.gameFunction]
+    ].forEach(([title, text]) => {
+        content.appendChild(createEl("h3", "", title));
+        content.appendChild(createEl("p", "", text));
+    });
+    info.appendChild(content);
+
+    card.append(name, imageBox, role, data, info);
+    return card;
+}
+
+async function showCharacters() {
     app.innerHTML =
     `<section id="characters-section">
         <div id="dev-guide">
             <h2>Clique em um personagem para saber mais</h2>
         </div>
-
-        <div id="character-container">
-
-            <div class="character-card" onclick="expandCard(this)">
-                <div class="character-name">
-                    <h2>Pedro Monteiro Rocha</h2>
-                </div>
-                <div class="character-image">
-                    <img src="img/pedro.JPG" alt="Pedro">
-                </div>
-                <div class="character-role">
-                    <h3>Protagonista</h3>
-                </div>
-                <div class="character-data">
-                    <p><strong>Idade</strong><span>24</span></p>
-                    <p><strong>Altura</strong><span>1,75 m</span></p>
-                    <p><strong>Peso</strong><span>69 kg</span></p>
-                    <p><strong>Gostos</strong><span>Jogar videogames e dormir</span></p>
-                    <p><strong>Cor favorita</strong><span>Verde</span></p>
-                    <p><strong>Gênero</strong><span>Homem</span></p>
-                    <p><strong>Ocupação</strong><span>Minerador de caramelos</span></p>
-                    <p><strong>Personalidade</strong><span>Determinado, curioso e sensato</span></p>
-                </div>
-                <div class="character-info">
-                    <div class="character-info-content">
-                        <h3>Aparência</h3>
-                        <p>
-                            Cabelos lisos, curtos e pretos, pele parda e olhos grandes e expressivos. Tem um rosto 
-                            quadrado que se destaca e uma expressão geralmente cansada. Veste camisas comuns e calça 
-                            jeans, e em uma das camisas aparece a logo do Space-Brillig.
-                        </p>
-                        <h3>Sobre o personagem</h3>
-                        <p>
-                            Pedro nasceu no interior, longe da evolução tecnológica e principalmente da Inteligência
-                            Artificial, mas após a morte de seus pais ele é forçado a ir para a cidade grande em busca
-                            de uma vida melhor. Porém, ele não conseguiu acompanhar a velocidade de produção esmagadora
-                            da IA e foi rapidamente demitido. Como última alternativa, decide se juntar à comunidade
-                            de mineradores de caramelo para sobreviver e manter sua casa. Agora Pedro deve fazer de tudo
-                            para sobreviver por 30 dias, superando desafios e homens de terno enquanto descobre segredos
-                            de seus conhecidos e sobre o mundo em que vive.
-                        </p>
-                        <h3>Função no jogo</h3>
-                        <p>
-                            É o personagem controlado pelo jogador. Cabe a VOCÊ administrar o dinheiro, a energia, o sono
-                            e as relações de Pedro para sobreviver até o final do jogo.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="character-card" onclick="expandCard(this)">
-                <div class="character-name">
-                    <h2>Felipe Brito</h2>
-                </div>
-                <div class="character-image">
-                    <img src="img/felipe.png" alt="Felipe">
-                </div>
-                <div class="character-role">
-                    <h3>Coadjuvante</h3>
-                </div>
-                <div class="character-data">
-                    <p><strong>Idade</strong><span>25</span></p>
-                    <p><strong>Altura</strong><span>1,80 m</span></p>
-                    <p><strong>Peso</strong><span>72 kg</span></p>
-                    <p><strong>Gostos</strong><span>Conversar e jogar videogames</span></p>
-                    <p><strong>Cor favorita</strong><span>Ciano</span></p>
-                    <p><strong>Gênero</strong><span>Homem</span></p>
-                    <p><strong>Ocupação</strong><span>Minerador de caramelos</span></p>
-                    <p><strong>Personalidade</strong><span>Otimista, engraçado e extrovertido</span></p>
-                </div>
-                <div class="character-info">
-                    <div class="character-info-content">
-                        <h3>Aparência</h3>
-                        <p>
-                            Cabelos cacheados de tamanho médio de cor escura, pele clara com algumas manchas e
-                            olhos grandes cobertos por óculos escuros. É notavelmente magro, tem o rosto arredondado e
-                            uma expressão alegre, cheia de vida. Usa roupas simples, com camisas e calças comuns.
-                        </p>
-                        <h3>Sobre o personagem</h3>
-                        <p>
-                            Velho amigo de Pedro e a única família que lhe resta. Amante da vida e do tipo que
-                            "desenrola as coisas na hora", sempre está lá quando precisa oferecendo apoio ao Pedro,
-                            e ainda por cima é um extrovertido por natureza o que fez ele conhecer e ganhar contato
-                            com várias pessoas diferentes. Além disso, ele é muito informado sobre o Protocolo-Caramelo
-                            contendo grandes infomações sobre sua história, mesmo que boa parte dela ainda seja um mistério
-                            para a sociedade.
-                        </p>
-                        <h3>Função no jogo</h3>
-                        <p>
-                            Guia do jogador do inicío ao fim do jogo, ele  é responsável por apresentar o Protocolo-Caramelo
-                            para o jogador e como ele funciona, e ele também passa o contato de vários conhecidos para Pedro
-                            para que Pedro tenha acesso a diferentes serviços. Por fim, sempre que estiver em dúvida ou com 
-                            insegurança sobre o que fazer a seguir, pode contar com seu lindo e maravilhoso amigo Felipe Brito!
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="character-card" onclick="expandCard(this)">
-                <div class="character-name">
-                    <h2>José</h2>
-                </div>
-                <div class="character-image">
-                    <img src="img/jose.png" alt="José">
-                </div>
-                <div class="character-role">
-                    <h3>Personagem secundário</h3>
-                </div>
-                <div class="character-data">
-                    <p><strong>Idade</strong><span>36</span></p>
-                    <p><strong>Altura</strong><span>1,70 m</span></p>
-                    <p><strong>Peso</strong><span>80 kg</span></p>
-                    <p><strong>Gostos</strong><span>Café e ler livros</span></p>
-                    <p><strong>Cor favorita</strong><span>Preto e branco</span></p>
-                    <p><strong>Gênero</strong><span>Homem</span></p>
-                    <p><strong>Ocupação</strong><span>Técnico de Informática</span></p>
-                    <p><strong>Personalidade</strong><span>Simpático, altruísta e otimista</span></p>
-                </div>
-                <div class="character-info">
-                    <div class="character-info-content">
-                        <h3>Aparência</h3>
-                        <p>
-                            Homem de postura firme, com cabelo curto e preto, com um pequeno topete na frente.
-                            pele negra e barba. Sua expressão é neutra, e no dia a dia usa roupas formais de escritório.
-                        </p>
-                        <h3>Sobre o personagem</h3>
-                        <p>
-                            Colega de Pedro no último emprego e a pessoa mais simpática que ele conheceu ali. Foi quem
-                            ajudou Pedro a entrar na comunidade Caramelo. José é um homem simples que o único objetivo
-                            é ajudar o maior número possível de pessoas até o dia de sua morte, pelo menos depois de não
-                            ter conseguido ajudar a pessoa que mais precisava dele...
-                        </p>
-                        <h3>Função no jogo</h3>
-                        <p>
-                            Contato da comunidade que ajuda o jogador com informações sobre a VERA. José é um técnico 
-                            disposto a fazer upgrades em seu computador por um preço amigável, e ainda por cima sempre
-                            vai estar disposto a conversar ou formatar seu computador quando precisar como um gentleman. 
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="character-card" onclick="expandCard(this)">
-                <div class="character-name">
-                    <h2>Ana</h2>
-                </div>
-                <div class="character-image">
-                    <img src="img/ana.png" alt="Ana">
-                </div>
-                <div class="character-role">
-                    <h3>Personagem secundária</h3>
-                </div>
-                <div class="character-data">
-                    <p><strong>Idade</strong><span>28</span></p>
-                    <p><strong>Altura</strong><span>1,62 m</span></p>
-                    <p><strong>Peso</strong><span>50 kg</span></p>
-                    <p><strong>Gostos</strong><span>Desenhar e gatos</span></p>
-                    <p><strong>Cor favorita</strong><span>Vermelho</span></p>
-                    <p><strong>Gênero</strong><span>Mulher</span></p>
-                    <p><strong>Ocupação</strong><span>Artista</span></p>
-                    <p><strong>Personalidade</strong><span>Forte e decisiva</span></p>
-                </div>
-                <div class="character-info">
-                    <div class="character-info-content">
-                        <h3>Aparência</h3>
-                        <p>
-                            Cabelo longo, liso e ruivo alaranjado, que chega até a cintura, com uma franja que cobre a testa.
-                            Seus olhos são pequenos e difíceis de decifrar. Tem postura ruim por passar muito tempo
-                            sentada, pele clara e bem cuidada e rosto arredondado. Sua expressão é de alguém estressada e
-                            insatisfeita, e as roupas comuns têm lápis nos bolsos e leves manchas de tinta.
-                        </p>
-                        <h3>Sobre o personagem</h3>
-                        <p>
-                            Artista por natureza, ficou sem espaço quando as pessoas deixaram de valorizar o trabalho humano 
-                            para vangloriar a velocidade de criação da IA, desde então ninguém mais valorizou a arte feita à mão.
-                            Mesmo assim ela ainda tenta vender seus desenhos e espalha grafites pelas ruas com a esperança que algum
-                            dia a humanidade acorde.
-                        </p>
-                        <h3>Função no jogo</h3>
-                        <p>
-                            Personagem da comunidade com quem o jogador pode conversar e negociar para conseguir artes, quadros
-                            e todos os tipos de decorações para sua casa.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="character-card" onclick="expandCard(this)">
-                <div class="character-name">
-                    <h2>Ricardo</h2>
-                </div>
-                <div class="character-image">
-                    <img src="img/ricardo.png" alt="Ricardo">
-                </div>
-                <div class="character-role">
-                    <h3>Personagem secundário</h3>
-                </div>
-                <div class="character-data">
-                    <p><strong>Idade</strong><span>40</span></p>
-                    <p><strong>Altura</strong><span>1,89 m</span></p>
-                    <p><strong>Peso</strong><span>85 kg</span></p>
-                    <p><strong>Gostos</strong><span>Jogos de azar</span></p>
-                    <p><strong>Cor favorita</strong><span>nenhuma</span></p>
-                    <p><strong>Gênero</strong><span>Homem</span></p>
-                    <p><strong>Ocupação</strong><span>Apostador</span></p>
-                    <p><strong>Personalidade</strong><span>Competitivo e cheio de energia</span></p>
-                </div>
-                <div class="character-info">
-                    <div class="character-info-content">
-                        <h3>Aparência</h3>
-                        <p>
-                            Careca, com olhos médios e pele clara. Normalmente tem o rosto de um homem
-                            modesto e de postura normal, mas quando está jogando fica com uma expressão elétrica, de olhos
-                            bem abertos. Usa roupas estranhas e sem nexo, e claramente não tem bom gosto em moda.
-                        </p>
-                        <h3>Sobre o personagem</h3>
-                        <p>
-                            Ricardo é um homem competitivo, viciado em jogos de azar e refém do próprio vício. Um dia ele
-                            já esteve no topo do mundo, mas hoje ele perdeu tudo, mesmo assim, Ricardo acredita fortemente 
-                            que não exista emoção melhor no mundo do que apostar com nada mais que sua própria sorte.
-                        </p>
-                        <h3>Função no jogo</h3>
-                        <p>
-                            Ricardo pode convidar o jogador para partidas de vinte e um valendo uma quantia de caramelos com  
-                            o vencedor levando o bolo. Se você estiver se sentindo com venha até o cassino se divertir um pouco!
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="character-card" onclick="expandCard(this)">
-                <div class="character-name">
-                    <h2>Dono do Prédio</h2>
-                </div>
-                <div class="character-image">
-                    <img src="img/dono.JPG" alt="Dono do prédio">
-                </div>
-                <div class="character-role">
-                    <h3>Vilão</h3>
-                </div>
-                <div class="character-data">
-                    <p><strong>Idade</strong><span>64</span></p>
-                    <p><strong>Altura</strong><span>1,69 m</span></p>
-                    <p><strong>Peso</strong><span>78 kg</span></p>
-                    <p><strong>Gostos</strong><span>Dinheiros e vinho</span></p>
-                    <p><strong>Cor favorita</strong><span>amarelo</span></p>
-                    <p><strong>Gênero</strong><span>Homem</span></p>
-                    <p><strong>Ocupação</strong><span>Proprietário do prédio</span></p>
-                    <p><strong>Personalidade</strong><span>Estressado, orgulhoso e rancoroso</span></p>
-                </div>
-                <div class="character-info">
-                    <div class="character-info-content">
-                        <h3>Aparência</h3>
-                        <p>
-                            Senhor de cabelo grisalho, liso, curto e muito bem cuidado, com olhos escuros.
-                            Tem pele clara e velha, com rugas e pintas pelo corpo. Seu rosto é o de um homem cansado e
-                            carregado de raiva, mas mantém a postura de alguém modesto. Quando se irrita, perde a postura
-                            e o cabelo fica bagunçado. Usa roupas caras e formais.
-                        </p>
-                        <h3>Sobre o personagem</h3>
-                        <p>
-                            Dono da casa popular onde Pedro mora. Estressa-se com extrema facilidade e, por algum motivo,
-                            parece não gostar de Pedro.
-                        </p>
-                        <h3>Função no jogo</h3>
-                        <p>
-                            Responsável pelas cobranças do jogo. O dono vem de 5 em 5 dias bater na porta de Pedro cobrando 
-                            contas cada vez mais absurdas forçando o jogador a correr contra o tempo para não ser despejado de seu apartamento.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div id="character-container"></div>
     </section>`;
+
+    const container = document.getElementById("character-container");
+
+    try {
+        const characters = await fetchJSON("/api/characters");
+        if (!container.isConnected) return; 
+        characters.forEach(c => container.appendChild(createCharacterCard(c)));
+    } catch (error) {
+        console.error(error);
+        container.textContent = "Não foi possível carregar os personagens.";
+    }
 }
 
-function showDevs(){
-    app.innerHTML = 
+function createDevCard(dev) {
+    const card = createEl("div", "dev-card");
+    card.addEventListener("click", () => card.classList.toggle("expanded"));
+
+    const nickname = createEl("div", "dev-nickname");
+    nickname.appendChild(createEl("h3", "", dev.nickname));
+
+    const imageBox = createEl("div", "dev-image");
+    const img = document.createElement("img");
+    img.src = dev.image;
+    img.alt = dev.name;
+    imageBox.appendChild(img);
+
+    const job = createEl("div", "dev-job");
+    job.appendChild(createEl("h3", "", dev.job));
+
+    const info = createEl("div", "dev-info");
+    info.appendChild(createEl("p", "", dev.info));
+
+    card.append(nickname, imageBox, job, info);
+    return card;
+}
+
+async function showDevs() {
+    app.innerHTML =
     `<section id="devs-section">
         <div id="dev-guide">
             <h2>Clique em um desenvolvedor para interagir</h2>
         </div>
-        <div id="devs-container">
-            <div class="dev-card" onclick="expandCard(this)">
-                <div class="dev-nickname">
-                    <h3>CastCris</h3>
-                </div>
-                <div class="dev-image">
-                    <img src="img/cris.jpeg" alt="Cris">
-                </div>
-                <div class="dev-job">
-                    <h3>Desenvolvedor</h3>
-                </div>
-                <div class="dev-info">
-                    <p>
-                        Líder do grupo, sendo o responsável pela modelagem e articulação do código fonte do jogo.
-                        Além disso, desenvolveu, junto ao JVVS, o bruto da parte criativa, a exemplo do tema, história,
-                        personagens a ambientação do Protocolo-Caramelo.
-                    </p>
-                </div>
-            </div>
-
-            <div class="dev-card" onclick="expandCard(this)">
-                <div class="dev-nickname">
-                    <h3>JVVS</h3>
-                </div>
-                <div class="dev-image">
-                    <img src="img/joao.png" alt="João">
-                </div>
-                <div class="dev-job">
-                    <h3>Diretor Criativo && Dev. Web</h3>
-                </div>
-                <div class="dev-info">
-                    <p>
-                        Diretor criativo do jogo, sendo responsável pela criação e desenvolvimento da história do jogo e seus personagens.
-                        Além disso, é responsável pela criação de efeitos sonoros e músicas ambientes dentro do jogo.
-                        Por fim, é responsável pela criação e desenvolvimento do site do jogo.
-                    </p>
-                </div>
-            </div>
-
-            <div class="dev-card" onclick="expandCard(this)">
-                <div class="dev-nickname">
-                    <h3>JeanCFreitas</h3>
-                </div>
-                <div class="dev-image">
-                    <img src="img/jean.jpeg" alt="Jean">
-                </div>
-                <div class="dev-job">
-                    <h3>Artista</h3>
-                </div>
-                <div class="dev-info">
-                    <p>
-                        Artista do grupo, responsável pelas artes conceituais do trabalho e pelo lado mais artístico.
-                        Desenvolveu o design do quarto e dos personagens.
-                    </p>
-                </div>
-            </div>
-
-            <div class="dev-card" onclick="expandCard(this)">
-                <div class="dev-nickname">
-                    <h3>DiogoBSousa</h3>
-                </div>
-                <div class="dev-image">
-                    <img src="img/diogo.jpeg" alt="Diogo">
-                </div>
-                <div class="dev-job">
-                    <h3>Artista</h3>
-                </div>
-                <div class="dev-info">
-                    <p>
-                        Artista responsável pela criação dos elementos gráficos e imagens do jogo, além de contribuir
-                        com ideias para o desenvolvimento da história, ambientação e identidade visual do Protocolo-Caramelo.
-                    </p>
-                </div>
-            </div>
-        </div>
+        <div id="devs-container"></div>
     </section>`;
-}
 
-function expandCard(card){
-    card.classList.toggle("expanded");
+    const container = document.getElementById("devs-container");
+
+    try {
+        const devs = await fetchJSON("/api/developers");
+        if (!container.isConnected) 
+            return;
+            devs.forEach(dev => container.appendChild(createDevCard(dev)));
+    } 
+    
+    catch (error) {
+        console.error(error);
+        container.textContent = "Não foi possível carregar os desenvolvedores.";
+    }
 }
 
 function loadPage() {
@@ -677,7 +431,7 @@ function loadPage() {
     const page = window.location.hash;
     const path = window.location.pathname;
 
-     if (path !== "/") {
+    if (path !== "/") {
         app.innerHTML = 
         `<section>
             <div id="error-alert">

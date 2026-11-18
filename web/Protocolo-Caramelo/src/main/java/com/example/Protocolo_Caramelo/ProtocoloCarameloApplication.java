@@ -2,7 +2,7 @@ package com.example.Protocolo_Caramelo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import com.example.Protocolo_Caramelo.controller.SiteController;
+import com.example.Protocolo_Caramelo.SiteController;
 
 @SpringBootApplication
 public class ProtocoloCarameloApplication {

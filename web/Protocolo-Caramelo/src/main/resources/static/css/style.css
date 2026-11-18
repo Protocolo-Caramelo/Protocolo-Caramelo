@@ -275,6 +275,15 @@ footer p {
 #down .card .card-intro{
     background-color: #0f1838;
 }
+
+#dev-guide h2 {
+    justify-content: center;
+    text-align: center;
+    font-size: 16px;
+    width: 100%;
+    margin: 35px 0 10px;
+}
+
 #character-container {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 520px));
@@ -420,14 +429,6 @@ footer p {
     line-height: 1.5;
     text-align: justify;
     hyphens: auto;
-}
-
-#dev-guide h2 {
-    justify-content: center;
-    text-align: center;
-    font-size: 16px;
-    width: 100%;
-    margin: 35px 0 10px;
 }
 
 #devs-container {
@@ -578,7 +579,7 @@ footer p {
         margin: 0 auto 30px;
     }
 
-     #levels-container{
+    #levels-container{
         width: 70%;
     }
 }
@@ -669,7 +670,7 @@ footer p {
         padding: 10px 15px;
     }
 
-        #character-container{
+    #character-container{
         gap: 25px;
         padding: 30px 15px;
     }
@@ -796,7 +797,7 @@ footer p {
         font-size: 11px;
     }
 
-        #levels-container{
+    #levels-container{
         width: 85%;
         grid-template-columns: 1fr;
         gap: 15px;
@@ -832,13 +833,12 @@ footer p {
         gap: 12px;
     }
 
-    .card-text,
-    .card-image{
+    .card-text, .card-image{
         flex: none;
         width: 100%;
     }
 
-    .card-images{
+    .card-image-M{
         grid-template-columns: 1fr;
     }
 
@@ -934,7 +934,7 @@ footer p {
 
     .dev-job{
         padding: 2px 4px;
-          border-bottom-left-radius: 10px;
+        border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
     }
 
