@@ -4,14 +4,14 @@
 <p align="center">
   <a href="">1 ……………………………………………………… Introdução</a>
   <br>
-  <!-- -->
+  <!-- Execução-->
   <a href="">2 ………………………………………………………… Execução</a>
   <br>
   <a href="">2.1 ……………………………………………………… Exe. Web</a>
   <br>
   <a href="">2.2 ………………………………………………………… Exe. P-C</a>
   <br>
-  <!-- -->
+  <!-- Ficha técnica -->
   <a href="">3 …………………………………………………… Ficha técnica</a>
   <br>
   <a href="">3.1 …………………………………………………… Arquitetura</a>
@@ -20,8 +20,27 @@
   <br>
   <a href="">3.1.2 ……………………………………………………… Arq. P-C</a>
   <br>
-  <!-- -->
-  <a href="">4 ………………………………………………………… Sobre nós</a>
+  <!-- Mecânicas -->
+  <a href="">4 ………………………………………………………… Mecânicas</a>
+  <br>
+  <a href="">4.1 ……………………………………………………………… Saúde</a>
+  <br>
+  <a href="">4.2 …………………………………………………………… Energia</a>
+  <br>
+  <a href="">4.3 ………………………………………………………………… Sono</a>
+  <br>
+  <a href="">4.4 ………………………………………………………… Caramelos</a>
+  <br>
+  <a href="">4.5 ……………………………………………………………… Tempo</a>
+  <br>
+  <a href="">4.6 …………………………………… Problemas Matemáticos</a>
+  <br>
+  <a href="">4.7 ……………………………………………………………… Dívidas</a>
+  <br>
+  <a href="">4.7 …………………………………………………………… Dialógos</a>
+  <br>
+  <!--Sobre nós -->
+  <a href="">5 …………………………………………………………… Sobre nós</a>
 </p>
 
 ## 1 Introdução
@@ -92,21 +111,55 @@ cmake --build __build_windows_devquote__
 
 ## 4 Mecânicas
 ### 4.1 Saúde
+<img height="240" alt="ConceptBoost_Medkit" src="https://github.com/user-attachments/assets/9c54e48b-973b-4e89-a3c2-3b702550e190" />
 
+A saúde é uma métrica da qualidade de sono do personagem e o recurso mais vital presente jogo. Ele irá definir se o jogador deve  perder o jogo ou se ele continuar.
+
+A cada vez que o jogador deixa de dormir ou consome energéticos, ele perde uma fração da sua saúde. Ela é recuperada minimamente 
+ a barra de sono está preenchida ou no uso do medkit.
+
+O medkit pode ser adquirido na loja virtual “entrega rápidas”
 
 ### 4.2 Energia
+<img width="240" alt="ConceptBoost_Arcus" src="https://github.com/user-attachments/assets/fda99efa-d8c8-482a-84f8-a475e2caadd1" />
+
+A energia é adquirida ao dormir ou ao ingerir um energético/café. Ela indica a disposição do personagem. 
+
+É importante notar a diferença entre energia e sono: caso a energia esteja baixa, a tela do jogador irá começar a escurecer e os problemas matemáticos serão mais difíceis; já o sono pode recuperar a saúde caso ela esteja completa ou diminuir caso contrário.
 
 ### 4.3 Sono
+<img width="240" alt="ConceptBoost_Pílula" src="https://github.com/user-attachments/assets/5c6d15b4-7300-4a1d-9fec-78597eb138a2" />
+
+
+O descanso é vital para o bem-estar, desenvolvimento e saúde humana, tanto no jogo quanto na vida real. Assim, caso o personagem não durma corretamente, ele começará a perder saúde.
+
+O sono é reduzido apenas quando o personagem descansa, e é reduzido exponencialmente quanto mais horas o jogador dorme continuamente.
+
+O sonífero pode ser utilizado para aumentar qualidade de sono e, portanto, o quanto ele é reduzido.
 
 ### 4.4 Caramelos
+<img width="240" alt="Caramelos" src="https://github.com/user-attachments/assets/86d85804-249b-4838-b580-9e24d802c9a8" />
 
-### 4.5 Problemas
 
-### 4.6 Dívidas
+O Caramelo é a moeda do jogo, ou seja, é a o recurso que o jogador vai receber sempre que ele finalizar uma sessão de mineração.
 
-### 4.7 Diálogos
+O caramelo é utilizado principalmente para pagar as contas e comprar os itens disponíveis na loja do jogo.
 
-## 4 Sobre nós
+O jogo também pode apostar seus caramelos com o Personagem Ricardo caso esteja se sentindo com sorte.
+
+### 4.5 Tempo
+
+### 4.6 Problemas Matemáticos
+_Gerado com o auxílio da I.A(Claude)_
+
+
+### 4.7 Dívidas
+_Gerado com o auxílio da I.A(GPT)_
+
+### 4.8 Diálogos
+_Gerado com o auxílio da I.A(Claude)_
+
+## 5 Sobre nós
 <table>
   <thead>
     <tr>
