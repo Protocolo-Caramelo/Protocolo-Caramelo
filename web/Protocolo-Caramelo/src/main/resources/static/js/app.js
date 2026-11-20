@@ -19,7 +19,7 @@ function showHome() {
     app.innerHTML = 
     `<section id="Home">
         <div id="logo"> 
-            <img src="img/cachorro.png" alt="dog">
+            <img src="img/logo.webp" alt="dog">
         </div>
         <h1>Sinopse</h1>
         <div class="card">
